@@ -23,5 +23,6 @@ public class User extends BaseModel {
 	private User manager;
 	private Department department;
 	private List<Certification> certifications;
-	private List<Course> courses;
+	private List<Course> pendingCourses;
+	private List<Course> completedCourses;
 }

@@ -14,4 +14,5 @@ import lombok.Setter;
 public class TypeOfInstitution extends BaseModel {
 
 	private String description;
+	private Authority authority;
 }

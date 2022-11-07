@@ -15,4 +15,5 @@ public class TypeOfCourse extends BaseModel {
 
 	private String name;
 	private String description;
+	private Course course;
 }

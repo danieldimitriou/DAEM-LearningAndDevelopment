@@ -15,4 +15,5 @@ public class Position extends BaseModel {
 
 	private String name;
 	private String level;
+	private User user;
 }

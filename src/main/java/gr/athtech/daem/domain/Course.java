@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @Builder
@@ -19,6 +17,5 @@ public class Course extends BaseModel {
 	private TypeOfCourse type;
 	private AreaOfStudy areaOfStudy;
 	private Certification certification;
-	private Date startDate;
-	private Date endDate;
+	private User user;
 }

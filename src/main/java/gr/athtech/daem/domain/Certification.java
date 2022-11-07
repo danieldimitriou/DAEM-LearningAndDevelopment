@@ -17,6 +17,7 @@ public class Certification extends BaseModel {
 
 	private String name;
 	private Authority certificationAuthority;
-	private AreaOfStudy field;
 	private Date expirationDate;
+	private User holder;
+	private Course course;
 }

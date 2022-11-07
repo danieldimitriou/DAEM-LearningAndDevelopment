@@ -15,4 +15,5 @@ public class Authority extends BaseModel {
 
 	private String name;
 	private TypeOfInstitution awardingBody;
+	private Certification certification;
 }
