@@ -23,7 +23,7 @@ spring:
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql:@//localhost:5432
+    url: jdbc:postgresql://localhost:5432/postgres
     generate-ddl: true
     hibernate:
       ddl-auto: create-drop
