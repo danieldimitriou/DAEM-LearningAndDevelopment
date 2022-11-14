@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -23,20 +22,19 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "AREA_OF_STUDY")
-@SequenceGenerator(name = "idGenerator",allocationSize = 1)
+@SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class AreaOfStudy extends BaseModel {
 
-	@Column(length = 255, nullable = false,unique = false)
+	@Column(length = 255, nullable = false, unique = false)
 	@NotEmpty
 	@NotNull
 	private String name;
 
-	@Column(length = 255,nullable = false,unique = false)
+	@Column(length = 255, nullable = false, unique = false)
 	@NotEmpty
 	@NotNull
 	private String description;
 
-
-	@ManyToMany(mappedBy = "areaOfStudy")
-	private Set<Course> course;
+	@ManyToMany(mappedBy = "areasOfStudy")
+	private List<Course> courses;
 }
