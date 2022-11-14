@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -33,7 +34,8 @@ public class Authority extends BaseModel {
 	@NotEmpty
 	private String name;
 
-	@ManyToOne(mappedBy = "authority", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "authority_id")
 	private TypeOfInstitution awardingBody;
 
 	@OneToMany(mappedBy = "certificationAuthority", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
