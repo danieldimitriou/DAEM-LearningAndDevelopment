@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "USERS")
-@SequenceGenerator(name = "idGenerator")
+@SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class User extends BaseModel {
 
 	@Column(length = 50, nullable = false, unique = false)
