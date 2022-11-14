@@ -11,9 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,7 +23,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "POSITION")
+@Table(name = "POSITIONS")
+@SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class Position extends BaseModel {
 
 	@Column(length = 50, nullable = false, unique = true)
@@ -36,6 +39,6 @@ public class Position extends BaseModel {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "position")
 	@JoinColumn(name = "user_id")
-	private User user;
+	private List<User> users;
 
 }

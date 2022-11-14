@@ -14,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,5 +37,5 @@ public class TypeOfCourse extends BaseModel {
 	private String description;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "type")
-	private Course course;
+	private List<Course> courses;
 }

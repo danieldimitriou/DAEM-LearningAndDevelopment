@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -24,6 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "DEPARTMENTS")
+@SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class Department extends BaseModel {
 
 	@Column(length = 50, nullable = false, unique = true)
