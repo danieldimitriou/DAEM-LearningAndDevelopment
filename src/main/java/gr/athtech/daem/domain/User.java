@@ -43,9 +43,7 @@ public class User extends BaseModel {
 	@NotEmpty
 	private String password;
 
-	@Column(length = 50, nullable = false, unique = false)
-	@NotNull
-	@NotEmpty
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Position position;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

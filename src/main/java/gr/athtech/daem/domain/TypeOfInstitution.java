@@ -32,8 +32,7 @@ public class TypeOfInstitution extends BaseModel {
 	@OneToOne
 	private String description;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "authority_id")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "awardingBody")
 	private Authority authority;
 
 	//One type of institution can have many authorities
