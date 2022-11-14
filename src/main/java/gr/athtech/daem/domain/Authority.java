@@ -25,19 +25,17 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "AUTHORITY")
-@SequenceGenerator(name = "idGenerator",allocationSize = 1)
+@SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class Authority extends BaseModel {
 
-	@Column(length = 255,nullable = false, unique = true)
+	@Column(length = 255, nullable = false, unique = true)
 	@NotNull
 	@NotEmpty
 	private String name;
 
-
 	@ManyToOne(mappedBy = "authority", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private TypeOfInstitution awardingBody;
 
-
 	@OneToMany(mappedBy = "certificationAuthority", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<Certification> certification;
+	private List<Certification> certifications;
 }

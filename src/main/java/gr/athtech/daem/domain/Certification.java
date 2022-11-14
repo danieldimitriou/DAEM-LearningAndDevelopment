@@ -18,8 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="CERTIFICATIONS")
-@SequenceGenerator(name = "idGenerator",allocationSize = 1)
+@Table(name = "CERTIFICATIONS")
+@SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class Certification extends BaseModel {
 
 	@Column(length = 100, nullable = false, unique = false)
@@ -27,7 +27,7 @@ public class Certification extends BaseModel {
 	@NotNull
 	private String name;
 	@ManyToOne
-	@JoinColumn(name="AUTHORITY_ID")
+	@JoinColumn(name = "AUTHORITY_ID")
 	private Authority certificationAuthority;
 
 	@Temporal(TemporalType.DATE)
@@ -35,7 +35,7 @@ public class Certification extends BaseModel {
 	@NotNull
 	private Date expirationDate;
 
-	@ManyToMany(mappedBy = "certifications",fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "certifications", fetch = FetchType.LAZY)
 	private List<User> holders;
 
 	@OneToOne(mappedBy = "certification")
