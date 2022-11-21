@@ -15,15 +15,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	Optional<User> findById(Long id);
 
-	List<User> findAllByDepartmentId(Long id);
+	List<User> findAllByDepartmentId(Long departmentId);
 
-	List<User> findUsersByManagerId(Long id);
+	List<User> findUsersByManagerId(Long managerId);
 
-	List<User> findUsersByFirstNameOrLastNameLikeIgnoreCase(String name);
+	List<User> findUsersByFirstNameOrLastNameLikeIgnoreCase(String firstName, String lastName);
 
 	User findByEmail(String email);
 
-	List<User> findUsersByPositionId(Long id);
+	List<User> findUsersByPositionId(Long positionId);
 
 	List<User> findUsersByCertifications(List<Certification> certifications);
 
