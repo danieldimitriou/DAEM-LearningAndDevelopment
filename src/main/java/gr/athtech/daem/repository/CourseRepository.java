@@ -1,11 +1,11 @@
 package gr.athtech.daem.repository;
 
 import gr.athtech.daem.domain.AreaOfStudy;
-import gr.athtech.daem.domain.Certification;
 import gr.athtech.daem.domain.Course;
 import gr.athtech.daem.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -20,10 +20,19 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
 	List<Course> findByUsersCompleted(List<User> usersCompleted);
 
-	List<Course> findCoursesByAreasOfStudy(List <AreaOfStudy> areasOfStudy);
+	List<Course> findCoursesByAreasOfStudy(List<AreaOfStudy> areasOfStudy);
 
 	Course findByCertificationId(Long certificationId);
 
 	List<Course> findByName(String name);
 
+	Course createCourse(Course course);
+
+	void updateCourse(Course course);
+
+	void updateStatus(Course course, boolean status);
+
+	void addCertification(Course course);
+
+	void deleteCourse(Course course);
 }

@@ -23,4 +23,13 @@ public interface CourseService extends BaseService<Course> {
 
 	Course findByCertificationId(Long certificationId);
 
+	void updateCourse(Course course);
+
+	void updateStatus(Course course, boolean status);
+
+	void addCertification(Course course);
+
+	Course createCourse(Course course);
+
+	void deleteCourse(Course course);
 }

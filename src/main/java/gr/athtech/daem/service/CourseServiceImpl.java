@@ -55,4 +55,31 @@ public class CourseServiceImpl extends BaseServiceImpl<Course> implements Course
 	public Course findByCertificationId(final Long certificationId) {
 		return courseRepository.findByCertificationId(certificationId);
 	}
+
+	@Override
+	public void updateCourse(final Course course) {
+		courseRepository.updateCourse(course);
+	}
+
+	@Override
+	public Course createCourse(final Course course) {
+		return courseRepository.createCourse(course);
+	}
+
+	@Override
+	public void updateStatus(final Course course, boolean status) {
+		courseRepository.updateStatus(course, status);
+	}
+
+	@Override
+	public void addCertification(final Course course) {
+		courseRepository.addCertification(course);
+	}
+
+	@Override
+	public void deleteCourse(final Course course) {
+		courseRepository.deleteCourse(course);
+
+	}
+
 }
