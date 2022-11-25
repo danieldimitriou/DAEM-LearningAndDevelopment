@@ -1,7 +1,6 @@
 package gr.athtech.daem.repository;
 
 import gr.athtech.daem.domain.Authority;
-import gr.athtech.daem.domain.Certification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
