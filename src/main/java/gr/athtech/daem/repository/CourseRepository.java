@@ -26,13 +26,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
 	List<Course> findByName(String name);
 
-	Course createCourse(Course course);
-
-	void updateCourse(Course course);
-
 	void updateStatus(Course course, boolean status);
 
 	void addCertification(Course course);
-
-	void deleteCourse(Course course);
 }
