@@ -15,7 +15,7 @@ public interface AuthorityRepository extends JpaRepository<Authority,Long> {
 	Optional<Authority> findByName(String name);
 
 	//It may be better to input a list of certifications
-	Optional<Authority> findByCertificationsId(Long certificationId);
+	Authority findByCertificationsId(Long certificationId);
 
 	List<Authority> findByAwardingBodyId(Long awardingBodyId);
 
