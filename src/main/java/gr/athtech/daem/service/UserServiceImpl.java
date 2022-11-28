@@ -109,56 +109,44 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
 	@Override
 	public User addCertificationToUser(final User userToBeUpdated, final Certification certification) {
-		List<Certification> certifications = userToBeUpdated.getCertifications();
-		if (!certifications.contains(certification)) {
-			certifications.add(certification);
-		}
+		userToBeUpdated.getCertifications().add(certification);
 		return userRepository.save(userToBeUpdated);
 	}
 
 	@Override
 	public User addPendingCourseToUser(final User userToBeUpdated, final Course pendingCourse) {
-		List<Course> pendingCourses = userToBeUpdated.getPendingCourses();
-		if (!pendingCourses.contains(pendingCourse)) {
-			pendingCourses.add(pendingCourse);
-		}
+		userToBeUpdated.getPendingCourses().add(pendingCourse);
 		return userRepository.save(userToBeUpdated);
 	}
 
 	@Override
 	public User addCompletedCourseToUser(final User userToBeUpdated, final Course completedCourse) {
-		List<Course> completedCourses = userToBeUpdated.getCompletedCourses();
-		if (!completedCourses.contains(completedCourse)) {
-			completedCourses.add(completedCourse);
-		}
+		userToBeUpdated.getCompletedCourses().add(completedCourse);
 		return userRepository.save(userToBeUpdated);
 	}
 
 	@Override
-	public User completePendingCourse(final User userToBeUpdated, final Course completedCourse) throws NoSuchElementException{
-		 if (userToBeUpdated.getPendingCourses().remove(completedCourse)) {
-			 // If the user is actually attending the course
-			 userToBeUpdated.getCompletedCourses().add(completedCourse);
-		 } else {
-			 throw new NoSuchElementException("The user is not attending course " + completedCourse);
-		 }
+	public User completePendingCourse(final User userToBeUpdated, final Course completedCourse) {
+		userToBeUpdated.getPendingCourses().remove(completedCourse);
+		userToBeUpdated.getCompletedCourses().add(completedCourse);
 		return userRepository.save(userToBeUpdated);
 	}
 
 	@Override
-	public User deletePendingCourseFromUser(final User userToBeUpdated, final Course pendingCourseToBeDeleted) throws NoSuchElementException{
-		if (!userToBeUpdated.getPendingCourses().remove(pendingCourseToBeDeleted)) {
-			// If the user is actually attending the course
-			throw new NoSuchElementException("The user is not attending course " + pendingCourseToBeDeleted);
-		}
+	public User deleteCertificationFromUser(final User userToBeUpdated, final Certification certification) {
+		userToBeUpdated.getCertifications().remove(certification);
 		return userRepository.save(userToBeUpdated);
 	}
 
 	@Override
-	public User deleteCompletedCourseFromUser(final User userToBeUpdated, final Course completedCourseToBeDeleted) throws NoSuchElementException{
-		if (!userToBeUpdated.getCompletedCourses().remove(completedCourseToBeDeleted)) {
-			throw new NoSuchElementException("The user has not completed course " + completedCourseToBeDeleted);
-		}
+	public User deletePendingCourseFromUser(final User userToBeUpdated, final Course pendingCourseToBeDeleted) {
+		userToBeUpdated.getPendingCourses().remove(pendingCourseToBeDeleted);
+		return userRepository.save(userToBeUpdated);
+	}
+
+	@Override
+	public User deleteCompletedCourseFromUser(final User userToBeUpdated, final Course completedCourseToBeDeleted) {
+		userToBeUpdated.getCompletedCourses().remove(completedCourseToBeDeleted);
 		return userRepository.save(userToBeUpdated);
 	}
 

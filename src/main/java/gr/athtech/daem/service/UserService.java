@@ -52,6 +52,8 @@ public interface UserService extends BaseService<User>{
 
 	User completePendingCourse(User userToBeUpdated, Course completedCourse);
 
+	User deleteCertificationFromUser(User userToBeUpdated, Certification certification);
+
 	User deletePendingCourseFromUser(User userToBeUpdated, Course pendingCourseToBeDeleted);
 
 	User deleteCompletedCourseFromUser(User userToBeUpdated, Course completedCourseToBeDeleted);
