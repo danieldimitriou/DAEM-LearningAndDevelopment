@@ -50,10 +50,10 @@ public interface UserService extends BaseService<User>{
 
 	User addCompletedCourseToUser(User userToBeUpdated, Course completedCourse);
 
-	User completePendingCourse(User userToBeUpdated, Course completedCourse) throws NoSuchElementException;
+	User completePendingCourse(User userToBeUpdated, Course completedCourse);
 
-	User deletePendingCourseFromUser(User userToBeUpdated, Course pendingCourseToBeDeleted) throws NoSuchElementException;
+	User deletePendingCourseFromUser(User userToBeUpdated, Course pendingCourseToBeDeleted);
 
-	User deleteCompletedCourseFromUser(User userToBeUpdated, Course completedCourseToBeDeleted) throws NoSuchElementException;
+	User deleteCompletedCourseFromUser(User userToBeUpdated, Course completedCourseToBeDeleted);
 
 }
