@@ -46,11 +46,11 @@ public class Course extends BaseModel {
 
 	@NotEmpty
 	@NotNull
-	private boolean  isPending;
+	private boolean pending;
 
 	@NotEmpty
 	@NotNull
-	private boolean  isCompleted;
+	private boolean completed;
 
 
 }
