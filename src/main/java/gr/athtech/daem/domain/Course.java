@@ -21,7 +21,7 @@ import java.util.List;
 @SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class Course extends BaseModel {
 
-	@Column(length = 100, nullable = false, unique = false)
+	@Column(length = 100, nullable = false)
 	@NotEmpty
 	@NotNull
 	private String name;
@@ -43,4 +43,14 @@ public class Course extends BaseModel {
 
 	@ManyToMany(mappedBy = "completedCourses", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<User> usersCompleted;
+
+	@NotEmpty
+	@NotNull
+	private boolean pending;
+
+	@NotEmpty
+	@NotNull
+	private boolean completed;
+
+
 }
