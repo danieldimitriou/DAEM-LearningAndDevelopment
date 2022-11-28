@@ -21,15 +21,11 @@ public interface CourseService extends BaseService<Course> {
 
 	List<Course> findCoursesByAreasOfStudy(List<AreaOfStudy> areasOfStudy);
 
-	Course findByCertificationId(Long certificationId);
+	Course findByCertificationId(Long[] certificationIds);
 
-	void updateCourse(Course course);
+	void updateIsPending(List<Course> coursesPending);
 
-	void updateStatus(Course course, boolean status);
+	void updateIsCompleted(List<Course> coursesCompleted);
 
-	void addCertification(Course course);
-
-	Course createCourse(Course course);
-
-	void deleteCourse(Course course);
+	void addCertifications(List<Course> course);
 }

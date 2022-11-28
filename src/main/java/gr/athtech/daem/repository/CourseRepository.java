@@ -22,11 +22,13 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
 	List<Course> findCoursesByAreasOfStudy(List<AreaOfStudy> areasOfStudy);
 
-	Course findByCertificationId(Long certificationId);
+	Course findByCertificationId(Long [] certificationIds);
 
 	List<Course> findByName(String name);
 
-	void updateStatus(Course course, boolean status);
+	void addCertifications(List<Course> courses);
 
-	void addCertification(Course course);
+	void updateIsCompleted(List<Course> coursesCompleted);
+
+	void updateIsPending(List<Course> coursesPending);
 }
