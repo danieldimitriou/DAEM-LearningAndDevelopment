@@ -34,11 +34,11 @@ public class AuthorityServiceImpl extends BaseServiceImpl<Authority> implements 
 
 	//Given an array of certification ID's, returns a list
 	//with all the authorities they were issued by in the same order as the certiifcation ID appear
-	// in the given array.
+	// in the given .
 	@Override
-	public List<Authority> findByCertificationsId(final Long[] certificationsId) {
-		List<Authority> authorities = new ArrayList<Authority>();
-		for(long certId:certificationsId) {
+	public List<Optional<Authority>> findByCertificationsId(final Long[] certificationsId) {
+		List<Optional<Authority>> authorities = new ArrayList<Optional<Authority>>();
+		for(Long certId:certificationsId) {
 				authorities.add(authorityRepository.findByCertificationsId(certId));
 		}
 		return authorities;
