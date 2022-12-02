@@ -13,7 +13,7 @@ public interface AuthorityService extends BaseService<Authority> {
 
 	Optional<Authority> findByName(String name);
 
-	Optional<Authority> findByCertificationsId(Long certificationsId);
+	List<Optional<Authority>> findByCertificationsId(Long[] certificationsId);
 
 	List<Authority> findByAwardingBodyId(Long awardingBodyId);
 

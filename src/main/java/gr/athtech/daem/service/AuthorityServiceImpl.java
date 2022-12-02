@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,9 +32,16 @@ public class AuthorityServiceImpl extends BaseServiceImpl<Authority> implements 
 		return authorityRepository.findByName(name);
 	}
 
+	//Given an array of certification ID's, returns a list
+	//with all the authorities they were issued by in the same order as the certiifcation ID appear
+	// in the given .
 	@Override
-	public Optional<Authority> findByCertificationsId(final Long certificationsId) {
-		return authorityRepository.findByCertificationsId(certificationsId);
+	public List<Optional<Authority>> findByCertificationsId(final Long[] certificationsId) {
+		List<Optional<Authority>> authorities = new ArrayList<Optional<Authority>>();
+		for(Long certId:certificationsId) {
+				authorities.add(authorityRepository.findByCertificationsId(certId));
+		}
+		return authorities;
 	}
 
 	@Override
