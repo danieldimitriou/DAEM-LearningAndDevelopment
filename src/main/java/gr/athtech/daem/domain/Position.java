@@ -9,7 +9,6 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -38,7 +37,6 @@ public class Position extends BaseModel {
 	private String level;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "position")
-	@JoinColumn(name = "user_id")
 	private List<User> users;
 
 }
