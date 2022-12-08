@@ -11,23 +11,21 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl extends BaseServiceImpl<User> implements UserService{
+public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
 	private final UserRepository userRepository;
 
 	@Override
-	public JpaRepository<User, Long> getRepository(){
+	public JpaRepository<User, Long> getRepository() {
 		return userRepository;
 	}
 
 	@Override
-	public Optional<User> findById(final Long id){
+	public Optional<User> findById(final Long id) {
 		return userRepository.findById(id);
 	}
 
@@ -58,21 +56,21 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
 	@Override
 	public List<User> findUsersByCertifications(final List<Certification> certifications) {
-		return userRepository.findUsersByCertifications(certifications);
+		return userRepository.findUsersByCertificationsIn(certifications);
 	}
 
 	@Override
 	public List<User> findUsersByPendingCourses(final List<Course> pendingCourses) {
-		return userRepository.findUsersByPendingCourses(pendingCourses);
+		return userRepository.findUsersByPendingCoursesIn(pendingCourses);
 	}
 
 	@Override
 	public List<User> findUsersByCompletedCourses(final List<Course> completedCourses) {
-		return userRepository.findUsersByCompletedCourses(completedCourses);
+		return userRepository.findUsersByCompletedCoursesIn(completedCourses);
 	}
 
 	@Override
-	public User updateUserFirstName(final User userToBeUpdated, final String firstName){
+	public User updateUserFirstName(final User userToBeUpdated, final String firstName) {
 		userToBeUpdated.setFirstName(firstName);
 		return userRepository.save(userToBeUpdated);
 	}

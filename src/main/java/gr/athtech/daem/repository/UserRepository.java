@@ -24,9 +24,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	List<User> findUsersByPositionId(Long positionId);
 
-	List<User> findUsersByCertifications(List<Certification> certifications);
+	List<User> findUsersByCertificationsIn(List<Certification> certifications);
 
-	List<User> findUsersByPendingCourses(List<Course> pendingCourses);
+	List<User> findUsersByPendingCoursesIn(List<Course> pendingCourses);
 
-	List<User> findUsersByCompletedCourses(List<Course> completedCourses);
+	List<User> findUsersByCompletedCoursesIn(List<Course> completedCourses);
 }

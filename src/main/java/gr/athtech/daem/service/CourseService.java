@@ -17,15 +17,9 @@ public interface CourseService extends BaseService<Course> {
 
 	List<Course> findByUsersPending(List<User> usersPending);
 
-	List<Course> findByUsersCompleted(List<User> usersCompleted);
+	List<Course> findByUsersCompletedIn(List<User> usersCompleted);
 
 	List<Course> findCoursesByAreasOfStudy(List<AreaOfStudy> areasOfStudy);
 
 	Course findByCertificationId(Long[] certificationIds);
-
-	void updateIsPending(List<Course> coursesPending);
-
-	void updateIsCompleted(List<Course> coursesCompleted);
-
-	void addCertifications(List<Course> course);
 }

@@ -38,43 +38,21 @@ public class CourseServiceImpl extends BaseServiceImpl<Course> implements Course
 
 	@Override
 	public List<Course> findByUsersPending(final List<User> usersPending) {
-		return courseRepository.findByUsersPending(usersPending);
+		return courseRepository.findByUsersPendingIn(usersPending);
 	}
 
 	@Override
-	public List<Course> findByUsersCompleted(final List<User> usersCompleted) {
-		return courseRepository.findByUsersCompleted(usersCompleted);
+	public List<Course> findByUsersCompletedIn(final List<User> usersCompleted) {
+		return courseRepository.findByUsersCompletedIn(usersCompleted);
 	}
 
 	@Override
 	public List<Course> findCoursesByAreasOfStudy(final List<AreaOfStudy> areasOfStudy) {
-		return courseRepository.findCoursesByAreasOfStudy(areasOfStudy);
+		return courseRepository.findCoursesByAreasOfStudyIn(areasOfStudy);
 	}
 
 	@Override
 	public Course findByCertificationId(final Long[] certificationIds) {
 		return courseRepository.findByCertificationId(certificationIds);
 	}
-
-	@Override
-	public void updateIsPending(final List<Course> coursesPending) {
-		for (Course course : coursesPending) {
-			course.setPending(!course.isPending());
-		}
-
-	}
-
-	@Override
-	public void updateIsCompleted(List<Course> coursesCompleted) {
-		for (Course course : coursesCompleted) {
-			course.setCompleted(!course.isCompleted());
-		}
-
-	}
-
-	@Override
-	public void addCertifications(final List<Course> courses) {
-		courseRepository.addCertifications(courses);
-	}
-
 }

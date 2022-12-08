@@ -16,19 +16,13 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
 	List<Course> findByTypeId(Long id);
 
-	List<Course> findByUsersPending(List<User> usersPending);
+	List<Course> findByUsersPendingIn(List<User> usersPending);
 
-	List<Course> findByUsersCompleted(List<User> usersCompleted);
+	List<Course> findByUsersCompletedIn(List<User> usersCompleted);
 
-	List<Course> findCoursesByAreasOfStudy(List<AreaOfStudy> areasOfStudy);
+	List<Course> findCoursesByAreasOfStudyIn(List<AreaOfStudy> areasOfStudy);
 
-	Course findByCertificationId(Long [] certificationIds);
+	Course findByCertificationId(Long[] certificationIds);
 
 	List<Course> findByName(String name);
-
-	void addCertifications(List<Course> courses);
-
-	void updateIsCompleted(List<Course> coursesCompleted);
-
-	void updateIsPending(List<Course> coursesPending);
 }
