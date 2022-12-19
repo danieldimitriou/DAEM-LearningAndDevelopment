@@ -21,16 +21,16 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "AREA_OF_STUDY")
+@Table
 @SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class AreaOfStudy extends BaseModel {
 
-	@Column(length = 255, nullable = false, unique = false)
+	@Column(nullable = false)
 	@NotEmpty
 	@NotNull
 	private String name;
 
-	@Column(length = 255, nullable = false, unique = false)
+	@Column(nullable = false)
 	@NotEmpty
 	@NotNull
 	private String description;

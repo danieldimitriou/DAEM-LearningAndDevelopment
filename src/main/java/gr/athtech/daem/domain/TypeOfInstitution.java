@@ -6,10 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -23,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "TYPES_OF_INSTITUTIONS")
+@Table
 @SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class TypeOfInstitution extends BaseModel {
 
@@ -32,6 +30,6 @@ public class TypeOfInstitution extends BaseModel {
 	@NotNull
 	private String description;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "awardingBody")
+	@OneToMany(mappedBy = "awardingBody")
 	private List<Authority> authorities;
 }

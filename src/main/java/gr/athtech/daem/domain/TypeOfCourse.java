@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -22,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "TYPES_OF_COURSES")
+@Table
 @SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class TypeOfCourse extends BaseModel {
 
@@ -36,6 +35,6 @@ public class TypeOfCourse extends BaseModel {
 	@NotNull
 	private String description;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "type")
+	@OneToMany(mappedBy = "type")
 	private List<Course> courses;
 }

@@ -6,7 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -22,12 +29,12 @@ import java.util.List;
 @SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class User extends BaseModel {
 
-	@Column(length = 50, nullable = false, unique = false)
+	@Column(length = 50, nullable = false)
 	@NotEmpty
 	@NotNull
 	private String firstName;
 
-	@Column(length = 50, nullable = false, unique = false)
+	@Column(length = 50, nullable = false)
 	@NotEmpty
 	@NotNull
 	private String lastName;
@@ -38,43 +45,31 @@ public class User extends BaseModel {
 	@Email
 	private String email;
 
-	@Column(length = 255, nullable = false)
+	@Column(nullable = false)
 	@NotNull
 	@NotEmpty
 	private String password;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne
 	private Position position;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User manager;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "department_id")
 	private Department department;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(
-			name="USERS_CERTIFICATIONS",
-			joinColumns = @JoinColumn(name="user_id"),
-			inverseJoinColumns = @JoinColumn(name="certification_id")
-	)
+	@ManyToMany
+	@JoinTable(name = "USERS_CERTIFICATIONS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "certification_id"))
 	private List<Certification> certifications;
 
 	@ManyToMany
-	@JoinTable(
-			name="PENDING_COURSES_USERS",
-			joinColumns = @JoinColumn(name="user_id"),
-			inverseJoinColumns = @JoinColumn(name="course_id")
-	)
+	@JoinTable(name = "PENDING_COURSES_USERS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> pendingCourses;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(
-			name="FINISHED_COURSES_USERS",
-			joinColumns = @JoinColumn(name="user_id"),
-			inverseJoinColumns = @JoinColumn(name="course_id")
-	)
+	@ManyToMany
+	@JoinTable(name = "FINISHED_COURSES_USERS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> completedCourses;
 }

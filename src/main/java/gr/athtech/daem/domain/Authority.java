@@ -6,11 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -25,19 +22,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "AUTHORITY")
+@Table
 @SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class Authority extends BaseModel {
 
-	@Column(length = 255, nullable = false, unique = true)
+	@Column(nullable = false, unique = true)
 	@NotNull
 	@NotEmpty
 	private String name;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "authority_id")
+	@ManyToOne
 	private TypeOfInstitution awardingBody;
 
-	@OneToMany(mappedBy = "certificationAuthority", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "certificationAuthority")
 	private List<Certification> certifications;
 }

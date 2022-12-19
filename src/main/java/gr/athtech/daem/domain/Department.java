@@ -8,8 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -24,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "DEPARTMENTS")
+@Table
 @SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class Department extends BaseModel {
 
@@ -33,10 +31,9 @@ public class Department extends BaseModel {
 	@NotNull
 	private String name;
 
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
+	@OneToOne
 	private User headOfDepartment;
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "department")
+	@OneToMany(mappedBy = "department")
 	private List<User> members;
 }
