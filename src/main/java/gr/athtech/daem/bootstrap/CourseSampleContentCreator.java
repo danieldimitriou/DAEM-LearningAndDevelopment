@@ -6,6 +6,7 @@ import gr.athtech.daem.domain.Certification;
 import gr.athtech.daem.domain.Course;
 import gr.athtech.daem.domain.TypeOfCourse;
 import gr.athtech.daem.service.CourseService;
+import gr.athtech.daem.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -21,7 +22,7 @@ import java.util.List;
 public class CourseSampleContentCreator extends BaseComponent implements CommandLineRunner {
 
 	private final CourseService courseService;
-	private final CourseService userService;
+
 
 	@Override
 	public void run(final String... args) throws Exception {
