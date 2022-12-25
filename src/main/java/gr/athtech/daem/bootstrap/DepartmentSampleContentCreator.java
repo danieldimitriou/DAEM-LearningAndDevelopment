@@ -15,7 +15,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Profile("generate-departments")
-@Order(2)
+@Order(1)
 public class DepartmentSampleContentCreator extends BaseComponent implements CommandLineRunner {
 
 	private final DepartmentService departmentService;
