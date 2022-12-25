@@ -38,8 +38,6 @@ public class Certification extends BaseModel {
 	private Authority certificationAuthority;
 
 	@Temporal(TemporalType.DATE)
-	@NotEmpty
-	@NotNull
 	private Date expirationDate;
 
 	@ManyToMany(mappedBy = "certifications")
