@@ -6,17 +6,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -34,15 +27,15 @@ public class Course extends BaseModel {
 	@NotNull
 	private String name;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "type_of_course_id")
 	private TypeOfCourse type;
 
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "COURSE_AREA_OF_STUDY", joinColumns = @JoinColumn(name = "COURSE_ID"), inverseJoinColumns = @JoinColumn(name = "AREA_OF_STUDY_ID"))
 	private List<AreaOfStudy> areasOfStudy;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "certification_id")
 	private Certification certification;
 
@@ -52,12 +45,27 @@ public class Course extends BaseModel {
 	@ManyToMany(mappedBy = "completedCourses")
 	private List<User> usersCompleted;
 
-	@NotEmpty
-	@NotNull
-	private boolean pending;
+//	@NotEmpty
+//	@NotNull
+//	private boolean pending;
+//
+//	@NotEmpty
+//	@NotNull
+//	private boolean completed;
 
-	@NotEmpty
-	@NotNull
-	private boolean completed;
+	public void setCertification(Certification certification) {
+		certification.setCourse(this);
+		this.certification = certification;
+	}
+
+	public void setType(TypeOfCourse type){
+		type.getCourses().add(this);
+		this.type = type;
+	}
+
+	public void addAreaOfStudy(AreaOfStudy areaOfStudy) {
+		areaOfStudy.getCourses().add(this);
+		this.areasOfStudy.add(areaOfStudy);
+	}
 
 }

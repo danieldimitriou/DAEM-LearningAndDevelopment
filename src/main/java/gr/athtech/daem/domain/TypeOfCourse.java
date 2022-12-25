@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -13,6 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -35,6 +37,6 @@ public class TypeOfCourse extends BaseModel {
 	@NotNull
 	private String description;
 
-	@OneToMany(mappedBy = "type")
+	@OneToMany(mappedBy = "type", cascade = CascadeType.PERSIST)
 	private List<Course> courses;
 }

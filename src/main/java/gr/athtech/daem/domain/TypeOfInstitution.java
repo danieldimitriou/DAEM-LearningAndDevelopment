@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -30,6 +31,6 @@ public class TypeOfInstitution extends BaseModel {
 	@NotNull
 	private String description;
 
-	@OneToMany(mappedBy = "awardingBody")
+	@OneToMany(mappedBy = "awardingBody", cascade = CascadeType.PERSIST)
 	private List<Authority> authorities;
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Profile("generate-users")
-@Order(1)
+@Order(2)
 public class UserSampleContentCreator extends BaseComponent implements CommandLineRunner {
 
 	private final UserService userService;
