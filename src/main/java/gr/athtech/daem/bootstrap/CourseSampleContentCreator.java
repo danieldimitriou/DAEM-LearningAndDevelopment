@@ -25,10 +25,10 @@ public class CourseSampleContentCreator extends BaseComponent implements Command
 
 	@Override
 	public void run(final String... args) throws Exception {
-		List<Course> course = List.of(Course.builder().name("Object Oriented Programming").type(
+		List<Course> courses = List.of(Course.builder().name("Object Oriented Programming").type(
 				TypeOfCourse.builder().name("Programming").build()).areasOfStudy(
 				(List<AreaOfStudy>) AreaOfStudy.builder().name("Software Development").build()).certification(
 				Certification.builder().name("Certification of Object Oriented Programming").build()).build());
-
+		courseService.createAll(courses);
 	}
 }
