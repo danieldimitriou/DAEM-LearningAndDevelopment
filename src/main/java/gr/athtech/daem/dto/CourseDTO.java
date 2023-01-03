@@ -15,6 +15,6 @@ public class CourseDTO {
 	private Certification certification;
 	private List<User> usersPending;
 	private List<User> usersCompleted;
-	private boolean pending;
-	private boolean completed;
+//	private boolean pending;
+//	private boolean completed;
 }

@@ -9,7 +9,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -54,17 +53,23 @@ public class Course extends BaseModel {
 //	private boolean completed;
 
 	public void setCertification(Certification certification) {
-		certification.setCourse(this);
+		if (certification != null) {
+			certification.setCourse(this);
+		}
 		this.certification = certification;
 	}
 
 	public void setType(TypeOfCourse type){
-		type.getCourses().add(this);
+		if (type != null)  {
+			type.getCourses().add(this);
+		}
 		this.type = type;
 	}
 
 	public void addAreaOfStudy(AreaOfStudy areaOfStudy) {
-		areaOfStudy.getCourses().add(this);
+		if (areaOfStudy != null) {
+			areaOfStudy.getCourses().add(this);
+		}
 		this.areasOfStudy.add(areaOfStudy);
 	}
 

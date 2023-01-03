@@ -47,7 +47,7 @@ public class DepartmentServiceImpl extends BaseServiceImpl<Department> implement
 
 	@Override
 	public Department addMember(final Department department, final User memberToBeAdded) {
-		department.getMembers().add(memberToBeAdded);
+		department.addMember(memberToBeAdded);
 		return departmentRepository.save(department);
 	}
 
