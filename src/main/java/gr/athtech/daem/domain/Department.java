@@ -1,17 +1,10 @@
 package gr.athtech.daem.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -31,9 +24,16 @@ public class Department extends BaseModel {
 	@NotNull
 	private String name;
 
+	@JsonBackReference
 	@OneToOne
 	private User headOfDepartment;
 
-	@OneToMany(mappedBy = "department")
+	@JsonIgnore
+	@OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)
 	private List<User> members;
+
+	public void addMember(User member) {
+		member.setDepartment(this);
+		members.add(member);
+	}
 }

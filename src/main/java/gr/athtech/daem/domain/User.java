@@ -1,11 +1,13 @@
 package gr.athtech.daem.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -50,13 +52,15 @@ public class User extends BaseModel {
 	@NotEmpty
 	private String password;
 
-	@ManyToOne
+	@JsonManagedReference
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Position position;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User manager;
 
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "department_id")
 	private Department department;
@@ -72,4 +76,9 @@ public class User extends BaseModel {
 	@ManyToMany
 	@JoinTable(name = "FINISHED_COURSES_USERS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> completedCourses;
+
+	public void setPosition(final Position position) {
+		position.getUsers().add(this);
+		this.position = position;
+	}
 }

@@ -1,11 +1,14 @@
 package gr.athtech.daem.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -35,6 +38,7 @@ public class Position extends BaseModel {
 	@NotNull
 	private String level;
 
+	@JsonBackReference
 	@OneToMany(mappedBy = "position")
 	private List<User> users;
 

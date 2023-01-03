@@ -18,6 +18,10 @@ public class UserConverter {
 		return modelMapper.map(userDTO, User.class);
 	}
 
+	public List<User> convertToEntity(List<UserDTO> userDTOList) {
+		return userDTOList.stream().map(this::convertToEntity).toList();
+	}
+
 	public UserDTO convertToDTO(User user) {
 		return modelMapper.map(user, UserDTO.class);
 	}
