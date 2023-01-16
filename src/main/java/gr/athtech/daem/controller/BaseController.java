@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 public abstract class BaseController<T extends BaseModel> extends BaseComponent {
 
 	protected abstract BaseService<T> getBaseService();
@@ -34,14 +33,12 @@ public abstract class BaseController<T extends BaseModel> extends BaseComponent 
 		return ResponseEntity.ok(ApiResponse.<T>builder().data(getBaseService().get(id)).build());
 	}
 
-	@CrossOrigin
 	@PostMapping
 	public ResponseEntity<ApiResponse<T>> create(@Valid @RequestBody final T entity) {
 		return new ResponseEntity<>(ApiResponse.<T>builder().data(getBaseService().create(entity)).build(),
 									HttpStatus.CREATED);
 	}
 
-	@CrossOrigin
 	@PostMapping(headers = "content=List")
 	public ResponseEntity<ApiResponse<List<T>>> createAll(@RequestBody List<T> entities) {
 		return new ResponseEntity<>(ApiResponse.<List<T>>builder().data(getBaseService().createAll(entities)).build(),
