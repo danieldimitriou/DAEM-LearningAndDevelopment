@@ -1,9 +1,7 @@
 package gr.athtech.daem.controller;
 
 import gr.athtech.daem.converter.CourseConverter;
-import gr.athtech.daem.domain.AreaOfStudy;
 import gr.athtech.daem.domain.Course;
-import gr.athtech.daem.domain.User;
 import gr.athtech.daem.dto.CourseDTO;
 import gr.athtech.daem.service.BaseService;
 import gr.athtech.daem.service.CourseService;
@@ -11,6 +9,7 @@ import gr.athtech.daem.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,29 +19,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("courses")
 @CrossOrigin
-public class CourseController extends BaseController<Course> {
+public class CourseController{
 
 	private final CourseService courseService;
 	private final CourseConverter courseConverter;
-	@Override
+
 	protected BaseService<Course> getBaseService() {
 		return courseService;
 	}
 
-	@GetMapping("id")
-	public ResponseEntity<Course> getCourseById(@PathVariable("id") final Long id) {
-		return ResponseEntity.ok(courseService.get(id));
+	@Transactional
+	@GetMapping("/{id}")
+	public ResponseEntity<ApiResponse<CourseDTO>> getCourseById(@PathVariable("id") final Long id) {
+		Optional<Course> courseOptional = courseService.findById(id);
+		if (courseOptional.isEmpty()) {
+			throw new NoSuchElementException("Element not found");
+		}
+		final CourseDTO courseDTO = courseConverter.entityToDto(courseOptional.get());
+		return ResponseEntity.ok(ApiResponse.<CourseDTO>builder().data(courseDTO).build());
 	}
 
-//	@GetMapping
-//	public ResponseEntity<List<Course>> getAllCourses() {
-//		return ResponseEntity.ok(courseService.findAll());
-//	}
+	@Transactional
+	@GetMapping
+	public ResponseEntity<ApiResponse<List<CourseDTO>>> getAllCourses() {
+		final List<CourseDTO> courseDTOList = courseConverter.entityToDto(courseService.findAll());
+		return ResponseEntity.ok(ApiResponse.<List<CourseDTO>>builder().data(courseDTOList).build());
+	}
 
 	@PostMapping("create")
 	public ResponseEntity<ApiResponse<Course>> createCourse(@RequestBody CourseDTO courseDto){

@@ -1,5 +1,6 @@
 package gr.athtech.daem.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +15,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -37,6 +37,7 @@ public class TypeOfCourse extends BaseModel {
 	@NotNull
 	private String description;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "type", cascade = CascadeType.PERSIST)
 	private List<Course> courses;
 }

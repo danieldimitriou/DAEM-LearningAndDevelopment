@@ -1,5 +1,7 @@
 package gr.athtech.daem.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,10 +32,12 @@ public class Course extends BaseModel {
 	@JoinColumn(name = "type_of_course_id")
 	private TypeOfCourse type;
 
+	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "COURSE_AREA_OF_STUDY", joinColumns = @JoinColumn(name = "COURSE_ID"), inverseJoinColumns = @JoinColumn(name = "AREA_OF_STUDY_ID"))
 	private List<AreaOfStudy> areasOfStudy;
 
+	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "certification_id")
 	private Certification certification;

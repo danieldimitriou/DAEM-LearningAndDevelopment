@@ -1,16 +1,11 @@
 package gr.athtech.daem.converter;
 
 import gr.athtech.daem.domain.Department;
-import gr.athtech.daem.domain.User;
 import gr.athtech.daem.dto.DepartmentDTO;
-import gr.athtech.daem.dto.UserDTO;
 import lombok.AllArgsConstructor;
-import org.hibernate.Hibernate;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -25,7 +20,7 @@ public class DepartmentConverter {
 		department.setName(departmentDTO.getName());
 		department.setHeadOfDepartment(userConverter.convertToEntity(departmentDTO.getHeadOfDepartment()));
 		department.setMembers(userConverter.convertToEntity(departmentDTO.getMembers()));
-		return modelMapper.map(departmentDTO, Department.class);
+		return department;
 	}
 
 

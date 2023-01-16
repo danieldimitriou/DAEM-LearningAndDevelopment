@@ -7,7 +7,6 @@ import gr.athtech.daem.service.BaseService;
 import gr.athtech.daem.service.DepartmentService;
 import gr.athtech.daem.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -53,7 +53,7 @@ public class UserController {
 		if (user == null) {
 			throw new NoSuchElementException("Element not found");
 		}
-		UserDTO userDTO = userConverter.convertToDTO(user);
+		final UserDTO userDTO = userConverter.convertToDTO(user);
 		return ResponseEntity.ok(ApiResponse.<UserDTO>builder().data(userDTO).build());
 	}
 
