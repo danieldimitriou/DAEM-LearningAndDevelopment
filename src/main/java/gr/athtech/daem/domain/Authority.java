@@ -1,5 +1,7 @@
 package gr.athtech.daem.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,9 +34,11 @@ public class Authority extends BaseModel {
 	@NotEmpty
 	private String name;
 
+	@JsonManagedReference
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private TypeOfInstitution awardingBody;
 
+	@JsonBackReference
 	@OneToMany(mappedBy = "certificationAuthority")
 	private List<Certification> certifications;
 }
