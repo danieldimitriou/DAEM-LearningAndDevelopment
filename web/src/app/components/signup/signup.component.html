@@ -1,0 +1,63 @@
+<app-header></app-header>
+
+<div class="container d-flex align-items-center justify-content-center">
+  <div class="submit-form ">
+    <div class="col-sm-10 text-center">
+      <div class="form-group row">
+        <label for="email">Email</label>
+        <input
+          type="text"
+          class="form-control"
+          id="email"
+          required
+          [(ngModel)]="user.email"
+          name="email"
+        />
+      </div>
+
+      <div class="form-group row">
+        <label for="firstName">First Name</label>
+        <input
+          class="form-control"
+          id="firstName"
+          required
+          [(ngModel)]="user.firstName"
+          name="firstName"
+        />
+      </div>
+
+      <div class="form-group row">
+        <label for="lastName">Last Name</label>
+        <input
+          class="form-control"
+          id="lastName"
+          required
+          [(ngModel)]="user.lastName"
+          name="lastName"
+        />
+      </div>
+
+      <div class="form-group row">
+        <label for="password">Password</label>
+        <input
+          class="form-control"
+          id="password"
+          required
+          [(ngModel)]="user.password"
+          name="password"
+        />
+      </div>
+      <div>
+        <a class="button" routerLink="/passwordReset">Already have an account?</a>
+      </div>
+      <button (click)="saveUser()" class="btn btn-success">Submit</button>
+    </div>
+
+    <div *ngIf="submitted">
+      <h4>User submitted successfully!</h4>
+
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
+
