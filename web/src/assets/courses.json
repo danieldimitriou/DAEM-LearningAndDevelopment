@@ -1,0 +1,39 @@
+{
+  "courses": [
+    {
+      "dtype" : "Course",
+      "id" : 10,
+      "name" : "Java",
+      "end_date" : null,
+      "start_date" : null,
+      "certification_id" : 11,
+      "type_of_course_id" : 9
+    },
+    {
+      "dtype" : "Course",
+      "id" : 13,
+      "name" : "Python",
+      "end_date" : null,
+      "start_date" : null,
+      "certification_id" : 14,
+      "type_of_course_id" : 9
+    },
+    {
+      "dtype" : "Course",
+      "id" : 15,
+      "name" : "JavaScript",
+      "end_date" : null,
+      "start_date" : null,
+      "certification_id" : 16,
+      "type_of_course_id" : 9
+    },
+    {
+      "dtype" : "Course",
+      "id" : 7,
+      "name" : "C#",
+      "end_date" : null,
+      "start_date" : null,
+      "certification_id" : 8,
+      "type_of_course_id" : 9
+    }
+  ]}

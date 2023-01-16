@@ -1,0 +1,42 @@
+<app-header></app-header>
+
+
+<div class="container d-flex align-items-center justify-content-center">
+  <div class="submit-form">
+    <div class="col-sm-10 text-center">
+      <div class="form-group row">
+        <label for="email" class="labels" >Email</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            required
+            [(ngModel)]="user.email"
+            name="email"
+          />
+      </div>
+      <div class="form-group row">
+        <label for="password" class="labels">Password</label>
+        <input
+          class="form-control"
+          id="password"
+          required
+          [(ngModel)]="user.password"
+          name="password"
+        />
+        </div>
+      <div>
+          <a class="button" routerLink="/passwordReset">Forgot your password?</a>
+      </div>
+      <button class="btn btn-success">Log in</button>
+    </div>
+
+    <div *ngIf="submitted">
+      <h4>User submitted successfully!</h4>
+
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
+
+
