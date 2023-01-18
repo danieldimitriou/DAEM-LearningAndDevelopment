@@ -10,8 +10,8 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 import { HeaderComponent } from './components/common/header/header.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { OverviewComponent } from './components/home/overview/overview.component';
-import { CoursesComponent } from './components/home/overview/courses/courses.component';
+import { CoursesComponent } from './components/home/courses/courses.component';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +21,6 @@ import { CoursesComponent } from './components/home/overview/courses/courses.com
     SignupComponent,
     AdminHomeComponent,
     HeaderComponent,
-    OverviewComponent,
     CoursesComponent
   ],
   imports: [
