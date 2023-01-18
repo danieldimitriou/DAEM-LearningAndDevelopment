@@ -10,7 +10,9 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 import { HeaderComponent } from './components/common/header/header.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { CoursesComponent } from './components/home/courses/courses.component';
+import { CoursesListComponent } from './components/home/courses-list/courses-list.component';
+import { AddExperienceComponent } from './components/add-experience/add-experience.component';
+import { AddCertificationsComponent } from './components/add-certifications/add-certifications.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { CoursesComponent } from './components/home/courses/courses.component';
     SignupComponent,
     AdminHomeComponent,
     HeaderComponent,
-    CoursesComponent
+    CoursesListComponent,
+    AddExperienceComponent,
+    AddCertificationsComponent
   ],
   imports: [
     BrowserModule,

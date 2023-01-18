@@ -5,11 +5,11 @@ import {TypeOfCourse} from "../../../models/type-of-course.model";
 import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'app-courses',
-  templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.css']
+  selector: 'app-courses-list',
+  templateUrl: './courses-list.component.html',
+  styleUrls: ['./courses-list.component.css']
 })
-export class CoursesComponent implements OnInit{
+export class CoursesListComponent implements OnInit{
 
   subscriptions: Subscription[] = [];
   coursesList: Course[] =[];
