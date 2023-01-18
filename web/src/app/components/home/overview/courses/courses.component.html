@@ -1,17 +1,16 @@
+<div>
+  <div class="course-container">
+    <h3 id="my-courses">My Courses</h3>
+    <div class="course-list">
+      <div class="course" *ngFor="let course of coursesList">
+        <h3 class="course-name"><a class="text-decoration-none" href="">{{ course.name }}</a></h3>
+        <p class="course-type">Course Type: {{course.type.name}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="buttons d-flex justify-content-center">
+    <button type="button" class="btn btn-primary" routerLink="/" >Add Experience</button>
+    <button type="button" class="btn btn-primary" routerLink="/">Add Certifications</button>
+  </div>
+</div>
 
-<table class="table">
-  <thead>
-  <tr>
-    <th scope="col">Course Name</th>
-    <th scope="col">Course Type</th>
-    <th scope="col">Area of Study</th>
-  </tr>
-  </thead>
-  <tbody *ngFor="let course of coursesList">
-  <tr>
-    <td>{{ course.name}}</td>
-<!--    <td *ngFor="let info of course.type">{{ course.type }}</td>-->
-    <td>{{ course.areasOfStudy }}</td>
-  </tr>
-  </tbody>
-</table>
