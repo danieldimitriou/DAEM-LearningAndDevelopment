@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from "../../models/user.model";
 import {UserService} from "../../services/user.service";
-import {Observable} from "rxjs";
 import {CourseService} from "../../services/course.service";
 import {Course} from "../../models/course.model";
 
@@ -34,9 +33,9 @@ export class HomeComponent implements OnInit{
 
 
     //get user by id
-    this.userService.getUserById(18).subscribe(data =>{
+    this.userService.getUserById(19).subscribe(data =>{
       this.user = data["data"];
-      console.log(this.user);
+      // console.log(this.user);
     });
   }
 

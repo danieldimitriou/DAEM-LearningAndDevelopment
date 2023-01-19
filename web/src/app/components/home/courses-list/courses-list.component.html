@@ -1,0 +1,16 @@
+<div>
+  <div class="course-container">
+    <h3 id="my-courses">My Courses</h3>
+    <div class="course-list">
+      <div class="course" *ngFor="let course of coursesList">
+        <h3 class="course-name"><a class="text-decoration-none" href="">{{ course.name }}</a></h3>
+        <p class="course-type">Course Type: {{course.type.name}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="buttons d-flex justify-content-center">
+    <button type="button" class="btn btn-primary" routerLink="/addExperience" >Add Experience</button>
+    <button type="button" class="btn btn-primary" routerLink="/addCertifications">Add Certifications</button>
+  </div>
+</div>
+

@@ -10,9 +10,10 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 import { HeaderComponent } from './components/common/header/header.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { UserpipePipe } from './components/common/userpipe.pipe';
-import { OverviewComponent } from './components/home/overview/overview.component';
-import { CoursesComponent } from './components/home/overview/courses/courses.component';
+import { CoursesListComponent } from './components/home/courses-list/courses-list.component';
+import { AddExperienceComponent } from './components/add-experience/add-experience.component';
+import { AddCertificationsComponent } from './components/add-certifications/add-certifications.component';
+
 
 @NgModule({
   declarations: [
@@ -22,9 +23,9 @@ import { CoursesComponent } from './components/home/overview/courses/courses.com
     SignupComponent,
     AdminHomeComponent,
     HeaderComponent,
-    UserpipePipe,
-    OverviewComponent,
-    CoursesComponent
+    CoursesListComponent,
+    AddExperienceComponent,
+    AddCertificationsComponent
   ],
   imports: [
     BrowserModule,
