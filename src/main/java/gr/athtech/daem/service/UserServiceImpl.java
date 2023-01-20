@@ -113,13 +113,13 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
 	@Override
 	public User addPendingCourseToUser(final User userToBeUpdated, final Course pendingCourse) {
-		userToBeUpdated.getPendingCourses().add(pendingCourse);
+		userToBeUpdated.addPendingCourse(pendingCourse);
 		return userRepository.save(userToBeUpdated);
 	}
 
 	@Override
 	public User addCompletedCourseToUser(final User userToBeUpdated, final Course completedCourse) {
-		userToBeUpdated.getCompletedCourses().add(completedCourse);
+		userToBeUpdated.addCompletedCourse(completedCourse);
 		return userRepository.save(userToBeUpdated);
 	}
 

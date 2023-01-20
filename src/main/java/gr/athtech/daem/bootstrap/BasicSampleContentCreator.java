@@ -116,7 +116,7 @@ public class BasicSampleContentCreator extends BaseComponent implements CommandL
 
 		// Instantiate Courses
 		List<Course> physicalCoursesSheffield = List.of(
-				Course.builder().name("Java").areasOfStudy(new ArrayList<>()).build(),
+				Course.builder().name("Java").areasOfStudy(new ArrayList<>()).usersPending(new ArrayList<>()).usersCompleted(new ArrayList<>()).build(),
 				Course.builder().name("Python").areasOfStudy(new ArrayList<>()).certification(sheffieldCertifications.get(1)).build()
 													   );
 
@@ -129,7 +129,8 @@ public class BasicSampleContentCreator extends BaseComponent implements CommandL
 		}
 
 		List<Course> physicalCoursesYork = List.of(
-				Course.builder().name("C#").areasOfStudy(new ArrayList<>()).build(),
+				Course.builder().name("C#").areasOfStudy(new ArrayList<>()).usersPending(new ArrayList<>())
+						.usersCompleted(new ArrayList<>()).build(),
 				Course.builder().name("JavaScript").areasOfStudy(new ArrayList<>()).build()
 												  );
 

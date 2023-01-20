@@ -69,11 +69,13 @@ public class User extends BaseModel {
 	@JoinTable(name = "USERS_CERTIFICATIONS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "certification_id"))
 	private List<Certification> certifications;
 
-	@ManyToMany
+	@JsonManagedReference
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "PENDING_COURSES_USERS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> pendingCourses;
 
-	@ManyToMany
+	@JsonManagedReference
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "FINISHED_COURSES_USERS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> completedCourses;
 
@@ -81,4 +83,23 @@ public class User extends BaseModel {
 		position.getUsers().add(this);
 		this.position = position;
 	}
+
+	public void addPendingCourse(final Course pendingCourse) {
+		if (!completedCourses.contains(pendingCourse)) {
+			pendingCourse.getUsersPending().add(this);
+			this.pendingCourses.add(pendingCourse);
+		} else {
+			throw new IllegalArgumentException("Cannot add pending course to user, the course is a completed course");
+		}
+	}
+
+	public void addCompletedCourse(final Course completedCourse) {
+		if (!pendingCourses.contains(completedCourse)) {
+			completedCourse.getUsersPending().add(this);
+			this.completedCourses.add(completedCourse);
+		} else {
+			throw new IllegalArgumentException("Cannot add completed course to user, the course is a pending course");
+		}
+	}
+
 }

@@ -1,5 +1,6 @@
 package gr.athtech.daem.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -42,9 +43,11 @@ public class Course extends BaseModel {
 	@JoinColumn(name = "certification_id")
 	private Certification certification;
 
+	@JsonBackReference
 	@ManyToMany(mappedBy = "pendingCourses")
 	private List<User> usersPending;
 
+	@JsonBackReference
 	@ManyToMany(mappedBy = "completedCourses")
 	private List<User> usersCompleted;
 

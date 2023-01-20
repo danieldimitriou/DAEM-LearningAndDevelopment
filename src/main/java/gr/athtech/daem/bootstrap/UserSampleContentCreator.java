@@ -4,6 +4,7 @@ import gr.athtech.daem.base.BaseComponent;
 import gr.athtech.daem.domain.Department;
 import gr.athtech.daem.domain.Position;
 import gr.athtech.daem.domain.User;
+import gr.athtech.daem.service.CourseService;
 import gr.athtech.daem.service.DepartmentService;
 import gr.athtech.daem.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +26,19 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
 	private final UserService userService;
 	private final DepartmentService departmentService;
 
+	private final CourseService courseService;
+
 	@Override
+	@Transactional
 	public void run(final String... args) throws Exception {
 		List<User> users = List.of(User.builder().firstName("Stefan").lastName("Bordea").email(
 											   "stefan@stefanbordea.com").password("oogAbooga12345!")
+										   .pendingCourses(new ArrayList<>()).completedCourses(new ArrayList<>())
 									   .build(),
 
 								   User.builder().firstName("Oogaman").lastName("Debest").email("ooga@booga.com")
-									   .password("o)(JD!2djjd109jd")
+									   .password("o)(JD!2djjd109jd").pendingCourses(new ArrayList<>())
+										   .completedCourses(new ArrayList<>())
 									   //						.department(Department.builder().name("C-level").build())
 									   .build());
 
@@ -45,6 +52,8 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
 		users.get(0).setPosition(positions.get(0));
 		users.get(1).setPosition(positions.get(1));
 
+		users.get(0).addPendingCourse(courseService.findById(7L).get());
+		users.get(0).addCompletedCourse(courseService.findById(10L).get());
 
 		departmentService.createAll(departments);
 		userService.createAll(users);
