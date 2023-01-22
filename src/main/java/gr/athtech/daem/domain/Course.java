@@ -38,16 +38,16 @@ public class Course extends BaseModel {
 	@JoinTable(name = "COURSE_AREA_OF_STUDY", joinColumns = @JoinColumn(name = "COURSE_ID"), inverseJoinColumns = @JoinColumn(name = "AREA_OF_STUDY_ID"))
 	private List<AreaOfStudy> areasOfStudy;
 
-	@JsonManagedReference
+	@JsonManagedReference(value = "course-certification")
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "certification_id")
 	private Certification certification;
 
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToMany(mappedBy = "pendingCourses")
 	private List<User> usersPending;
 
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToMany(mappedBy = "completedCourses")
 	private List<User> usersCompleted;
 

@@ -9,15 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -38,7 +30,7 @@ public class Certification extends BaseModel {
 	@NotNull
 	private String name;
 
-	@JsonManagedReference
+
 	@ManyToOne
 	private Authority certificationAuthority;
 
@@ -49,7 +41,7 @@ public class Certification extends BaseModel {
 	@ManyToMany(mappedBy = "certifications")
 	private List<User> holders;
 
-	@JsonBackReference
+	@JsonBackReference(value = "course-certification")
 	@OneToOne(mappedBy = "certification")
 	private Course course;
 }
