@@ -47,12 +47,12 @@ public class CourseServiceImpl extends BaseServiceImpl<Course> implements Course
 	}
 
 	@Override
-	public List<Course> findCoursesByAreasOfStudy(final List<AreaOfStudy> areasOfStudy) {
-		return courseRepository.findCoursesByAreasOfStudyIn(areasOfStudy);
+	public List<Course> findByAreasOfStudyIn(final Long [] areasOfStudyIds) {
+		return courseRepository.findByAreasOfStudyIn(areasOfStudyIds);
 	}
 
 	@Override
-	public Course findByCertificationId(final Long[] certificationIds) {
-		return courseRepository.findByCertificationId(certificationIds);
+	public Course findByCertificationId(final Long id) {
+		return courseRepository.findByCertificationId(id);
 	}
 }

@@ -7,15 +7,13 @@ import gr.athtech.daem.service.BaseService;
 import gr.athtech.daem.service.CourseService;
 import gr.athtech.daem.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -26,7 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("courses")
 @CrossOrigin
-public class CourseController{
+public class CourseController {
 
 	private final CourseService courseService;
 	private final CourseConverter courseConverter;
@@ -53,49 +51,25 @@ public class CourseController{
 		return ResponseEntity.ok(ApiResponse.<List<CourseDTO>>builder().data(courseDTOList).build());
 	}
 
-	@PostMapping("create")
-	public ResponseEntity<ApiResponse<Course>> createCourse(@RequestBody CourseDTO courseDto){
-		Course course = courseConverter.dtoToEntity(courseDto);
-		Course newCourse = courseService.create(course);
-		return new ResponseEntity<>(ApiResponse.<Course>builder().data(newCourse).build(),HttpStatus.CREATED );
+	@GetMapping(params = "name")
+	public ResponseEntity<ApiResponse<List<CourseDTO>>> findByName(@PathVariable("name") @RequestParam String name) {
+		final List<CourseDTO> courseDTOList = courseConverter.entityToDto(courseService.findByName(name));
+		return ResponseEntity.ok(ApiResponse.<List<CourseDTO>>builder().data(courseDTOList).build());
 	}
 
-	@PostMapping("update")
-	public ResponseEntity<ApiResponse<Course>> updateCourse(@RequestBody Course course) {
-		return new ResponseEntity<>(ApiResponse.<Course>builder().data(course).build(), HttpStatus.NO_CONTENT);
+	@Transactional
+	@GetMapping("/findBy/certification/{id}")
+	public ResponseEntity<ApiResponse<CourseDTO>> findByCertification(@PathVariable("id") final Long id) {
+
+		final CourseDTO courseDTO = courseConverter.entityToDto(courseService.findByCertificationId(id));
+		return ResponseEntity.ok(ApiResponse.<CourseDTO>builder().data(courseDTO).build());
 	}
 
-	@GetMapping("name")
-	public ResponseEntity<List<Course>> findByName(@PathVariable("name") final String name) {
-		return ResponseEntity.ok(courseService.findByName(name));
+	@Transactional
+	@GetMapping("findType/{typeId}")
+	public ResponseEntity<ApiResponse<List<CourseDTO>>> findByTypeId(@PathVariable("typeId") final Long typeId) {
+		final List<CourseDTO> courseDTOList = courseConverter.entityToDto(courseService.findByTypeId(typeId));
+		return ResponseEntity.ok(ApiResponse.<List<CourseDTO>>builder().data(courseDTOList).build());
 	}
-
-	//	@GetMapping
-	//	public ResponseEntity<List<Course>> findByTypeId(@PathVariable ("type") final Long typeId){
-	//		return ResponseEntity.ok(courseService.findByTypeId(typeId));
-	//	}
-//	@GetMapping
-//	public ResponseEntity<List<Course>> findByUsersPending(
-//			@PathVariable("usersPending") final List<User> usersPending) {
-//		return ResponseEntity.ok(courseService.findByUsersPending(usersPending));
-//	}
-//
-//	@GetMapping
-//	public ResponseEntity<List<Course>> findByUsersCompletedIn(
-//			@PathVariable("usersCompleted") final List<User> usersCompleted) {
-//		return ResponseEntity.ok(courseService.findByUsersCompletedIn(usersCompleted));
-//	}
-//
-//	@GetMapping
-//	public ResponseEntity<List<Course>> findCoursesByAreasOfStudy(
-//			@PathVariable("areasOfStudy") final List<AreaOfStudy> areasOfStudy) {
-//		return ResponseEntity.ok(courseService.findCoursesByAreasOfStudy(areasOfStudy));
-//	}
-//
-//	@GetMapping
-//	public ResponseEntity<Course> findByCertificationId(
-//			@PathVariable("certificationIds") final Long[] certificationIds) {
-//		return ResponseEntity.ok(courseService.findByCertificationId(certificationIds));
-//	}
 
 }
