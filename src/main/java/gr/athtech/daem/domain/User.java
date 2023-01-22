@@ -69,11 +69,9 @@ public class User extends BaseModel {
 	@JoinTable(name = "USERS_CERTIFICATIONS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "certification_id"))
 	private List<Certification> certifications;
 
-
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "PENDING_COURSES_USERS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> pendingCourses;
-
 
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "FINISHED_COURSES_USERS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))

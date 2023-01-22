@@ -1,6 +1,5 @@
 package gr.athtech.daem.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -51,13 +50,13 @@ public class Course extends BaseModel {
 	@ManyToMany(mappedBy = "completedCourses")
 	private List<User> usersCompleted;
 
-//	@NotEmpty
-//	@NotNull
-//	private boolean pending;
-//
-//	@NotEmpty
-//	@NotNull
-//	private boolean completed;
+	//	@NotEmpty
+	//	@NotNull
+	//	private boolean pending;
+	//
+	//	@NotEmpty
+	//	@NotNull
+	//	private boolean completed;
 
 	public void setCertification(Certification certification) {
 		if (certification != null) {
@@ -66,8 +65,8 @@ public class Course extends BaseModel {
 		this.certification = certification;
 	}
 
-	public void setType(TypeOfCourse type){
-		if (type != null)  {
+	public void setType(TypeOfCourse type) {
+		if (type != null) {
 			type.getCourses().add(this);
 		}
 		this.type = type;

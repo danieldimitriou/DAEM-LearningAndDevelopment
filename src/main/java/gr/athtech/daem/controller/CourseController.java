@@ -1,7 +1,6 @@
 package gr.athtech.daem.controller;
 
 import gr.athtech.daem.converter.CourseConverter;
-import gr.athtech.daem.domain.Authority;
 import gr.athtech.daem.domain.Course;
 import gr.athtech.daem.dto.CourseDTO;
 import gr.athtech.daem.service.AuthorityService;
@@ -28,7 +27,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("courses")
 @CrossOrigin
-public class CourseController{
+public class CourseController {
 
 	private final CourseService courseService;
 
@@ -59,12 +58,12 @@ public class CourseController{
 
 	@Transactional
 	@PostMapping("create")
-	public ResponseEntity<ApiResponse<Course>> createCourse(@RequestBody CourseDTO courseDto){
+	public ResponseEntity<ApiResponse<Course>> createCourse(@RequestBody CourseDTO courseDto) {
 		final Course newCourse = courseConverter.dtoToEntity(courseDto);
-//		final Authority authority = newCourse.getCertification();
+		//		final Authority authority = newCourse.getCertification();
 		authorityService.create(newCourse.getCertification().getCertificationAuthority());
 		courseService.create(newCourse);
-		return new ResponseEntity<>(ApiResponse.<Course>builder().data(newCourse).build(),HttpStatus.CREATED );
+		return new ResponseEntity<>(ApiResponse.<Course>builder().data(newCourse).build(), HttpStatus.CREATED);
 	}
 
 	@PostMapping("update")
@@ -81,28 +80,28 @@ public class CourseController{
 	//	public ResponseEntity<List<Course>> findByTypeId(@PathVariable ("type") final Long typeId){
 	//		return ResponseEntity.ok(courseService.findByTypeId(typeId));
 	//	}
-//	@GetMapping
-//	public ResponseEntity<List<Course>> findByUsersPending(
-//			@PathVariable("usersPending") final List<User> usersPending) {
-//		return ResponseEntity.ok(courseService.findByUsersPending(usersPending));
-//	}
-//
-//	@GetMapping
-//	public ResponseEntity<List<Course>> findByUsersCompletedIn(
-//			@PathVariable("usersCompleted") final List<User> usersCompleted) {
-//		return ResponseEntity.ok(courseService.findByUsersCompletedIn(usersCompleted));
-//	}
-//
-//	@GetMapping
-//	public ResponseEntity<List<Course>> findCoursesByAreasOfStudy(
-//			@PathVariable("areasOfStudy") final List<AreaOfStudy> areasOfStudy) {
-//		return ResponseEntity.ok(courseService.findCoursesByAreasOfStudy(areasOfStudy));
-//	}
-//
-//	@GetMapping
-//	public ResponseEntity<Course> findByCertificationId(
-//			@PathVariable("certificationIds") final Long[] certificationIds) {
-//		return ResponseEntity.ok(courseService.findByCertificationId(certificationIds));
-//	}
+	//	@GetMapping
+	//	public ResponseEntity<List<Course>> findByUsersPending(
+	//			@PathVariable("usersPending") final List<User> usersPending) {
+	//		return ResponseEntity.ok(courseService.findByUsersPending(usersPending));
+	//	}
+	//
+	//	@GetMapping
+	//	public ResponseEntity<List<Course>> findByUsersCompletedIn(
+	//			@PathVariable("usersCompleted") final List<User> usersCompleted) {
+	//		return ResponseEntity.ok(courseService.findByUsersCompletedIn(usersCompleted));
+	//	}
+	//
+	//	@GetMapping
+	//	public ResponseEntity<List<Course>> findCoursesByAreasOfStudy(
+	//			@PathVariable("areasOfStudy") final List<AreaOfStudy> areasOfStudy) {
+	//		return ResponseEntity.ok(courseService.findCoursesByAreasOfStudy(areasOfStudy));
+	//	}
+	//
+	//	@GetMapping
+	//	public ResponseEntity<Course> findByCertificationId(
+	//			@PathVariable("certificationIds") final Long[] certificationIds) {
+	//		return ResponseEntity.ok(courseService.findByCertificationId(certificationIds));
+	//	}
 
 }
