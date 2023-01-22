@@ -1,7 +1,6 @@
 package gr.athtech.daem.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -34,11 +34,10 @@ public class Authority extends BaseModel {
 	@NotEmpty
 	private String name;
 
-	@JsonManagedReference
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private TypeOfInstitution awardingBody;
 
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy = "certificationAuthority")
-	private List<Certification> certifications;
+	private List<Certification> certifications = new ArrayList<>();
 }

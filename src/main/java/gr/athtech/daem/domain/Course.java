@@ -1,6 +1,5 @@
 package gr.athtech.daem.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -38,26 +37,26 @@ public class Course extends BaseModel {
 	@JoinTable(name = "COURSE_AREA_OF_STUDY", joinColumns = @JoinColumn(name = "COURSE_ID"), inverseJoinColumns = @JoinColumn(name = "AREA_OF_STUDY_ID"))
 	private List<AreaOfStudy> areasOfStudy;
 
-	@JsonManagedReference
+	@JsonManagedReference(value = "course-certification")
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "certification_id")
 	private Certification certification;
 
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToMany(mappedBy = "pendingCourses")
 	private List<User> usersPending;
 
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToMany(mappedBy = "completedCourses")
 	private List<User> usersCompleted;
 
-//	@NotEmpty
-//	@NotNull
-//	private boolean pending;
-//
-//	@NotEmpty
-//	@NotNull
-//	private boolean completed;
+	//	@NotEmpty
+	//	@NotNull
+	//	private boolean pending;
+	//
+	//	@NotEmpty
+	//	@NotNull
+	//	private boolean completed;
 
 	public void setCertification(Certification certification) {
 		if (certification != null) {
@@ -66,8 +65,8 @@ public class Course extends BaseModel {
 		this.certification = certification;
 	}
 
-	public void setType(TypeOfCourse type){
-		if (type != null)  {
+	public void setType(TypeOfCourse type) {
+		if (type != null) {
 			type.getCourses().add(this);
 		}
 		this.type = type;

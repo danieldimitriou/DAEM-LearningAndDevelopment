@@ -1,6 +1,6 @@
 package gr.athtech.daem.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -32,7 +33,7 @@ public class TypeOfInstitution extends BaseModel {
 	@NotNull
 	private String description;
 
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy = "awardingBody", cascade = CascadeType.PERSIST)
-	private List<Authority> authorities;
+	private List<Authority> authorities = new ArrayList<>();
 }
