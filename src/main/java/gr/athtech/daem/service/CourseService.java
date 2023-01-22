@@ -19,7 +19,7 @@ public interface CourseService extends BaseService<Course> {
 
 	List<Course> findByUsersCompletedIn(List<User> usersCompleted);
 
-	List<Course> findCoursesByAreasOfStudy(List<AreaOfStudy> areasOfStudy);
+	List<Course> findByAreasOfStudyIn(Long[] AreasOfStudyIds);
 
-	Course findByCertificationId(Long[] certificationIds);
+	Course findByCertificationId(Long id);
 }

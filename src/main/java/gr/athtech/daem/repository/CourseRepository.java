@@ -20,9 +20,9 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
 	List<Course> findByUsersCompletedIn(List<User> usersCompleted);
 
-	List<Course> findCoursesByAreasOfStudyIn(List<AreaOfStudy> areasOfStudy);
+	List<Course> findByAreasOfStudyIn(Long [] areaOfStudyIds);
 
-	Course findByCertificationId(Long[] certificationIds);
+	Course findByCertificationId(Long id);
 
 	List<Course> findByName(String name);
 }
