@@ -7,6 +7,7 @@ import gr.athtech.daem.domain.Position;
 import gr.athtech.daem.domain.User;
 import gr.athtech.daem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	}
 
 	@Override
+	@Cacheable(value = "profile")
 	public Optional<User> findById(final Long id) {
 		return userRepository.findById(id);
 	}
@@ -45,6 +47,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	}
 
 	@Override
+	@Cacheable(value = "userByEmails")
 	public User findByEmail(final String email) {
 		return userRepository.findByEmail(email);
 	}
