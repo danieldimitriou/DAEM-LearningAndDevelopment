@@ -3,22 +3,27 @@ package gr.athtech.daem.controller;
 import gr.athtech.daem.converter.UserConverter;
 import gr.athtech.daem.converter.UserWithCoursesConverter;
 import gr.athtech.daem.domain.User;
+import gr.athtech.daem.dto.LoginRequest;
+import gr.athtech.daem.dto.RegisterRequest;
 import gr.athtech.daem.dto.UserDTO;
 import gr.athtech.daem.dto.UserWithCoursesDTO;
 import gr.athtech.daem.service.BaseService;
 import gr.athtech.daem.service.UserService;
 import gr.athtech.daem.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.Email;
+import jakarta.validation.constraints.Email;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -74,6 +79,23 @@ public class UserController {
 		}
 		final UserWithCoursesDTO userWithCoursesDTO = userWithCoursesConverter.convertToDTO(userOptional.get());
 		return ResponseEntity.ok(ApiResponse.<UserWithCoursesDTO>builder().data(userWithCoursesDTO).build());
+	}
+
+	@PostMapping("/login")
+	public ResponseEntity<ApiResponse<UserDTO>> login(@RequestBody LoginRequest loginRequest) {
+		return ResponseEntity.ok(ApiResponse.<UserDTO>builder().data(userService.login(loginRequest.getEmail(),
+																					   loginRequest.getPassword()))
+											.build());
+	}
+
+	@Transactional
+	@PostMapping("/register")
+	public ResponseEntity<ApiResponse<User>> register(@RequestBody @NotNull RegisterRequest registerRequest) {
+		return ResponseEntity.ok(ApiResponse.<User>builder().data(userService.register(registerRequest.getFirstName(),
+																					   registerRequest.getLastName(),
+																					   registerRequest.getEmail(),
+																					   registerRequest.getPassword()))
+											.build());
 	}
 }
 

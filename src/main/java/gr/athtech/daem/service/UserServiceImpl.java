@@ -1,14 +1,17 @@
 package gr.athtech.daem.service;
 
+import gr.athtech.daem.converter.UserConverter;
 import gr.athtech.daem.domain.Certification;
 import gr.athtech.daem.domain.Course;
 import gr.athtech.daem.domain.Department;
 import gr.athtech.daem.domain.Position;
 import gr.athtech.daem.domain.User;
+import gr.athtech.daem.dto.UserDTO;
 import gr.athtech.daem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +22,8 @@ import java.util.Optional;
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
 	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
+	private final UserConverter userConverter;
 
 	@Override
 	public JpaRepository<User, Long> getRepository() {
@@ -149,6 +154,32 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	public User deleteCompletedCourseFromUser(final User userToBeUpdated, final Course completedCourseToBeDeleted) {
 		userToBeUpdated.getCompletedCourses().remove(completedCourseToBeDeleted);
 		return userRepository.save(userToBeUpdated);
+	}
+
+	@Override
+	public User register(String firstName, String lastName, String email, String password) {
+		if (userRepository.findByEmail(email) == null) {
+			User user = new User();
+			user.setFirstName(firstName);
+			user.setLastName(lastName);
+			user.setEmail(email);
+			user.setPassword(passwordEncoder.encode(password));
+			user.setCertifications(null);
+			user.setCompletedCourses(null);
+			user.setPendingCourses(null);
+			return userRepository.save(user);
+		}
+		return null;
+	}
+
+	@Override
+	public UserDTO login(String email, String password) {
+		User user = userRepository.findByEmail(email);
+		UserDTO userDTO = userConverter.convertToDTO(user);
+		if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+			return userDTO;
+		}
+		return null;
 	}
 
 }

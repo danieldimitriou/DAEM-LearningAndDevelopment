@@ -5,14 +5,12 @@ import gr.athtech.daem.domain.Course;
 import gr.athtech.daem.domain.Department;
 import gr.athtech.daem.domain.Position;
 import gr.athtech.daem.domain.User;
+import gr.athtech.daem.dto.UserDTO;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
-public interface UserService extends BaseService<User>{
-
-
+public interface UserService extends BaseService<User> {
 
 	Optional<User> findById(Long id);
 
@@ -57,5 +55,9 @@ public interface UserService extends BaseService<User>{
 	User deletePendingCourseFromUser(User userToBeUpdated, Course pendingCourseToBeDeleted);
 
 	User deleteCompletedCourseFromUser(User userToBeUpdated, Course completedCourseToBeDeleted);
+
+	User register(String firstName, String lastName, String email, String password);
+
+	UserDTO login(String email, String password);
 
 }
