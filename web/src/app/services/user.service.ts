@@ -27,7 +27,11 @@ export class UserService {
   }
 
   create(data: any): Observable<any> {
-    return this.http.post(baseUrl, data);
+    return this.http.post(baseUrl +"/register", data);
+  }
+
+  login(data:any): Observable<any>{
+    return this.http.post(baseUrl + "/login",data)
   }
 
 

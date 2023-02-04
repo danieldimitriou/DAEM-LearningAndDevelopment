@@ -26,17 +26,19 @@
         />
         </div>
       <div>
-          <a class="button" routerLink="/passwordReset">Forgot your password?</a>
+          <a class="button" routerLink="/passwordReset" >Forgot your password?</a>
       </div>
-      <button class="btn btn-success">Log in</button>
+      <button class="btn btn-success" (click)="login()">Log in</button>
     </div>
 
-    <div *ngIf="submitted">
-      <h4>User submitted successfully!</h4>
-
+    <div *ngIf="loginSuccessful">
+      Logged in!
     </div>
   </div>
 </div>
+
+
+
 <router-outlet></router-outlet>
 
 
