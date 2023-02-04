@@ -8,9 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
@@ -49,14 +49,6 @@ public class Course extends BaseModel {
 	@JsonIgnore
 	@ManyToMany(mappedBy = "completedCourses")
 	private List<User> usersCompleted;
-
-	//	@NotEmpty
-	//	@NotNull
-	//	private boolean pending;
-	//
-	//	@NotEmpty
-	//	@NotNull
-	//	private boolean completed;
 
 	public void setCertification(Certification certification) {
 		if (certification != null) {
