@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,18 +28,20 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
 	private final DepartmentService departmentService;
 
 	private final CourseService courseService;
+	private final PasswordEncoder passwordEncoder;
 
 	@Override
 	@Transactional
 	public void run(final String... args) throws Exception {
 		List<User> users = List.of(User.builder().firstName("Stefan").lastName("Bordea").email(
-											   "stefan@stefanbordea.com").password("oogAbooga12345!")
-										   .pendingCourses(new ArrayList<>()).completedCourses(new ArrayList<>())
+											   "stefan@stefanbordea.com").password(passwordEncoder.encode("oogAbooga12345!"))
+									   .pendingCourses(new ArrayList<>()).completedCourses(new ArrayList<>())
 									   .build(),
 
 								   User.builder().firstName("Oogaman").lastName("Debest").email("ooga@booga.com")
-									   .password("o)(JD!2djjd109jd").pendingCourses(new ArrayList<>())
-										   .completedCourses(new ArrayList<>())
+									   .password(passwordEncoder.encode("o)(JD!2djjd109jd")).pendingCourses(
+											   new ArrayList<>())
+									   .completedCourses(new ArrayList<>())
 									   //						.department(Department.builder().name("C-level").build())
 									   .build());
 
