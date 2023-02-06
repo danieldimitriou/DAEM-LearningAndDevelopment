@@ -1,6 +1,7 @@
 package gr.athtech.daem.controller;
 
 import gr.athtech.daem.converter.CourseConverter;
+import gr.athtech.daem.domain.Authority;
 import gr.athtech.daem.domain.Course;
 import gr.athtech.daem.dto.CourseDTO;
 import gr.athtech.daem.service.AuthorityService;
@@ -57,12 +58,16 @@ public class CourseController {
 		return ResponseEntity.ok(ApiResponse.<List<CourseDTO>>builder().data(courseDTOList).build());
 	}
 
-	@Transactional
 	@PostMapping("create")
 	public ResponseEntity<ApiResponse<Course>> createCourse(@RequestBody CourseDTO courseDto) {
 		final Course newCourse = courseConverter.dtoToEntity(courseDto);
-		//		final Authority authority = newCourse.getCertification();
-		authorityService.create(newCourse.getCertification().getCertificationAuthority());
+		final Authority authority = newCourse.getCertification().getCertificationAuthority();
+		Optional<Authority> existingAuthority = authorityService.findByName(authority.getName());
+		if (existingAuthority.isEmpty()) {
+			authorityService.create(authority);
+		} else {
+			newCourse.getCertification().setCertificationAuthority(existingAuthority.get());
+		}
 		courseService.create(newCourse);
 		return new ResponseEntity<>(ApiResponse.<Course>builder().data(newCourse).build(), HttpStatus.CREATED);
 	}
