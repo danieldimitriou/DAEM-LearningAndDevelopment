@@ -1,6 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
-import {UserService} from "../../services/user.service";
 import {User} from "../../models/user.model";
+import {AuthenticationService} from "../../services/authentication.service";
 
 
 @Component({
@@ -19,7 +19,7 @@ export class SignupComponent implements OnDestroy {
   };
   submitted = false;
 
-  constructor(private userService: UserService) {
+  constructor(private authService: AuthenticationService) {
   }
 
   createUser(){
@@ -31,7 +31,7 @@ export class SignupComponent implements OnDestroy {
     };
 
 
-    this.userService.create(data).subscribe(
+    this.authService.register(data).subscribe(
       {
         next: (result) => {
           console.log(result);

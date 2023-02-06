@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {map, Observable} from 'rxjs';
 import {User} from "../models/user.model";
 import {environment} from "../../environments/environment";
@@ -24,8 +24,15 @@ export class UserService {
     return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
   }
 
-  create(data: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/users/register`, data);
+  getUserWithCourses(id: number){
+    return this.http.get<User>(`${environment.apiUrl}/users/${id}/courses`);
+  }
+
+
+
+  getUserByEmail(email: string){
+    return this.http.get(`${environment.apiUrl}/users`,{params:{email:email}})
+
   }
 
 

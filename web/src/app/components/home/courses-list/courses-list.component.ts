@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Course} from "../../../models/course.model";
-import {CourseService} from "../../../services/course.service";
 import {TypeOfCourse} from "../../../models/type-of-course.model";
 import {Subscription} from "rxjs";
+import {AuthenticationService} from "../../../services/authentication.service";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-courses-list',
@@ -15,20 +16,33 @@ export class CoursesListComponent implements OnInit{
   coursesList: Course[] =[];
   courseType : TypeOfCourse[] =[];
 
-  constructor(private courseService: CourseService) {
+  constructor(private userService:UserService, private authService: AuthenticationService) {
   }
 
   ngOnInit(){
-    this.courseService.getAll().subscribe(
-      (data) => {
+    this.userService.getUserWithCourses(this.authService.currentUserValue["id"]).subscribe(
+      next =>{
+        console.log(next["data"]["pendingCourses"]);
         // @ts-ignore
-        for(let x:Course of data["data"]){
-          // console.log(x);
-          this.coursesList.push(x);
-          this.courseType.push(x.type);
+        for(let x : Course of next["data"]["pendingCourses"]){
+            this.coursesList.push(x);
         }
+        console.log(this.coursesList);
+
       }
     )
+
+
+    // getAll().subscribe(
+    //   (data) => {
+    //     // @ts-ignore
+    //     for(let x:Course of data["data"]){
+    //       // console.log(x);
+    //       this.coursesList.push(x);
+    //       this.courseType.push(x.type);
+    //     }
+    //   }
+    // )
     // console.log(this.coursesList);
     // console.log(this.courseType);
 
