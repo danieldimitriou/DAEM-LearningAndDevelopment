@@ -30,6 +30,9 @@ export class LoginComponent implements OnInit {
     });
 
     // get return url from route parameters or default to '/'
+    // if a user enters /admin-home but needs login, they get redirected
+    // to /admin-home after authentication, or if they didn't give any link,
+    // they get redirected to home
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../../services/authentication.service";
 
 @Component({
@@ -6,13 +6,21 @@ import {AuthenticationService} from "../../../services/authentication.service";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
+
+  //acts as a flag to check whether the user is logged in, and change the buttons accordingly
+  isLoggedIn: boolean;
+
   constructor(private authService: AuthenticationService) {
   }
-  logout(){
-    this.authService.logout();
+  ngOnInit() {
+    if(this.authService.currentUserValue!=null){
+      this.isLoggedIn = true;
+    }
   }
 
-
-
+  logout(){
+    this.isLoggedIn = false;
+    this.authService.logout();
+  }
 }
