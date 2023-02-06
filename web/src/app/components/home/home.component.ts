@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from "../../models/user.model";
 import {UserService} from "../../services/user.service";
 import {Course} from "../../models/course.model";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-home',
@@ -10,32 +10,23 @@ import {Course} from "../../models/course.model";
 })
 export class HomeComponent implements OnInit{
   //array of type User to hold the users from userService.getAll
-  userList: User[] = [];
-  //local variable to save the user we get from getUserByID
-  user:User;
+  courseList: Course[] = [];
   //array of type Course to hold the courses from courseService.getAll
   coursesList: Course[] = [];
 
-  constructor(private userService: UserService){
+  constructor(private userService: UserService, private authService: AuthenticationService){
   }
 
 
 
   ngOnInit() {
-    this.userService.getAll().subscribe(data => {
-      // @ts-ignore
-      for(let x:User of data["data"]){
-        this.userList.push(x);
-      }
-      // console.log(this.userList)
-    });
-
-
-    //get user by id
-    this.userService.getUserById(18).subscribe(data =>{
-      this.user = data["data"];
-      // console.log(this.user);
-    });
+    // console.log(this.authService.currentUserValue)
+    // this.userService.getUserWithCourses(this.authService.currentUserValue["id"]).subscribe(
+    //   next =>{
+    //     console.log("----------")
+    //     console.log(next);
+    //   }
+    // )
   }
 
 

@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           this.loading = false;
+          this.router.navigate([this.returnUrl]);
         },
         error => {
           console.log(error); // check if the error was returned

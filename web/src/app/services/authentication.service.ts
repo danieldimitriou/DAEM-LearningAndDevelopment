@@ -14,7 +14,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
-    console.log(this.currentUserSubject)
+    // console.log(this.currentUserSubject)
   }
 
   public get currentUserValue(): User {
@@ -31,8 +31,7 @@ export class AuthenticationService {
         map(res => {
           if (res.status == 200) {
             let user: User = {
-              email: email,
-              password: password,
+              id: res.body["data"]["id"],
               authData: window.btoa(email + ':' + password)
             }
             localStorage.setItem('currentUser', JSON.stringify(user));
@@ -51,7 +50,27 @@ export class AuthenticationService {
 
 
   register(data: User){
-    return this.http.post(`${environment.apiUrl}/users/register`, data);
+    return this.http.post(`${environment.apiUrl}/users/register`, data,{observe:'response'})
+      .pipe(
+        map(res => {
+          console.log(res.status)
+          if (res.status == 200) {
+            let user: User = {
+              id: res.body["data"]["id"],
+              authData: window.btoa(data.email + ':' + data.password)
+            }
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            this.currentUserSubject.next(user);
+            return user;
+          } else {
+            throw new Error('Signup failed');
+          }
+        }),
+        catchError(e => {
+          console.log(e);
+          return throwError(e);
+        })
+      );
   }
   logout() {
     // remove user from local storage to log user out
