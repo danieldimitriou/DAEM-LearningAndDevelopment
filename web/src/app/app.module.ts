@@ -8,11 +8,14 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { HeaderComponent } from './components/common/header/header.component';
-import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { CoursesListComponent } from './components/home/courses-list/courses-list.component';
 import { AddExperienceComponent } from './components/add-experience/add-experience.component';
 import { AddCertificationsComponent } from './components/add-certifications/add-certifications.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import {BasicAuthInterceptor} from "./helpers/basic-auth.interceptor";
+import {ErrorInterceptor} from "./helpers/error.interceptor";
 
 
 @NgModule({
@@ -25,15 +28,20 @@ import { AddCertificationsComponent } from './components/add-certifications/add-
     HeaderComponent,
     CoursesListComponent,
     AddExperienceComponent,
-    AddCertificationsComponent
+    AddCertificationsComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

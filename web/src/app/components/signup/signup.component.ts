@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user.model";
-import {error} from "@angular/compiler-cli/src/transformers/util";
+
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent {
+export class SignupComponent implements OnDestroy {
 
   //check if there is a different way to implement this
   user:User ={
@@ -22,7 +22,7 @@ export class SignupComponent {
   constructor(private userService: UserService) {
   }
 
-  saveUser(){
+  createUser(){
     const data : User = {
       firstName: this.user.firstName,
       lastName: this.user.lastName,
@@ -30,14 +30,18 @@ export class SignupComponent {
       password:this.user.password
     };
 
+
     this.userService.create(data).subscribe(
       {
         next: (result) => {
-      console.log(result);
-      this.submitted = true;
-    },
-      error: (e) => console.error(e)
-  });
+          console.log(result);
+          this.submitted = true;
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
+  ngOnDestroy(): void {
   }
 
 }

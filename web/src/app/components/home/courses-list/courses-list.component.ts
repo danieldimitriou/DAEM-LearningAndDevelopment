@@ -23,14 +23,14 @@ export class CoursesListComponent implements OnInit{
       (data) => {
         // @ts-ignore
         for(let x:Course of data["data"]){
-          console.log(x);
+          // console.log(x);
           this.coursesList.push(x);
           this.courseType.push(x.type);
         }
       }
     )
-    console.log(this.coursesList);
-    console.log(this.courseType);
+    // console.log(this.coursesList);
+    // console.log(this.courseType);
 
     // console.log(this.coursesList);
   }

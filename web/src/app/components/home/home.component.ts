@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from "../../models/user.model";
 import {UserService} from "../../services/user.service";
-import {CourseService} from "../../services/course.service";
 import {Course} from "../../models/course.model";
 
 @Component({
@@ -17,7 +16,7 @@ export class HomeComponent implements OnInit{
   //array of type Course to hold the courses from courseService.getAll
   coursesList: Course[] = [];
 
-  constructor(private userService: UserService,private courseService: CourseService){
+  constructor(private userService: UserService){
   }
 
 
@@ -33,7 +32,7 @@ export class HomeComponent implements OnInit{
 
 
     //get user by id
-    this.userService.getUserById(19).subscribe(data =>{
+    this.userService.getUserById(18).subscribe(data =>{
       this.user = data["data"];
       // console.log(this.user);
     });

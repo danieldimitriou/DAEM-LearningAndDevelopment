@@ -50,7 +50,7 @@
       <div>
         <a class="button" routerLink="/passwordReset">Already have an account?</a>
       </div>
-      <button (click)="saveUser()" class="btn btn-success">Submit</button>
+      <button (click)="createUser()" class="btn btn-success">Submit</button>
     </div>
 
     <div *ngIf="submitted">
@@ -59,5 +59,33 @@
     </div>
   </div>
 </div>
+<!--<div class="row d-flex align-items-center justify-content-center">-->
+<!--  <div class="col-sm-3 text-center">-->
+<!--    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">-->
+<!--      <div class="form-group">-->
+<!--        <label>First Name</label>-->
+<!--        <input type="text" formControlName="firstName" class="form-control"  />-->
+<!--      </div>-->
+<!--      <div class="form-group">-->
+<!--        <label>Last Name</label>-->
+<!--        <input type="text" formControlName="lastName" class="form-control"  />-->
+<!--      </div>-->
+<!--      <div class="form-group">-->
+<!--        <label>Email</label>-->
+<!--        <input type="text" formControlName="email" class="form-control"  />-->
+<!--      </div>-->
+<!--      <div class="form-group">-->
+<!--        <label>Password</label>-->
+<!--        <input type="password" formControlName="password" class="form-control"  />-->
+<!--      </div>-->
+<!--      <button [disabled]="loading" class="btn btn-primary">-->
+<!--        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>-->
+<!--        Login-->
+<!--      </button>-->
+<!--      <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--</div>-->
+
 <router-outlet></router-outlet>
 
