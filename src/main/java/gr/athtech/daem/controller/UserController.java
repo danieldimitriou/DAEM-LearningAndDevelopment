@@ -12,6 +12,7 @@ import gr.athtech.daem.service.UserService;
 import gr.athtech.daem.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -83,19 +84,23 @@ public class UserController {
 
 	@PostMapping("/login")
 	public ResponseEntity<ApiResponse<UserDTO>> login(@RequestBody LoginRequest loginRequest) {
-		return ResponseEntity.ok(ApiResponse.<UserDTO>builder().data(userService.login(loginRequest.getEmail(),
-																					   loginRequest.getPassword()))
-											.build());
+		UserDTO body = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
+		if (body == null) {
+			return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(body).build(), HttpStatus.NOT_FOUND);
+		}
+		return ResponseEntity.ok(ApiResponse.<UserDTO>builder().data(body).build());
 	}
 
 	@Transactional
 	@PostMapping("/register")
 	public ResponseEntity<ApiResponse<User>> register(@RequestBody @NotNull RegisterRequest registerRequest) {
-		return ResponseEntity.ok(ApiResponse.<User>builder().data(userService.register(registerRequest.getFirstName(),
-																					   registerRequest.getLastName(),
-																					   registerRequest.getEmail(),
-																					   registerRequest.getPassword()))
-											.build());
+		User body = userService.register(registerRequest.getFirstName(), registerRequest.getLastName(),
+										 registerRequest.getEmail(), registerRequest.getPassword());
+		if (body == null) {
+			return new ResponseEntity<>(ApiResponse.<User>builder().data(body).build(),
+										HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		return ResponseEntity.ok(ApiResponse.<User>builder().data(body).build());
 	}
 }
 
