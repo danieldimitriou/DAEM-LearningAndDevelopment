@@ -34,11 +34,11 @@ export class SignupComponent implements OnDestroy {
     this.userService.create(data).subscribe(
       {
         next: (result) => {
-      console.log(result);
-      this.submitted = true;
-    },
-      error: (e) => console.error(e)
-  });
+          console.log(result);
+          this.submitted = true;
+        },
+        error: (e) => console.error(e)
+      });
   }
 
   ngOnDestroy(): void {
