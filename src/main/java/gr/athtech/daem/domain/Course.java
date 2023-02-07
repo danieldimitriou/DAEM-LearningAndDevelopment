@@ -11,6 +11,7 @@ import lombok.Setter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -44,7 +45,7 @@ public class Course extends BaseModel {
 
 	@JsonIgnore
 	@ManyToMany(mappedBy = "pendingCourses")
-	private List<User> usersPending;
+	private List<User> usersPending = new ArrayList<>();
 
 	@JsonIgnore
 	@ManyToMany(mappedBy = "completedCourses")

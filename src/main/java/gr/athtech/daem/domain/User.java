@@ -19,6 +19,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -83,16 +84,31 @@ public class User extends BaseModel {
 	}
 
 	public void addPendingCourse(final Course pendingCourse) {
-		if (!completedCourses.contains(pendingCourse)) {
-			pendingCourse.getUsersPending().add(this);
-			this.pendingCourses.add(pendingCourse);
-		} else {
-			throw new IllegalArgumentException("Cannot add pending course to user, the course is a completed course");
+		if (this.pendingCourses == null) {
+			this.pendingCourses = new ArrayList<>();
+		}
+		boolean exists = false;
+		for (Course course : pendingCourses) {
+			if (course.getId().equals(pendingCourse.getId())) {
+				exists = true;
+				break;
+			}
+		}
+		if (!exists) {
+			if (completedCourses == null || !completedCourses.contains(pendingCourse)) {
+				pendingCourse.getUsersPending().add(this);
+				this.pendingCourses.add(pendingCourse);
+			} else {
+				throw new IllegalArgumentException("Cannot add pending course to user, the course is a completed course");
+			}
 		}
 	}
 
 	public void addCompletedCourse(final Course completedCourse) {
-		if (!pendingCourses.contains(completedCourse)) {
+		if (this.completedCourses == null) {
+			this.completedCourses = new ArrayList<>();
+		}
+		if (pendingCourses == null || !pendingCourses.contains(completedCourse)) {
 			completedCourse.getUsersPending().add(this);
 			this.completedCourses.add(completedCourse);
 		} else {

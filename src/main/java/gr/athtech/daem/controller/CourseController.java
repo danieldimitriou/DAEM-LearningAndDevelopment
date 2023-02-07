@@ -60,13 +60,22 @@ public class CourseController {
 
 	@PostMapping("create")
 	public ResponseEntity<ApiResponse<Course>> createCourse(@RequestBody CourseDTO courseDto) {
-		final Course newCourse = courseConverter.dtoToEntity(courseDto);
+		Course newCourse = courseConverter.dtoToEntity(courseDto);
 		final Authority authority = newCourse.getCertification().getCertificationAuthority();
 		Optional<Authority> existingAuthority = authorityService.findByName(authority.getName());
 		if (existingAuthority.isEmpty()) {
 			authorityService.create(authority);
 		} else {
 			newCourse.getCertification().setCertificationAuthority(existingAuthority.get());
+		}
+		final List<Course> existingCourses = courseService.findByName(newCourse.getName());
+		String existingCourseAuthorityName;
+		for (Course existingCourse : existingCourses) {
+			existingCourseAuthorityName = existingCourse.getCertification().getCertificationAuthority().getName();
+			if (authority.getName().equals(existingCourseAuthorityName)) {
+				newCourse = existingCourse;
+				break;
+			}
 		}
 		courseService.create(newCourse);
 		return new ResponseEntity<>(ApiResponse.<Course>builder().data(newCourse).build(), HttpStatus.CREATED);
