@@ -17,7 +17,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           return res
         }),
         catchError((error: HttpErrorResponse) => {
-          let errorMsg = '';
+          let errorMsg;
           if (error.error instanceof ErrorEvent) {
             console.log('This is client side error');
             errorMsg = `Error: ${error.error.message}`;
@@ -27,7 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           }
           console.log(errorMsg);
           // reload page
-          location.reload();
+          // location.reload();
           return throwError(errorMsg);
         })
       )

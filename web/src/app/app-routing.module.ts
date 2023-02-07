@@ -7,16 +7,16 @@ import {AddExperienceComponent} from "./components/add-experience/add-experience
 import {AddCertificationsComponent} from "./components/add-certifications/add-certifications.component";
 import {AdminHomeComponent} from "./components/admin-home/admin-home.component";
 import {NotFoundComponent} from "./components/not-found/not-found.component";
-import {AuthGuard} from "./helpers/auth.guard";
+import {AuthGuard} from "./helpers";
 
 const routes: Routes = [
   {path:'',component:HomeComponent},
   {path:'home',canActivate:[AuthGuard],component:HomeComponent},
   {path:'signup',component:SignupComponent},
   {path:'login',component:LoginComponent},
-  {path:'addExperience', component:AddExperienceComponent},
-  {path:'addCertifications', component:AddCertificationsComponent},
-  {path:'admin-home',component:AdminHomeComponent},
+  {path:'addExperience',canActivate:[AuthGuard], component:AddExperienceComponent},
+  {path:'addCertifications',canActivate:[AuthGuard], component:AddCertificationsComponent},
+  {path:'admin-home',canActivate:[AuthGuard],component:AdminHomeComponent},
   {path: '**', component:NotFoundComponent}
 ];
 

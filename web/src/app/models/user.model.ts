@@ -4,10 +4,11 @@ import {Certification} from "./certification.model";
 import {Course} from "./course.model";
 
 export class User {
+  id?:number;
   firstName?: string;
   lastName?: string;
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
   position?: Position;
   manager?:User;
   department?:Department;

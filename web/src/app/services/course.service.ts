@@ -27,7 +27,4 @@ export class CourseService {
   create(data: any): Observable<any> {
     return this.http.post(baseUrl, data);
   }
-
-
-
 }

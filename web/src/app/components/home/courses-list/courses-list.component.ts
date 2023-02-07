@@ -1,8 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Course} from "../../../models/course.model";
-import {CourseService} from "../../../services/course.service";
-import {TypeOfCourse} from "../../../models/type-of-course.model";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-courses-list',
@@ -11,36 +8,17 @@ import {Subscription} from "rxjs";
 })
 export class CoursesListComponent implements OnInit{
 
-  subscriptions: Subscription[] = [];
-  coursesList: Course[] =[];
-  courseType : TypeOfCourse[] =[];
+  //takes values from the parent component, home.component.ts courseList
+  @Input() coursesList: Course[] =[];
 
-  constructor(private courseService: CourseService) {
+  constructor() {
   }
 
   ngOnInit(){
-    this.courseService.getAll().subscribe(
-      (data) => {
-        // @ts-ignore
-        for(let x:Course of data["data"]){
-          // console.log(x);
-          this.coursesList.push(x);
-          this.courseType.push(x.type);
-        }
-      }
-    )
-    // console.log(this.coursesList);
-    // console.log(this.courseType);
-
-    // console.log(this.coursesList);
   }
 
   ngOnDestroy(){
-    this.subscriptions.forEach((subscription) =>subscription.unsubscribe());
-    console.log(this.subscriptions);
   }
 
-  // checkCourseType(course : Course){
-  //   if()
-  // }
+
 }
