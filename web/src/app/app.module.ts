@@ -11,12 +11,16 @@ import { HeaderComponent } from './components/common/header/header.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { CoursesListComponent } from './components/home/courses-list/courses-list.component';
-import { AddExperienceComponent } from './components/add-experience/add-experience.component';
+import { AddCourseComponent } from './components/add-course/add-course.component';
 import { AddCertificationsComponent } from './components/add-certifications/add-certifications.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import {BasicAuthInterceptor} from "./helpers/basic-auth.interceptor";
-import {ErrorInterceptor} from "./helpers/error.interceptor";
-
+import {BasicAuthInterceptor} from "./helpers";
+import {ErrorInterceptor} from "./helpers";
+import { ProfileComponent } from './components/profile/profile.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { AddPositionComponent } from './components/add-position/add-position.component';
+import { AddManagerComponent } from './components/add-manager/add-manager.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -27,16 +31,21 @@ import {ErrorInterceptor} from "./helpers/error.interceptor";
     AdminHomeComponent,
     HeaderComponent,
     CoursesListComponent,
-    AddExperienceComponent,
+    AddCourseComponent,
     AddCertificationsComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ProfileComponent,
+    AddPositionComponent,
+    AddManagerComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

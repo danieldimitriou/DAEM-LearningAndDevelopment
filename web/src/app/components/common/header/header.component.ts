@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit{
   constructor(private authService: AuthenticationService) {
   }
   ngOnInit() {
-    if(this.authService.currentUserValue!=null){
+    if(this.authService.currentUserValue){
       this.isLoggedIn = true;
     }
   }

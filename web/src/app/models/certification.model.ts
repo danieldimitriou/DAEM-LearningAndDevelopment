@@ -6,9 +6,9 @@ export class Certification {
 
   name:string;
   certificationAuthority:Authority;
-  expirationDate:Date;
-  holders:User[];
-  course:Course;
+  expirationDate?:Date;
+  holders?:User[];
+  course?:Course;
   // constructor(name:string, certificationAuthority:Authority,expirationDate:Date, holders:User[],course:Course) {
   //   this.name = name;
   //   this.certificationAuthority = certificationAuthority;

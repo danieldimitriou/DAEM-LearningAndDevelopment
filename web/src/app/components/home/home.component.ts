@@ -23,12 +23,8 @@ export class HomeComponent implements OnInit{
 
 
   ngOnInit() {
-    console.log(this.authService.currentUserValue);
-    // console.log(this.coursesList);
     this.userService.getUserWithCourses(this.authService.currentUserValue["id"]).subscribe(
       next=>{
-
-        // console.log(next["data"]["pendingCourses"]);
         this.user = {
           firstName:next["data"]["firstName"],
           lastName:next["data"]["lastName"]
@@ -37,12 +33,6 @@ export class HomeComponent implements OnInit{
           // console.log(pendingCourse);
           this.courseList.push(pendingCourse);
         }
-        console.log(this.courseList);
-        }
-
-    )
-    // console.log(this.user);
-  }
-
-
+      }
+    )}
 }

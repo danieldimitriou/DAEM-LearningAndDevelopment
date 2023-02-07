@@ -13,9 +13,9 @@ export class Course {
 
   certification: Certification;
 
-  usersPending: User[];
+  usersPending?: User[];
 
-  usersCompleted: User[];
+  usersCompleted?: User[];
 
   constructor(obj?: any) {
       Object.assign(this, obj);
