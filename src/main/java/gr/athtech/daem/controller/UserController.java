@@ -2,7 +2,9 @@ package gr.athtech.daem.controller;
 
 import gr.athtech.daem.converter.UserConverter;
 import gr.athtech.daem.converter.UserWithCoursesConverter;
+import gr.athtech.daem.domain.Course;
 import gr.athtech.daem.domain.User;
+import gr.athtech.daem.dto.CourseDTO;
 import gr.athtech.daem.dto.LoginRequest;
 import gr.athtech.daem.dto.RegisterRequest;
 import gr.athtech.daem.dto.UserDTO;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.constraints.Email;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -39,6 +42,8 @@ public class UserController {
 	private final UserConverter userConverter;
 
 	private final UserWithCoursesConverter userWithCoursesConverter;
+
+	private final CourseController courseController;
 
 	protected BaseService<User> getBaseService() {
 		return userService;
@@ -102,5 +107,22 @@ public class UserController {
 		}
 		return ResponseEntity.ok(ApiResponse.<User>builder().data(body).build());
 	}
+
+	@Transactional
+	@PostMapping("/{id}/addPendingCourse")
+	public ResponseEntity<ApiResponse<UserWithCoursesDTO>> addPendingCourse(@PathVariable(name = "id") Long id, @RequestBody
+															  CourseDTO courseDTO){
+		Optional<User> userOptional = userService.findById(id);
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		final User user = userOptional.get();
+		final Course newCourse = Objects.requireNonNull(courseController.createCourse(courseDTO).getBody()).getData();
+		userService.addPendingCourseToUser(user, newCourse);
+		final UserWithCoursesDTO userWithCoursesDTO = userWithCoursesConverter.convertToDTO(user);
+		return new ResponseEntity<>(ApiResponse.<UserWithCoursesDTO>builder().data(userWithCoursesDTO).build(), HttpStatus.CREATED);
+
+	}
+
 }
 
