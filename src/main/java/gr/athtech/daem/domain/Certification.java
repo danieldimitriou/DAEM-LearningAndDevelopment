@@ -2,23 +2,13 @@ package gr.athtech.daem.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+
+import lombok.*;
+
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +34,7 @@ public class Certification extends BaseModel {
 	private Date expirationDate;
 
 	@JsonIgnore
-	@ManyToMany(mappedBy = "certifications")
+	@ManyToMany(mappedBy = "certifications", cascade = CascadeType.MERGE)
 	private List<User> holders;
 
 	@JsonBackReference(value = "course-certification")

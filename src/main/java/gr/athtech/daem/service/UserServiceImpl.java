@@ -9,7 +9,6 @@ import gr.athtech.daem.domain.User;
 import gr.athtech.daem.dto.UserDTO;
 import gr.athtech.daem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,6 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	}
 
 	@Override
-	@Cacheable(value = "profile")
 	public Optional<User> findById(final Long id) {
 		return userRepository.findById(id);
 	}
@@ -53,7 +51,6 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	}
 
 	@Override
-	@Cacheable(value = "userByEmails")
 	public User findByEmail(final String email) {
 		return userRepository.findByEmail(email);
 	}
@@ -116,7 +113,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
 	@Override
 	public User addCertificationToUser(final User userToBeUpdated, final Certification certification) {
-		userToBeUpdated.getCertifications().add(certification);
+		userToBeUpdated.addCertification(certification);
 		return userRepository.save(userToBeUpdated);
 	}
 
@@ -134,8 +131,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
 	@Override
 	public User completePendingCourse(final User userToBeUpdated, final Course completedCourse) {
-		userToBeUpdated.getPendingCourses().remove(completedCourse);
-		userToBeUpdated.getCompletedCourses().add(completedCourse);
+		userToBeUpdated.removePendingCourse(completedCourse);
+		userToBeUpdated.addCompletedCourse(completedCourse);
 		return userRepository.save(userToBeUpdated);
 	}
 

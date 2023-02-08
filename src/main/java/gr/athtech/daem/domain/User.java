@@ -66,15 +66,15 @@ public class User extends BaseModel {
 	@JoinColumn(name = "department_id")
 	private Department department;
 
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "USERS_CERTIFICATIONS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "certification_id"))
 	private List<Certification> certifications;
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "PENDING_COURSES_USERS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> pendingCourses;
 
-	@ManyToMany(cascade = CascadeType.PERSIST)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "FINISHED_COURSES_USERS", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> completedCourses;
 
@@ -99,7 +99,8 @@ public class User extends BaseModel {
 				pendingCourse.getUsersPending().add(this);
 				this.pendingCourses.add(pendingCourse);
 			} else {
-				throw new IllegalArgumentException("Cannot add pending course to user, the course is a completed course");
+				throw new IllegalArgumentException(
+						"Cannot add pending course to user, the course is a completed course");
 			}
 		}
 	}
@@ -108,11 +109,69 @@ public class User extends BaseModel {
 		if (this.completedCourses == null) {
 			this.completedCourses = new ArrayList<>();
 		}
+		if (completedCourse.getUsersCompleted() == null) {
+			completedCourse.setUsersCompleted(new ArrayList<>());
+		}
+		boolean exists = false;
 		if (pendingCourses == null || !pendingCourses.contains(completedCourse)) {
-			completedCourse.getUsersPending().add(this);
-			this.completedCourses.add(completedCourse);
+			for (Course course : this.completedCourses) {
+				if (completedCourse.getId().equals(course.getId())) {
+					exists = true;
+					break;
+				}
+			}
+			if (!exists) {
+				completedCourse.getUsersCompleted().add(this);
+				this.completedCourses.add(completedCourse);
+				this.addCertification(completedCourse.getCertification());
+			}
 		} else {
 			throw new IllegalArgumentException("Cannot add completed course to user, the course is a pending course");
+		}
+
+	}
+
+	public void removePendingCourse(Course course) {
+		if (this.pendingCourses == null) {
+			throw new NullPointerException("User is not attending any courses");
+		}
+		if (course.getUsersPending() == null) {
+			throw new NullPointerException("Course does not have any pending users");
+		}
+		// Remove course from user's pendingCourses
+		for (int i = 0; i < this.pendingCourses.size(); i++) {
+			if (this.pendingCourses.get(i).getId().equals(course.getId())) {
+				// Remove user from course's usersPending
+				for (int j = 0; j < course.getUsersPending().size(); j++) {
+					if (course.getUsersPending().get(j).getId().equals(this.getId())) {
+						course.getUsersPending().remove(j);
+						break;
+					}
+
+				}
+				this.pendingCourses.remove(i);
+				break;
+			}
+		}
+	}
+
+	public void addCertification(final Certification newCertification) {
+		if (this.certifications == null) {
+			this.certifications = new ArrayList<>();
+		}
+		if (newCertification.getHolders() == null) {
+			newCertification.setHolders(new ArrayList<>());
+		}
+		boolean exists = false;
+		for (Certification certification : certifications) {
+			if (newCertification.getId().equals(certification.getId())) {
+				exists = true;
+				break;
+			}
+		}
+		if (!exists) {
+			newCertification.getHolders().add(this);
+			this.certifications.add(newCertification);
 		}
 	}
 
