@@ -11,6 +11,7 @@ import gr.athtech.daem.dto.ResetPasswordRequest;
 import gr.athtech.daem.dto.UserDTO;
 import gr.athtech.daem.dto.UserWithCoursesDTO;
 import gr.athtech.daem.service.BaseService;
+import gr.athtech.daem.service.CourseService;
 import gr.athtech.daem.service.UserService;
 import gr.athtech.daem.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,8 @@ public class UserController {
 	private final UserWithCoursesConverter userWithCoursesConverter;
 
 	private final CourseController courseController;
+
+	private final CourseService courseService;
 
 	protected BaseService<User> getBaseService() {
 		return userService;
@@ -138,6 +141,26 @@ public class UserController {
 		return new ResponseEntity<>(ApiResponse.<UserWithCoursesDTO>builder().data(userWithCoursesDTO).build(),
 									HttpStatus.CREATED);
 
+	}
+
+	@Transactional
+	@PostMapping("/{userId}/completePendingCourse/{courseId}")
+	public ResponseEntity<ApiResponse<UserWithCoursesDTO>> completePendingCourse(
+			@PathVariable(name = "userId") Long userId, @PathVariable(name = "courseId") Long courseId) {
+		Optional<User> userOptional = userService.findById(userId);
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		User user = userOptional.get();
+		Optional<Course> courseOptional = courseService.findById(courseId);
+		if (courseOptional.isEmpty()) {
+			throw new NoSuchElementException("Course not found");
+		}
+		Course course = courseOptional.get();
+		userService.completePendingCourse(user, course);
+		final UserWithCoursesDTO userWithCoursesDTO = userWithCoursesConverter.convertToDTO(user);
+		return new ResponseEntity<>(ApiResponse.<UserWithCoursesDTO>builder().data(userWithCoursesDTO).build(),
+									HttpStatus.CREATED);
 	}
 
 }

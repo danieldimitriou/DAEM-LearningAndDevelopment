@@ -44,11 +44,11 @@ public class Course extends BaseModel {
 	private Certification certification;
 
 	@JsonIgnore
-	@ManyToMany(mappedBy = "pendingCourses")
+	@ManyToMany(mappedBy = "pendingCourses", cascade = CascadeType.MERGE)
 	private List<User> usersPending = new ArrayList<>();
 
 	@JsonIgnore
-	@ManyToMany(mappedBy = "completedCourses")
+	@ManyToMany(mappedBy = "completedCourses", cascade = CascadeType.MERGE)
 	private List<User> usersCompleted;
 
 	public void setCertification(Certification certification) {
