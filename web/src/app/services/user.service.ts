@@ -4,6 +4,8 @@ import {map, Observable} from 'rxjs';
 import {User} from "../models/user.model";
 import {environment} from "../../environments/environment";
 import {Course} from "../models/course.model";
+import {Position} from "../models/position.model";
+import {Department} from "../models/department.model";
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +49,28 @@ export class UserService {
     );
   }
 
+  changePassword(currentPassword: string, newPassword:string, newPasswordConfirmed:string, id:number){
+    return this.http.put(`${environment.apiUrl}/users/${id}/change-password`,
+      {"currentPassword":currentPassword,"newPassword":newPassword,"newPasswordConfirmed":newPasswordConfirmed},
+      {observe:'response'});
+  }
 
+  addCertificationToUser(){
+
+  }
+
+  addDepartmentToUser(department: Department, id: number){
+    this.http.put(`${environment.apiUrl}/users/${id}/addDepartment`,department,{observe:'response'});
+
+  }
+  addPositionToUser(position: Position, id: number){
+    this.http.put(`${environment.apiUrl}/users/${id}/addPosition`,position,{observe:'response'})
+
+  }
+
+  addManagerToUser(){
+
+  }
 
 
 
