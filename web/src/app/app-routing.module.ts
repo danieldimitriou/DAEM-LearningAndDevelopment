@@ -12,6 +12,7 @@ import {ProfileComponent} from "./components/profile/profile.component";
 import {AddManagerComponent} from "./components/add-manager/add-manager.component";
 import {AddPositionComponent} from "./components/add-position/add-position.component";
 import {ResetPasswordComponent} from "./components/reset-password/reset-password.component";
+import {AddDepartmentComponent} from "./add-department/add-department.component";
 
 const routes: Routes = [
   {path:'',canActivate:[AuthGuard],component:HomeComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path:'profile',canActivate:[AuthGuard],component:ProfileComponent},
   {path: 'users/addManager',canActivate:[AuthGuard],component:AddManagerComponent},
   {path: 'users/addPosition',canActivate:[AuthGuard],component:AddPositionComponent},
+  {path: 'users/addDepartment',canActivate:[AuthGuard],component:AddDepartmentComponent},
   {path: 'users/resetPassword',canActivate:[AuthGuard],component:ResetPasswordComponent},
   {path:'signup',component:SignupComponent},
   {path:'login',component:LoginComponent},

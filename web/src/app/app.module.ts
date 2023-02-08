@@ -21,6 +21,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { AddPositionComponent } from './components/add-position/add-position.component';
 import { AddManagerComponent } from './components/add-manager/add-manager.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { AddDepartmentComponent } from './add-department/add-department.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
     ProfileComponent,
     AddPositionComponent,
     AddManagerComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    AddDepartmentComponent
   ],
   imports: [
     BrowserModule,
