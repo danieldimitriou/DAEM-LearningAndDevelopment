@@ -22,7 +22,7 @@ public interface CertificationRepository extends JpaRepository<Certification, Lo
 
 	List<Certification> findByExpirationDate(Date date);
 
-	List<Certification> findByHolders(List<User> holder);
+	List<Certification> findByHoldersIn(List<User> holder);
 
 	List<Certification> findByCourse(Course course);
 }

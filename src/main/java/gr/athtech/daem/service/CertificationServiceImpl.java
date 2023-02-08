@@ -46,7 +46,7 @@ public class CertificationServiceImpl extends BaseServiceImpl<Certification> imp
 
 	@Override
 	public List<Certification> findByHolders(final List<User> holders) {
-		return certificationRepository.findByHolders(holders);
+		return certificationRepository.findByHoldersIn(holders);
 	}
 
 	@Override
