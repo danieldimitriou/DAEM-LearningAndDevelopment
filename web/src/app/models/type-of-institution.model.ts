@@ -4,7 +4,7 @@ export class TypeOfInstitution {
 
   description : string;
 
-  authorities : Authority[];
+  authorities?: Authority[];
 
   constructor(obj? : any) {
     Object.assign(this,obj);

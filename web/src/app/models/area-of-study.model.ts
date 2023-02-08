@@ -5,7 +5,7 @@ export class AreaOfStudy {
   name : string;
 
   description : string;
-  courses : Course[];
+  courses?: Course[];
 
   constructor(obj? : any) {
     Object.assign(this,obj);

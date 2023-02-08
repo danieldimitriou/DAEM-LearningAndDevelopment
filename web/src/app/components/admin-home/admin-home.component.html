@@ -1,3 +1,17 @@
+<script src="../../models/user.model.ts"></script>
 <app-header></app-header>
 
-<p>admin works</p>
+<div class="row m-4">
+  <div class="col-sm-4 mb-3" *ngFor="let user of users;" >
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title text-center pb-2 text-decoration-none"><a class="text-decoration-none" href="" >{{ user.firstName}} {{user.lastName}}</a></h5>
+<!--        <p class="user-department-name"><b>Department:</b> {{user.department.name}}</p>-->
+        <p class="user-email"><b>Email:</b> {{user.email}}</p>
+        <div class="text-center">
+          <button class="btn btn-primary" routerLink="">View Employee</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

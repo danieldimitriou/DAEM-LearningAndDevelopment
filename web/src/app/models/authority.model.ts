@@ -6,7 +6,7 @@ export class Authority {
   name : string;
 
   awardingBody : TypeOfInstitution;
-  certifications : Certification[];
+  certifications? : Certification[];
 
   constructor(obj? : any) {
     Object.assign(this,obj);
