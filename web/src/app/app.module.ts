@@ -20,8 +20,8 @@ import { ProfileComponent } from './components/profile/profile.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { AddPositionComponent } from './components/add-position/add-position.component';
 import { AddManagerComponent } from './components/add-manager/add-manager.component';
-import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
-import { AddDepartmentComponent } from './add-department/add-department.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { AddDepartmentComponent } from './components/add-department/add-department.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,7 @@ import { AddDepartmentComponent } from './add-department/add-department.componen
     ProfileComponent,
     AddPositionComponent,
     AddManagerComponent,
-    ResetPasswordComponent,
+    ChangePasswordComponent,
     AddDepartmentComponent
   ],
   imports: [

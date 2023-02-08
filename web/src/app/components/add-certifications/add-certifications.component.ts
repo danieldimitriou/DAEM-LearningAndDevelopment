@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../services/authentication.service";
 import {UserService} from "../../services/user.service";
+import {Certification} from "../../models/certification.model";
+import {TypeOfInstitution} from "../../models/type-of-institution.model";
+import {Authority} from "../../models/authority.model";
 
 @Component({
   selector: 'app-add-certifications',
@@ -26,8 +29,32 @@ export class AddCertificationsComponent implements OnInit{
 
   ngOnInit(): void {
     this.addCertificationForm = this.formBuilder.group({
-
+      certificationName:['', Validators.required],
+      certificationAuthorityName:['',Validators.required],
+      awardingBodyDescription:['',Validators.required]
     })
+  }
+
+  get f() { return this.addCertificationForm.controls; }
+
+  onSubmit(){
+
+    let awardingBody:TypeOfInstitution = {
+      description:this.f['awardingBodyDescription'].value
+    }
+
+    let certificationAuthority:Authority = {
+      name:this.f['certificationAuthorityName'].value,
+      awardingBody:awardingBody
+    }
+
+    let certification: Certification = {
+      name:this.f['certificationName'].value,
+      certificationAuthority:certificationAuthority
+    }
+
+    console.log(JSON.stringify(certification));
+    // this.userService.addCertificationToUser(certification);
   }
 
 }

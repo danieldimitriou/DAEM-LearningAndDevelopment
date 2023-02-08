@@ -4,7 +4,7 @@ export class Position {
   name : string;
 
   level : string;
-  users : User[];
+  users? : User[];
 
   constructor(obj?:any) {
     Object.assign(this,obj);
