@@ -1,6 +1,7 @@
 
-<div class="row m-4">
-  <div class="col-sm-4 mb-3" *ngFor="let course of coursesList; let i = index" [ngClass]="{ 'ml-auto': (i + 1) % 3 === 0 }">
+<div class="m-4">
+  <div class="col-sm-4 mb-3" *ngFor="let course of coursesList; let i = index"
+       [ngClass]="{ 'ml-auto': (i + 1) % 3 === 0 }">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title text-center pb-2"><a class="text-decoration-none" href="">{{ course.name }}</a></h5>
