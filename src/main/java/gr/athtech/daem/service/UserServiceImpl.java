@@ -159,12 +159,12 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
 	@Override
 	public User register(String firstName, String lastName, String email, String password) {
-		if (userRepository.findByEmail(email) == null) {
+		if (userRepository.findByEmail(email.trim()) == null) {
 			User user = new User();
-			user.setFirstName(firstName);
-			user.setLastName(lastName);
-			user.setEmail(email);
-			user.setPassword(passwordEncoder.encode(password));
+			user.setFirstName(firstName.trim());
+			user.setLastName(lastName.trim());
+			user.setEmail(email.trim());
+			user.setPassword(passwordEncoder.encode(password.trim()));
 			user.setCertifications(null);
 			user.setCompletedCourses(null);
 			user.setPendingCourses(null);
@@ -175,9 +175,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
 	@Override
 	public UserDTO login(String email, String password) {
-		User user = userRepository.findByEmail(email);
+		User user = userRepository.findByEmail(email.trim());
 		UserDTO userDTO = userConverter.convertToDTO(user);
-		if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+		if (user != null && passwordEncoder.matches(password.trim(), user.getPassword())) {
 			return userDTO;
 		}
 		return null;
@@ -188,9 +188,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 								  String newPasswordConfirmed) {
 		Optional<User> user = userRepository.findById(userId);
 		UserDTO userDTO = userConverter.convertToDTO(user.get());
-		if (user.isPresent() && passwordEncoder.matches(currentPassword, user.get().getPassword())) {
-			if (Objects.equals(newPassword, newPasswordConfirmed)) {
-				user.get().setPassword(passwordEncoder.encode(newPassword));
+		if (user.isPresent() && passwordEncoder.matches(currentPassword.trim(), user.get().getPassword())) {
+			if (Objects.equals(newPassword.trim(), newPasswordConfirmed.trim())) {
+				user.get().setPassword(passwordEncoder.encode(newPassword.trim()));
 				userRepository.save(user.get());
 				logger.info("Changed password for user with ID {}", userId);
 				return userDTO;
