@@ -60,4 +60,6 @@ public interface UserService extends BaseService<User> {
 
 	UserDTO login(String email, String password);
 
+	UserDTO changePassword(Long userId, String currentPassword, String newPassword, String newPasswordConfirmed);
+
 }

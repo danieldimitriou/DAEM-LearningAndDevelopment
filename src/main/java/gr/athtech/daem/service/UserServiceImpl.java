@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -178,6 +179,22 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 		UserDTO userDTO = userConverter.convertToDTO(user);
 		if (user != null && passwordEncoder.matches(password, user.getPassword())) {
 			return userDTO;
+		}
+		return null;
+	}
+
+	@Override
+	public UserDTO changePassword(Long userId, String currentPassword, String newPassword,
+								  String newPasswordConfirmed) {
+		Optional<User> user = userRepository.findById(userId);
+		UserDTO userDTO = userConverter.convertToDTO(user.get());
+		if (user.isPresent() && passwordEncoder.matches(currentPassword, user.get().getPassword())) {
+			if (Objects.equals(newPassword, newPasswordConfirmed)) {
+				user.get().setPassword(passwordEncoder.encode(newPassword));
+				userRepository.save(user.get());
+				logger.info("Changed password for user with ID {}", userId);
+				return userDTO;
+			}
 		}
 		return null;
 	}
