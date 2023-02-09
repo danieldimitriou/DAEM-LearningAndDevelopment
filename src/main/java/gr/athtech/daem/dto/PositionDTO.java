@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class PositionDTO {
 
-	String name;
-	String level;
+	private String name;
+	private String level;
 }
