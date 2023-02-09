@@ -49,12 +49,9 @@
         <input type="text" formControlName="awardingBodyDescription" class="form-control" placeholder="University, College etc."  />
       </div>
 
-
-      <button [disabled]="loading" class="btn btn-primary">
-        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-        Add Course
-      </button>
-      <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
-    </form>
+      <div *ngIf="error" class="alert alert-danger mt-3 mb-0">Something went wrong. Please try again. </div>
+      <div *ngIf="!error && submitted" class="alert alert-info mt-3 mb-0">Certification added.</div>
+      <button class="btn btn-primary">Add Course</button>
+     </form>
   </div>
 </div>

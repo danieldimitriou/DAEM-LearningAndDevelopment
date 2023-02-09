@@ -38,7 +38,6 @@ export class AddCertificationsComponent implements OnInit{
   get f() { return this.addCertificationForm.controls; }
 
   onSubmit(){
-
     let awardingBody:TypeOfInstitution = {
       description:this.f['awardingBodyDescription'].value
     }
@@ -52,9 +51,22 @@ export class AddCertificationsComponent implements OnInit{
       name:this.f['certificationName'].value,
       certificationAuthority:certificationAuthority
     }
+    this.userService.addCertificationToUser(certification,this.authenticationService.currentUserValue.id).subscribe(
+      next =>{
+        if(next.status === 201){
+          this.submitted = true;
+          setTimeout(() => {
+            this.router.navigate(['/profile']);
+          }, 500);
+          this.addCertificationForm.reset();
+        }
+        console.log(next);
+      },error=>{
+        this.error=error;
+        this.submitted=false;
+      }
+    );
 
-    console.log(JSON.stringify(certification));
-    // this.userService.addCertificationToUser(certification);
   }
 
 }

@@ -13,7 +13,7 @@ export class ChangePasswordComponent implements OnInit{
 
   changePasswordForm: FormGroup;
 
-  passwordChangeSuccess: boolean;
+  submitted: boolean;
 
   error:string;
 
@@ -44,14 +44,18 @@ export class ChangePasswordComponent implements OnInit{
     //   "newPasswordConfirmed":this.f['newPasswordConfirmed'].value,
     // }
     // console.log(passwordChange);
-    this.userService.changePassword
-    (this.f['currentPassword'].value,
-      this.f['newPassword'].value,
-      this.f['newPasswordConfirmed'].value,
-      this.authService.currentUserValue.id).subscribe(
+    this.userService.changePassword(
+              this.f['currentPassword'].value,
+              this.f['newPassword'].value,
+              this.f['newPasswordConfirmed'].value,
+              this.authService.currentUserValue.id)
+      .subscribe(
         next =>{
             if(next.status === 200){
-              this.passwordChangeSuccess = true;
+              this.submitted = true;
+              setTimeout(() => {
+                this.router.navigate(['/profile']);
+              }, 1500);
               // this.router.navigate(['/']);
             }
         },error =>{
