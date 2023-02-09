@@ -16,13 +16,13 @@
             <li class="list-group-item">
               <strong>Email:</strong> {{user.email}}
             </li>
-            <li class="list-group-item">
+            <li *ngIf="user.position.name" class="list-group-item">
               <strong>Position:</strong> {{user.position.name}}
             </li>
-            <li class="list-group-item">
+            <li *ngIf="user.position.level" class="list-group-item">
               <strong>Level:</strong> {{user.position.level}}
             </li>
-            <li class="list-group-item">
+            <li *ngIf="user.department.name" class="list-group-item">
               <strong>Department:</strong> {{user.department.name}}
             </li>
           </ul>
@@ -31,7 +31,7 @@
   </div>
 </div>
   <div class="text-center">
-    <button class="btn btn-primary m-3" routerLink="/users/addCertification">Edit Certification</button>
+    <button class="btn btn-primary m-3" routerLink="/users/addCertification">Add Certification</button>
     <button class="btn btn-primary m-3" routerLink="/users/addPosition">Edit Position</button>
     <button class="btn btn-primary m-3" routerLink="/users/addManager">Edit Manager</button>
   </div>

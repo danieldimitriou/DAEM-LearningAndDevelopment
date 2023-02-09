@@ -23,7 +23,7 @@ export class AddCourseComponent implements OnInit{
   error : string;
   counter = 1;
 
-  areasOfStudy: FormGroup[];
+  // areasOfStudy: FormGroup[];
 
 
   constructor(private formBuilder: FormBuilder,
@@ -31,26 +31,17 @@ export class AddCourseComponent implements OnInit{
               private router: Router,
               private authenticationService: AuthenticationService,
               private userService: UserService) {
-
   }
   ngOnInit(){
-      this.addCourseForm = this.formBuilder.group({
+    this.addCourseForm = this.formBuilder.group({
       courseName: ['', Validators.required],
       typeOfCourseName: ['', Validators.required],
       typeOfCourseDescription: ['', Validators.required],
-      areasOfStudy: this.formBuilder.array([
-        this.formBuilder.group({
-          name: ['', Validators.required],
-          description: ['', Validators.required]
-        })
-      ]),
-      certificationName:['', Validators.required],
-      certificationAuthorityName:['',Validators.required],
-      awardingBodyDescription:['',Validators.required]
+      areasOfStudy: this.formBuilder.array([this.newAreaOfStudy()]),
+      certificationName: ['', Validators.required],
+      certificationAuthorityName: ['', Validators.required],
+      awardingBodyDescription: ['', Validators.required]
     });
-
-
-
     // get return url from route parameters or default to '/'
     // if a user enters /admin-home but needs login, they get redirected
     // to /admin-home after authentication, or if they didn't give any link,
@@ -58,34 +49,56 @@ export class AddCourseComponent implements OnInit{
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  get f() { return this.addCourseForm.controls; }
+  areasOfStudyGet(): FormArray {
+    return this.addCourseForm.get("areasOfStudy") as FormArray;
+  }
+
+  newAreaOfStudy(): FormGroup {
+    return this.formBuilder.group({
+      name: ['', Validators.required],
+      description: ['', Validators.required]
+    })
+  }
 
   addAreaOfStudy() {
-    const control = <FormArray>this.addCourseForm.controls['areasOfStudy'];
-    control.push(
-      this.formBuilder.group({
-        'name': [''],
-        'description': ['']
-      })
-    );
     this.counter++;
+    this.areasOfStudyGet().push(this.newAreaOfStudy());
   }
 
-  removeAreaOfStudy(){
-    const control = <FormArray>this.addCourseForm.controls['areasOfStudy'];
-    this.counter--;
-    control.removeAt(this.counter);
+  removeAreaOfStudy() {
+    this.areasOfStudyGet().removeAt(this.areasOfStudyGet().length - 1)
   }
 
+  get f() {
+    return this.addCourseForm.controls;
+  }
 
-  onSubmit(){
-    let awardingBody:TypeOfInstitution = {
-      description:this.f['awardingBodyDescription'].value
+  // addAreaOfStudy() {
+  //   const control = <FormArray>this.addCourseForm.controls['areasOfStudy'];
+  //   control.push(
+  //     this.formBuilder.group({
+  //       'name': [''],
+  //       'description': ['']
+  //     })
+  //   );
+  //   this.counter++;
+  // }
+  //
+  // removeAreaOfStudy(){
+  //   const control = <FormArray>this.addCourseForm.controls['areasOfStudy'];
+  //   this.counter--;
+  //   control.removeAt(this.counter);
+  // }
+
+
+  onSubmit() {
+    let awardingBody: TypeOfInstitution = {
+      description: this.f['awardingBodyDescription'].value
     }
 
-    let certificationAuthority:Authority = {
-      name:this.f['certificationAuthorityName'].value,
-      awardingBody:awardingBody
+    let certificationAuthority: Authority = {
+      name: this.f['certificationAuthorityName'].value,
+      awardingBody: awardingBody
     }
 
     let certification: Certification = {
@@ -119,7 +132,7 @@ export class AddCourseComponent implements OnInit{
           this.submitted = true;
           setTimeout(() => {
             this.router.navigate(['/'])
-          },1500)
+          }, 500)
         }
       },error=>{
         this.error = error;

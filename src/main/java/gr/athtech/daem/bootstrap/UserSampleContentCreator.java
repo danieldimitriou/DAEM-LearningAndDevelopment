@@ -3,6 +3,7 @@ package gr.athtech.daem.bootstrap;
 import gr.athtech.daem.base.BaseComponent;
 import gr.athtech.daem.domain.Department;
 import gr.athtech.daem.domain.Position;
+import gr.athtech.daem.domain.Role;
 import gr.athtech.daem.domain.User;
 import gr.athtech.daem.service.CourseService;
 import gr.athtech.daem.service.DepartmentService;
@@ -34,10 +35,10 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
 	@Transactional
 	public void run(final String... args) throws Exception {
 		List<User> users = List.of(User.builder().firstName("Stefan").lastName("Bordea").email(
-										   "stefan@stefanbordea.com").password(passwordEncoder.encode("oogAbooga12345!")).build(),
+										   "stefan@stefanbordea.com").password(passwordEncoder.encode("oogAbooga12345!")).role(Role.ADMIN).build(),
 
 								   User.builder().firstName("Oogaman").lastName("Debest").email("ooga@booga.com")
-									   .password(passwordEncoder.encode("o)(JD!2djjd109jd"))
+									   .password(passwordEncoder.encode("o)(JD!2djjd109jd")).role(Role.USER)
 									   //						.department(Department.builder().name("C-level").build())
 									   .build());
 

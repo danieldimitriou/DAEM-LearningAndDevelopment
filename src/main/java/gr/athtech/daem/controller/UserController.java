@@ -268,5 +268,20 @@ public class UserController {
 		return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(userDTO).build(), HttpStatus.CREATED);
 	}
 
+	@Transactional
+	@PutMapping(value = "/{id}/updateEmail", consumes = "application/json")
+	public ResponseEntity<ApiResponse<UserDTO>> updateEmail(@PathVariable(name = "id") Long id,
+															@RequestBody @Email Map<String, String> newEmail) {
+		Optional<User> userOptional = userService.findById(id);
+
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		User user = userOptional.get();
+		userService.updateUserEmail(user, newEmail.get("email"));
+		final UserDTO userDTO = userConverter.convertToDTO(user);
+		return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(userDTO).build(), HttpStatus.CREATED);
+	}
+
 }
 

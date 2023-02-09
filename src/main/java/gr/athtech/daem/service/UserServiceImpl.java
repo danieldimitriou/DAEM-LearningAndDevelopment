@@ -5,6 +5,7 @@ import gr.athtech.daem.domain.Certification;
 import gr.athtech.daem.domain.Course;
 import gr.athtech.daem.domain.Department;
 import gr.athtech.daem.domain.Position;
+import gr.athtech.daem.domain.Role;
 import gr.athtech.daem.domain.User;
 import gr.athtech.daem.dto.UserDTO;
 import gr.athtech.daem.repository.UserRepository;
@@ -162,6 +163,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 			user.setLastName(lastName.trim());
 			user.setEmail(email.trim());
 			user.setPassword(passwordEncoder.encode(password.trim()));
+			user.setRole(Role.USER);
 			user.setCertifications(null);
 			user.setCompletedCourses(null);
 			user.setPendingCourses(null);
