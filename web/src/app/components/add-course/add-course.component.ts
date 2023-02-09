@@ -18,10 +18,9 @@ import {UserService} from "../../services/user.service";
 export class AddCourseComponent implements OnInit{
 
   addCourseForm: FormGroup;
-  loading = false;
   submitted = false;
   returnUrl: string;
-  error = '';
+  error : string;
   counter = 1;
 
   areasOfStudy: FormGroup[];
@@ -35,7 +34,7 @@ export class AddCourseComponent implements OnInit{
 
   }
   ngOnInit(){
-    this.addCourseForm = this.formBuilder.group({
+      this.addCourseForm = this.formBuilder.group({
       courseName: ['', Validators.required],
       typeOfCourseName: ['', Validators.required],
       typeOfCourseDescription: ['', Validators.required],
@@ -61,12 +60,6 @@ export class AddCourseComponent implements OnInit{
 
   get f() { return this.addCourseForm.controls; }
 
-  createAreaOfStudy(): FormGroup {
-    return this.formBuilder.group({
-      name: ['', Validators.required],
-      description: ['', Validators.required]
-    });
-  }
   addAreaOfStudy() {
     const control = <FormArray>this.addCourseForm.controls['areasOfStudy'];
     control.push(
@@ -82,7 +75,6 @@ export class AddCourseComponent implements OnInit{
     const control = <FormArray>this.addCourseForm.controls['areasOfStudy'];
     this.counter--;
     control.removeAt(this.counter);
-
   }
 
 
@@ -119,9 +111,22 @@ export class AddCourseComponent implements OnInit{
       areasOfStudy:areasOfStudy,
       certification:certification,
     }
-    console.log(JSON.stringify({ data: course}, null, 4));
 
-    this.userService.createCourse(course,this.authenticationService.currentUserValue.id);
+    console.log(JSON.stringify({ data: course}, null, 4));
+    this.userService.createCourse(course,this.authenticationService.currentUserValue.id).subscribe(
+      next =>{
+        if(next.status === 201){
+          this.submitted = true;
+          setTimeout(() => {
+            this.router.navigate(['/'])
+          },1500)
+        }
+      },error=>{
+        this.error = error;
+        this.submitted = false;
+      }
+    );
+    this.addCourseForm.reset();
   }
 
 

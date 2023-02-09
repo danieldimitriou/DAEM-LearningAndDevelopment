@@ -57,11 +57,19 @@ export class AddPositionComponent {
       level: this.f['positionLevel'].value,
     }
 
-    // this.userService.addPositionToUser(position,this.authenticationService.currentUserValue.id);
+    this.userService.addPositionToUser(position,this.authenticationService.currentUserValue.id).subscribe(
+      // next => {
+        // console.log(next);
+      // }
+    );
 
     let department:Department = this.departments.find(department => department.id === this.f['department'].value);
 
-    // this.userService.addDepartmentToUser(department,this.authenticationService.currentUserValue.id);
+    this.userService.addDepartmentToUser(department,this.authenticationService.currentUserValue.id).subscribe(
+      // next => {
+        // console.log(next);
+      // }
+    );
     console.log(department);
 
     console.log(this.departments);

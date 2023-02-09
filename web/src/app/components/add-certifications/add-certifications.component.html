@@ -15,7 +15,9 @@
         <label>Type of Institution:</label>
         <input type="text" formControlName="awardingBodyDescription" class="form-control" placeholder="University, College etc."  />
       </div>
-      <button class="btn btn-primary">Add Certification</button>
+      <div *ngIf="error" class="alert alert-danger mt-3 mb-0">Something went wrong. Please try again. </div>
+      <div *ngIf="!error && submitted" class="alert alert-info mt-3 mb-0">Certification added.</div>
+      <button *ngIf="!submitted" class="btn btn-primary">Add Certification</button>
     </form>
   </div>
 </div>

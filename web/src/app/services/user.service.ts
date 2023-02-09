@@ -6,6 +6,7 @@ import {environment} from "../../environments/environment";
 import {Course} from "../models/course.model";
 import {Position} from "../models/position.model";
 import {Department} from "../models/department.model";
+import {Certification} from "../models/certification.model";
 
 @Injectable({
   providedIn: 'root'
@@ -22,57 +23,38 @@ export class UserService {
     );
   }
 
-
-  getUserById(id: number): Observable<User> {
-    return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
+  getUserById(userId: number): Observable<User> {
+    return this.http.get<User>(`${environment.apiUrl}/users/${userId}`);
   }
 
-  getUserWithCourses(id: number){
-    return this.http.get<User>(`${environment.apiUrl}/users/${id}/courses`);
+  getUserWithCourses(userId: number){
+    return this.http.get<User>(`${environment.apiUrl}/users/${userId}/courses`);
   }
 
-
-
-  getUserByEmail(email: string){
-    return this.http.get(`${environment.apiUrl}/users`,{params:{email:email}})
-
+  createCourse(course: Course, userId: number){
+    return this.http.post(`${environment.apiUrl}/users/${userId}/addPendingCourse`,course,{observe:'response'});
   }
 
-  createCourse(course: Course, id: number){
-    return this.http.post(`${environment.apiUrl}/users/${id}/addPendingCourse`,course).subscribe(
-      next =>{
-        console.log(next);
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
-  changePassword(currentPassword: string, newPassword:string, newPasswordConfirmed:string, id:number){
-    return this.http.put(`${environment.apiUrl}/users/${id}/change-password`,
+  changePassword(currentPassword: string, newPassword:string, newPasswordConfirmed:string, userId:number){
+    return this.http.put(`${environment.apiUrl}/users/${userId}/change-password`,
       {"currentPassword":currentPassword,"newPassword":newPassword,"newPasswordConfirmed":newPasswordConfirmed},
       {observe:'response'});
   }
 
-  addCertificationToUser(){
-
+  addCertificationToUser(certification: Certification, userId:number){
+    return this.http.put(`${environment.apiUrl}/users/${userId}/addCertification`,certification,{observe:'response'});
   }
 
-  addDepartmentToUser(department: Department, id: number){
-    this.http.put(`${environment.apiUrl}/users/${id}/addDepartment`,department,{observe:'response'});
-
-  }
-  addPositionToUser(position: Position, id: number){
-    this.http.put(`${environment.apiUrl}/users/${id}/addPosition`,position,{observe:'response'})
-
+  addDepartmentToUser(department: Department, userId: number){
+    return this.http.put(`${environment.apiUrl}/users/${userId}/addDepartment`,department,{observe:'response'});
   }
 
-  addManagerToUser(){
-
+  addPositionToUser(position: Position, userId: number){
+    return this.http.put(`${environment.apiUrl}/users/${userId}/addPosition`,position,{observe:'response'})
   }
+  addManagerToUser(){}
 
-
-
-
+  completePendingCourse(userId : number, pendingCourseId : number,){
+    return this.http.post(`${environment.apiUrl}/users/${userId}/completePendingCourse/${pendingCourseId}`,{});
+  }
 }
