@@ -1,16 +1,21 @@
 package gr.athtech.daem.controller;
 
 import gr.athtech.daem.converter.UserConverter;
+import gr.athtech.daem.converter.UserWithCertificationsConverter;
 import gr.athtech.daem.converter.UserWithCoursesConverter;
+import gr.athtech.daem.domain.Certification;
 import gr.athtech.daem.domain.Course;
 import gr.athtech.daem.domain.User;
+import gr.athtech.daem.dto.CertificationDTO;
 import gr.athtech.daem.dto.CourseDTO;
 import gr.athtech.daem.dto.LoginRequest;
 import gr.athtech.daem.dto.RegisterRequest;
 import gr.athtech.daem.dto.ResetPasswordRequest;
 import gr.athtech.daem.dto.UserDTO;
+import gr.athtech.daem.dto.UserWithCertificationsDTO;
 import gr.athtech.daem.dto.UserWithCoursesDTO;
 import gr.athtech.daem.service.BaseService;
+import gr.athtech.daem.service.CourseService;
 import gr.athtech.daem.service.UserService;
 import gr.athtech.daem.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +50,13 @@ public class UserController {
 
 	private final UserWithCoursesConverter userWithCoursesConverter;
 
+	private final UserWithCertificationsConverter userWithCertificationsConverter;
+
 	private final CourseController courseController;
+
+	private final CertificationController certificationController;
+
+	private final CourseService courseService;
 
 	protected BaseService<User> getBaseService() {
 		return userService;
@@ -138,6 +149,58 @@ public class UserController {
 		return new ResponseEntity<>(ApiResponse.<UserWithCoursesDTO>builder().data(userWithCoursesDTO).build(),
 									HttpStatus.CREATED);
 
+	}
+
+	@Transactional
+	@PostMapping("/{userId}/completePendingCourse/{courseId}")
+	public ResponseEntity<ApiResponse<UserWithCoursesDTO>> completePendingCourse(
+			@PathVariable(name = "userId") Long userId, @PathVariable(name = "courseId") Long courseId) {
+		Optional<User> userOptional = userService.findById(userId);
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		User user = userOptional.get();
+		Optional<Course> courseOptional = courseService.findById(courseId);
+		if (courseOptional.isEmpty()) {
+			throw new NoSuchElementException("Course not found");
+		}
+		Course course = courseOptional.get();
+		userService.completePendingCourse(user, course);
+		final UserWithCoursesDTO userWithCoursesDTO = userWithCoursesConverter.convertToDTO(user);
+		return new ResponseEntity<>(ApiResponse.<UserWithCoursesDTO>builder().data(userWithCoursesDTO).build(),
+									HttpStatus.CREATED);
+	}
+
+	@Transactional
+	@PutMapping("/{id}/addCertification")
+	public ResponseEntity<ApiResponse<UserWithCertificationsDTO>> addCertification(@PathVariable(name = "id") Long id,
+																				   @RequestBody CertificationDTO certificationDTO) {
+		Optional<User> userOptional = userService.findById(id);
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		final User user = userOptional.get();
+		final Certification newCertification = Objects.requireNonNull(
+				certificationController.createCertification(certificationDTO).getBody()).getData();
+		userService.addCertificationToUser(user, newCertification);
+		final UserWithCertificationsDTO userWithCertificationsDTO = userWithCertificationsConverter.convertToDTO(user);
+		return new ResponseEntity<>(
+				ApiResponse.<UserWithCertificationsDTO>builder().data(userWithCertificationsDTO).build(),
+				HttpStatus.CREATED);
+	}
+
+	@Transactional
+	@GetMapping("/{id}/certifications")
+	public ResponseEntity<ApiResponse<UserWithCertificationsDTO>> getUserWithCertificationsByUserId(
+			@PathVariable(name = "id") Long id) {
+		Optional<User> userOptional = userService.findById(id);
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		final UserWithCertificationsDTO userWithCertificationsDTO = userWithCertificationsConverter.convertToDTO(
+				userOptional.get());
+		return ResponseEntity.ok(
+				ApiResponse.<UserWithCertificationsDTO>builder().data(userWithCertificationsDTO).build());
 	}
 
 }

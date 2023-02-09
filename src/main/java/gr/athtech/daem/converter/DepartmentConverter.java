@@ -26,6 +26,7 @@ public class DepartmentConverter {
 
 	public DepartmentDTO convertDepartmentToDTO(Department department) {
 		DepartmentDTO departmentDTO = new DepartmentDTO();
+		departmentDTO.setId(department.getId());
 		departmentDTO.setName(department.getName());
 		departmentDTO.setHeadOfDepartment(userConverter.convertToDTO(department.getHeadOfDepartment()));
 		departmentDTO.setMembers(userConverter.convertToDTO(department.getMembers()));

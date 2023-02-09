@@ -5,16 +5,12 @@ import {User} from "./user.model";
 
 export class Course {
 
+  id?: number
   name: string;
-
   type: TypeOfCourse;
-
   areasOfStudy: AreaOfStudy[];
-
   certification: Certification;
-
   usersPending?: User[];
-
   usersCompleted?: User[];
 
   constructor(obj?: any) {
