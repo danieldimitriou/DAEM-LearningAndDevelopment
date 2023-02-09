@@ -79,6 +79,9 @@ public class User extends BaseModel {
 	private List<Course> completedCourses;
 
 	public void setPosition(final Position position) {
+		if (position.getUsers() == null) {
+			position.setUsers(new ArrayList<>());
+		}
 		position.getUsers().add(this);
 		this.position = position;
 	}
