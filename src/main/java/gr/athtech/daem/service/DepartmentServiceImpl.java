@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class DepartmentServiceImpl extends BaseServiceImpl<Department> implements DepartmentService {
@@ -55,5 +57,10 @@ public class DepartmentServiceImpl extends BaseServiceImpl<Department> implement
 	public Department removeMember(final Department department, final User memberToBeRemoved) {
 		department.getMembers().remove(memberToBeRemoved);
 		return departmentRepository.save(department);
+	}
+
+	@Override
+	public Optional<Department> findById(final Long id) {
+		return departmentRepository.findById(id);
 	}
 }

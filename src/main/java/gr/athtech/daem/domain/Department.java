@@ -17,6 +17,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -42,8 +43,33 @@ public class Department extends BaseModel {
 	@OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)
 	private List<User> members;
 
-	public void addMember(User member) {
-		member.setDepartment(this);
-		members.add(member);
+	public void addMember(User newMember) {
+		if (this.members == null) {
+			this.members = new ArrayList<>();
+		}
+		// If the user is not in any Department add them to this Department
+		if (newMember.getDepartment() == null) {
+			newMember.setDepartment(this);
+			members.add(newMember);
+		}
+		// Else if the user is a member of another Department remove them from that Department and add them on this one
+		else if (!newMember.getDepartment().getId().equals(this.getId())) {
+			// If the user was the head of their previous department make the head of the previous department null
+			if (newMember.getDepartment().getHeadOfDepartment() != null &&
+					newMember.getDepartment().getHeadOfDepartment().getId().equals(newMember.getId())) {
+				newMember.getDepartment().setHeadOfDepartment(null);
+			}
+			// Remove user from previous Department and add them on this one
+			for (int i = 0; i < newMember.getDepartment().getMembers().size(); i++) {
+				if (newMember.getDepartment().getMembers().get(i).getId().equals(newMember.getId())) {
+					newMember.getDepartment().getMembers().remove(i);
+					newMember.setDepartment(this);
+					members.add(newMember);
+					break;
+				}
+			}
+
+		}
 	}
+
 }
