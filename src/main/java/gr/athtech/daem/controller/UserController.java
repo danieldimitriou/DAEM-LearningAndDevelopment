@@ -40,6 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
@@ -245,6 +246,26 @@ public class UserController {
 		final UserDTO userDTO = userConverter.convertToDTO(user);
 		return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(userDTO).build(), HttpStatus.CREATED);
 
+	}
+
+	@PutMapping("/{id}/setManager")
+	public ResponseEntity<ApiResponse<UserDTO>> setManager(@PathVariable(name = "id") Long id,
+														   @RequestBody @Email Map<String, String> managerEmail) {
+		Optional<User> userOptional = userService.findById(id);
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		User user = userOptional.get();
+		User manager = userService.findByEmail(managerEmail.get("managerEmail"));
+		if (manager == null) {
+			throw new NoSuchElementException("Wrong email");
+		}
+		if (!manager.getPosition().getName().equalsIgnoreCase("Manager")) {
+			throw new IllegalArgumentException("Email does not belong to a manager");
+		}
+		userService.updateUserManager(user, manager);
+		final UserDTO userDTO = userConverter.convertToDTO(user);
+		return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(userDTO).build(), HttpStatus.CREATED);
 	}
 
 }
