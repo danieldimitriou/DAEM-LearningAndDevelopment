@@ -22,6 +22,7 @@ import { AddPositionComponent } from './components/add-position/add-position.com
 import { AddManagerComponent } from './components/add-manager/add-manager.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { AddDepartmentComponent } from './components/add-department/add-department.component';
+import { ViewEmployeeComponent } from './components/admin-home/view-employee/view-employee.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AddDepartmentComponent } from './components/add-department/add-departme
     AddPositionComponent,
     AddManagerComponent,
     ChangePasswordComponent,
-    AddDepartmentComponent
+    AddDepartmentComponent,
+    ViewEmployeeComponent
   ],
   imports: [
     BrowserModule,

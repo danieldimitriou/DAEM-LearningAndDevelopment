@@ -13,14 +13,15 @@ import {Position} from "../../models/position.model";
   styleUrls: ['./add-position.component.css']
 })
 export class AddPositionComponent {
-  addDepartmentForm:FormGroup;
   addPositionForm: FormGroup
   loading = false;
   submitted = false;
+  positionSubmitted: boolean = false;
+  departmentSubmitted: boolean = false;
   returnUrl: string;
   error = '';
   counter = 1;
-  departments: Department[] =[];
+  departments: Department[] = [];
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -29,50 +30,66 @@ export class AddPositionComponent {
               private userService: UserService,
               private departmentService: DepartmentService) {
   }
-  ngOnInit(){
+
+  ngOnInit() {
     this.addPositionForm = this.formBuilder.group({
-      positionName:['',Validators.required],
-      positionLevel:['', Validators.required],
-      department:['',Validators.required]
+      positionName: ['', Validators.required],
+      positionLevel: ['', Validators.required],
+      department: ['', Validators.required]
     })
-
-
     this.departmentService.getAllDepartments().subscribe(
-      next =>{
+      next => {
         // @ts-ignore
-        for(let department :Department of next["data"]){
+        for (let department: Department of next["data"]) {
           this.departments.push(department);
           console.log(department)
         }
       }
     )
-
   }
-  get f() { return this.addPositionForm.controls; }
 
-  onSubmit(){
+  get f() {
+    return this.addPositionForm.controls;
+  }
 
-    let position: Position ={
-      name : this.f['positionName'].value,
-      level: this.f['positionLevel'].value,
+  onSubmit() {
+    this.error = '';
+    this.submitted = false;
+    this.positionSubmitted = false;
+    this.departmentSubmitted = false;
+    if (this.addPositionForm.valid) {
+      let position: Position = {
+        name: this.f['positionName'].value,
+        level: this.f['positionLevel'].value,
+      }
+      let departmentId = this.f['department'].value;
+
+
+      this.userService.addPositionToUser(position, this.authenticationService.currentUserValue.id).subscribe(
+        next => {
+          if (next.status === 201) {
+            this.positionSubmitted = true;
+            console.log(next);
+            this.userService.addDepartmentToUser(departmentId, this.authenticationService.currentUserValue.id).subscribe(
+              next => {
+                if (next.status === 201) {
+                  this.departmentSubmitted = true;
+                  this.submitted = true;
+                  setTimeout(() => {
+                    this.router.navigate(['/profile'])
+                  }, 500);
+                }
+              }, error => {
+                this.error = error;
+              }
+            )
+          }
+        }, error => {
+          this.error = error;
+        }
+      );
+
     }
 
-    this.userService.addPositionToUser(position,this.authenticationService.currentUserValue.id).subscribe(
-      // next => {
-        // console.log(next);
-      // }
-    );
-
-    let department:Department = this.departments.find(department => department.id === this.f['department'].value);
-
-    this.userService.addDepartmentToUser(department,this.authenticationService.currentUserValue.id).subscribe(
-      // next => {
-        // console.log(next);
-      // }
-    );
-    console.log(department);
-
-    console.log(this.departments);
   }
-
 }

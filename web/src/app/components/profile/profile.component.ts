@@ -19,15 +19,7 @@ export class ProfileComponent implements OnInit{
     this.userService.getUserById(this.authService.currentUserValue.id).subscribe(
       next =>{
         console.log(next["data"]);
-          this.user={
-            firstName:next["data"]['firstName'],
-            lastName:next["data"]['lastName'],
-            email:next["data"]['email'],
-            position:next["data"]['position'],
-            manager:next["data"]['manager'],
-            department:next["data"]['department'],
-            certifications:next["data"]['certifications']
-          }
+          this.user=next["data"];
         console.log(this.user);
       }
     )

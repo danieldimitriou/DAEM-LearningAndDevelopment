@@ -5,7 +5,6 @@ import {User} from "../models/user.model";
 import {environment} from "../../environments/environment";
 import {Course} from "../models/course.model";
 import {Position} from "../models/position.model";
-import {Department} from "../models/department.model";
 import {Certification} from "../models/certification.model";
 
 @Injectable({
@@ -45,12 +44,12 @@ export class UserService {
     return this.http.put(`${environment.apiUrl}/users/${userId}/addCertification`,certification,{observe:'response'});
   }
 
-  addDepartmentToUser(department: Department, userId: number){
-    return this.http.put(`${environment.apiUrl}/users/${userId}/addDepartment`,department,{observe:'response'});
+  addDepartmentToUser(departmentId:number, userId: number){
+    return this.http.put(`${environment.apiUrl}/users/${userId}/setDepartment/${departmentId}`,null, {observe:'response'});
   }
 
   addPositionToUser(position: Position, userId: number){
-    return this.http.put(`${environment.apiUrl}/users/${userId}/addPosition`,position,{observe:'response'})
+    return this.http.put(`${environment.apiUrl}/users/${userId}/setPosition`,position, {observe:'response'})
   }
   addManagerToUser(){}
 
