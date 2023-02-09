@@ -40,6 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
@@ -245,6 +246,21 @@ public class UserController {
 		final UserDTO userDTO = userConverter.convertToDTO(user);
 		return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(userDTO).build(), HttpStatus.CREATED);
 
+	}
+
+	@Transactional
+	@PutMapping(value = "/{id}/updateEmail", consumes = "application/json")
+	public ResponseEntity<ApiResponse<UserDTO>> updateEmail(@PathVariable(name = "id") Long id,
+															@RequestBody @Email Map<String, String> newEmail) {
+		Optional<User> userOptional = userService.findById(id);
+
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		User user = userOptional.get();
+		userService.updateUserEmail(user, newEmail.get("email"));
+		final UserDTO userDTO = userConverter.convertToDTO(user);
+		return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(userDTO).build(), HttpStatus.CREATED);
 	}
 
 }
