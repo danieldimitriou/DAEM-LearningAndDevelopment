@@ -10,7 +10,6 @@ export class HeaderComponent implements OnInit{
 
   //acts as a flag to check whether the user is logged in, and change the buttons accordingly
   isLoggedIn: boolean;
-
   constructor(private authService: AuthenticationService) {
   }
   ngOnInit() {

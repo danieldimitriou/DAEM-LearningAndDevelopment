@@ -55,7 +55,7 @@ export class ChangePasswordComponent implements OnInit{
               this.submitted = true;
               setTimeout(() => {
                 this.router.navigate(['/profile']);
-              }, 1500);
+              }, 500);
               // this.router.navigate(['/']);
             }
         },error =>{
