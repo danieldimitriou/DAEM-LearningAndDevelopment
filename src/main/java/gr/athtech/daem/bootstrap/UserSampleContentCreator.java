@@ -43,12 +43,15 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
 									   //						.department(Department.builder().name("C-level").build())
 									   .build());
 
-		List<Department> departments = List.of(Department.builder().name("C-Level").members(new ArrayList<>()).build());
+		List<Department> departments = List.of(Department.builder().name("C-Level").members(new ArrayList<>()).build(),
+											   Department.builder().name("A-Level").build(),
+											   Department.builder().name("B-Level").build());
 		departments.get(0).setHeadOfDepartment(users.get(0));
 		users.forEach(user -> departments.get(0).addMember(user));
 
-		List<Position> positions = List.of(Position.builder().name("Manager").level("2").users(new ArrayList<>()).build(),
-										   Position.builder().name("Subordinate").level("3").users(new ArrayList<>()).build());
+		List<Position> positions = List.of(Position.builder().name("Manager").level("2").users(new ArrayList<>())
+												   .build(), Position.builder().name("Subordinate").level("3")
+																	 .users(new ArrayList<>()).build());
 
 		users.get(0).setPosition(positions.get(0));
 		users.get(1).setPosition(positions.get(1));

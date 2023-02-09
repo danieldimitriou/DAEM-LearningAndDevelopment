@@ -16,11 +16,7 @@ public class DepartmentConverter {
 	private final UserConverter userConverter;
 
 	public Department convertToEntity(DepartmentDTO departmentDTO) {
-		Department department = new Department();
-		department.setName(departmentDTO.getName());
-		department.setHeadOfDepartment(userConverter.convertToEntity(departmentDTO.getHeadOfDepartment()));
-		department.setMembers(userConverter.convertToEntity(departmentDTO.getMembers()));
-		return department;
+		return modelMapper.map(departmentDTO, Department.class);
 	}
 
 
@@ -28,8 +24,10 @@ public class DepartmentConverter {
 		DepartmentDTO departmentDTO = new DepartmentDTO();
 		departmentDTO.setId(department.getId());
 		departmentDTO.setName(department.getName());
-		departmentDTO.setHeadOfDepartment(userConverter.convertToDTO(department.getHeadOfDepartment()));
-		departmentDTO.setMembers(userConverter.convertToDTO(department.getMembers()));
+		departmentDTO.setHeadOfDepartment(department.getHeadOfDepartment() != null ? userConverter.convertToDTO(
+				department.getHeadOfDepartment()) : null);
+		departmentDTO.setMembers(
+				department.getMembers() != null ? userConverter.convertToDTO(department.getMembers()) : null);
 		return departmentDTO;
 	}
 

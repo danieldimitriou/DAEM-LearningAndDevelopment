@@ -6,6 +6,7 @@ import gr.athtech.daem.converter.UserWithCertificationsConverter;
 import gr.athtech.daem.converter.UserWithCoursesConverter;
 import gr.athtech.daem.domain.Certification;
 import gr.athtech.daem.domain.Course;
+import gr.athtech.daem.domain.Department;
 import gr.athtech.daem.domain.Position;
 import gr.athtech.daem.domain.User;
 import gr.athtech.daem.dto.CertificationDTO;
@@ -19,6 +20,7 @@ import gr.athtech.daem.dto.UserWithCertificationsDTO;
 import gr.athtech.daem.dto.UserWithCoursesDTO;
 import gr.athtech.daem.service.BaseService;
 import gr.athtech.daem.service.CourseService;
+import gr.athtech.daem.service.DepartmentService;
 import gr.athtech.daem.service.UserService;
 import gr.athtech.daem.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +64,8 @@ public class UserController {
 	private final CertificationController certificationController;
 
 	private final CourseService courseService;
+
+	private final DepartmentService departmentService;
 
 	protected BaseService<User> getBaseService() {
 		return userService;
@@ -221,6 +225,26 @@ public class UserController {
 		userService.updateUserPosition(user, position);
 		final UserDTO userDTO = userConverter.convertToDTO(user);
 		return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(userDTO).build(), HttpStatus.CREATED);
+	}
+
+	@Transactional
+	@PutMapping("/{userId}/setDepartment/{departmentId}")
+	public ResponseEntity<ApiResponse<UserDTO>> setDepartment(@PathVariable(name = "userId") Long userId,
+															  @PathVariable(name = "departmentId") Long departmentId) {
+		Optional<User> userOptional = userService.findById(userId);
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		User user = userOptional.get();
+		Optional<Department> departmentOptional = departmentService.findById(departmentId);
+		if (departmentOptional.isEmpty()) {
+			throw new NoSuchElementException("Department not found");
+		}
+		Department department = departmentOptional.get();
+		departmentService.addMember(department, user);
+		final UserDTO userDTO = userConverter.convertToDTO(user);
+		return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(userDTO).build(), HttpStatus.CREATED);
+
 	}
 
 }

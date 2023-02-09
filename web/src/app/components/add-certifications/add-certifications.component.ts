@@ -37,36 +37,42 @@ export class AddCertificationsComponent implements OnInit{
 
   get f() { return this.addCertificationForm.controls; }
 
-  onSubmit(){
-    let awardingBody:TypeOfInstitution = {
-      description:this.f['awardingBodyDescription'].value
-    }
-
-    let certificationAuthority:Authority = {
-      name:this.f['certificationAuthorityName'].value,
-      awardingBody:awardingBody
-    }
-
-    let certification: Certification = {
-      name:this.f['certificationName'].value,
-      certificationAuthority:certificationAuthority
-    }
-    this.userService.addCertificationToUser(certification,this.authenticationService.currentUserValue.id).subscribe(
-      next =>{
-        if(next.status === 201){
-          this.submitted = true;
-          setTimeout(() => {
-            this.router.navigate(['/profile']);
-          }, 500);
-          this.addCertificationForm.reset();
-        }
-        console.log(next);
-      },error=>{
-        this.error=error;
-        this.submitted=false;
+  onSubmit() {
+    this.submitted = false;
+    this.error = '';
+    if (this.addCertificationForm.valid) {
+      let awardingBody: TypeOfInstitution = {
+        description: this.f['awardingBodyDescription'].value
       }
-    );
 
+      let certificationAuthority: Authority = {
+        name: this.f['certificationAuthorityName'].value,
+        awardingBody: awardingBody
+      }
+
+      let certification: Certification = {
+        name: this.f['certificationName'].value,
+        certificationAuthority: certificationAuthority
+      }
+      this.userService.addCertificationToUser(certification, this.authenticationService.currentUserValue.id).subscribe(
+        next => {
+          if (next.status === 201) {
+            this.submitted = true;
+            setTimeout(() => {
+              this.router.navigate(['/profile']);
+            }, 500);
+            this.addCertificationForm.reset();
+          }
+          console.log(next);
+        }, error => {
+          this.error = error;
+          this.submitted = false;
+        }
+      );
+
+    } else {
+      this.submitted = false;
+      this.error = "Invalid form fields.";
+    }
   }
-
 }
