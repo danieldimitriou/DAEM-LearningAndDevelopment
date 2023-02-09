@@ -1,4 +1,4 @@
-<div class="container rounded" style="border: 1px solid black ">
+<div class="container rounded"  >
     <h1 class="text-center rounded" >Pending Courses</h1>
 <div class="row m-4">
   <div class="col-sm-4 mb-3" *ngFor="let course of pendingCoursesList; let i = index"
@@ -8,7 +8,9 @@
         <h5 class="card-title text-center pb-2"><a class="text-decoration-none" href="">{{ course.name }}</a></h5>
         <p class="course-type"><b>Course Type:</b> {{course.type.name}}</p>
         <p class="course-type"><b>Certified By:</b> {{course.certification.certificationAuthority.name}}</p>
-        <button class="btn btn-primary" (click)="markPendingCourseAsComplete(course.id)" >Mark as complete</button>
+        <div class="text-center">
+          <button class="btn btn-primary" (click)="markPendingCourseAsComplete(course.id)" >Mark as complete</button>
+        </div>
       </div>
     </div>
   </div>
@@ -17,8 +19,9 @@
     <button type="button" class="btn btn-primary m-1" routerLink="/home/addCourse" >Add Course</button>
 </div>
 </div>
+<hr>
 
-<div class="container mt-5 mb-5 rounded" style="border: 1px solid black " >
+<div class="container mt-5 mb-5 rounded"  >
   <h1 class="text-center">Completed Courses</h1>
   <div class="row m-4" >
     <div class="col-sm-4 mb-3" *ngFor="let course of completedCoursesList; let i = index"

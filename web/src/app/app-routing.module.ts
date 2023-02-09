@@ -13,6 +13,9 @@ import {AddManagerComponent} from "./components/add-manager/add-manager.componen
 import {AddPositionComponent} from "./components/add-position/add-position.component";
 import {ChangePasswordComponent} from "./components/change-password/change-password.component";
 import {ViewEmployeeComponent} from "./components/admin-home/view-employee/view-employee.component";
+import {AdminAuthGuard} from "./helpers/admin-auth.guard";
+import {ChangeEmailComponent} from "./components/change-email/change-email.component";
+import {CertificationsListComponent} from "./components/home/certifications-list/certifications-list.component";
 
 const routes: Routes = [
   {path:'',canActivate:[AuthGuard],component:HomeComponent},
@@ -20,13 +23,15 @@ const routes: Routes = [
   {path:'profile',canActivate:[AuthGuard],component:ProfileComponent},
   {path: 'users/addManager',canActivate:[AuthGuard],component:AddManagerComponent},
   {path: 'users/addPosition',canActivate:[AuthGuard],component:AddPositionComponent},
+  {path: 'home/certifications',canActivate:[AuthGuard],component:CertificationsListComponent},
   {path: 'users/changePassword',canActivate:[AuthGuard],component:ChangePasswordComponent},
   {path:'signup',component:SignupComponent},
   {path:'login',component:LoginComponent},
   {path:'home/addCourse',canActivate:[AuthGuard], component:AddCourseComponent},
   {path:'users/addCertification',canActivate:[AuthGuard], component:AddCertificationsComponent},
-  {path:'admin-home',canActivate:[AuthGuard],component:AdminHomeComponent,children:[]},
-  {path:'admin-home/viewEmployee/:id',canActivate:[AuthGuard],component:ViewEmployeeComponent},
+  {path:'users/changeEmail',canActivate:[AuthGuard],component:ChangeEmailComponent},
+  {path:'admin-home',canActivate:[AdminAuthGuard],component:AdminHomeComponent,children:[]},
+  {path:'admin-home/viewEmployee/:id',canActivate:[AdminAuthGuard],component:ViewEmployeeComponent},
   {path: '**', component:NotFoundComponent}
 
 ];

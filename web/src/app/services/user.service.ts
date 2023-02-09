@@ -33,6 +33,9 @@ export class UserService {
   createCourse(course: Course, userId: number){
     return this.http.post(`${environment.apiUrl}/users/${userId}/addPendingCourse`,course,{observe:'response'});
   }
+  updateEmail(newEmail: string,userId:number){
+    return this.http.put(`${environment.apiUrl}/users/${userId}/updateEmail`, {"email":newEmail},{observe:'response'});
+  }
 
   changePassword(currentPassword: string, newPassword:string, newPasswordConfirmed:string, userId:number){
     return this.http.put(`${environment.apiUrl}/users/${userId}/change-password`,
@@ -49,11 +52,20 @@ export class UserService {
   }
 
   addPositionToUser(position: Position, userId: number){
-    return this.http.put(`${environment.apiUrl}/users/${userId}/setPosition`,position, {observe:'response'})
+    return this.http.put(`${environment.apiUrl}/users/${userId}/setPosition`,position, {observe:'response'});
   }
-  addManagerToUser(){}
+  addManagerToUser(managersEmail: string, userId: number){
+    return this.http.put(`${environment.apiUrl}/users/${userId}/setManager`,managersEmail,{observe:'response'});
+  }
 
   completePendingCourse(userId : number, pendingCourseId : number,){
     return this.http.post(`${environment.apiUrl}/users/${userId}/completePendingCourse/${pendingCourseId}`,{});
   }
+
+  getUserWithCertifications(userId:number){
+    return this.http.get(`${environment.apiUrl}/users/${userId}/certifications`);
+  }
+
+
+
 }

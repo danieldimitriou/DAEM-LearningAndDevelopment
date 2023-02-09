@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user.model";
@@ -14,14 +14,18 @@ export class AdminHomeComponent implements OnInit{
 
 
   constructor(private authService: AuthenticationService,
-              private userService: UserService) {
+              private userService: UserService,
+              private cdr: ChangeDetectorRef) {
   }
 
   ngOnInit() {
+    this.cdr.detectChanges();
     this.userService.getAll().subscribe(
       next =>{
         // console.log(next["data"])
-        for(let user of next["data"]){
+        // @ts-ignore
+        for(let user:User of next["data"]){
+
           this.users.push(user);
         }
       }
