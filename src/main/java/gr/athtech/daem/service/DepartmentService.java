@@ -3,7 +3,11 @@ package gr.athtech.daem.service;
 import gr.athtech.daem.domain.Department;
 import gr.athtech.daem.domain.User;
 
+import java.util.Optional;
+
 public interface DepartmentService extends BaseService<Department> {
+
+	Optional<Department> findById(Long id);
 
 	Department findDepartmentByHeadOfDepartment(User headOfDepartment);
 
