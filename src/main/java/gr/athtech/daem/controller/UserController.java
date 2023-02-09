@@ -1,14 +1,17 @@
 package gr.athtech.daem.controller;
 
+import gr.athtech.daem.converter.PositionConverter;
 import gr.athtech.daem.converter.UserConverter;
 import gr.athtech.daem.converter.UserWithCertificationsConverter;
 import gr.athtech.daem.converter.UserWithCoursesConverter;
 import gr.athtech.daem.domain.Certification;
 import gr.athtech.daem.domain.Course;
+import gr.athtech.daem.domain.Position;
 import gr.athtech.daem.domain.User;
 import gr.athtech.daem.dto.CertificationDTO;
 import gr.athtech.daem.dto.CourseDTO;
 import gr.athtech.daem.dto.LoginRequest;
+import gr.athtech.daem.dto.PositionDTO;
 import gr.athtech.daem.dto.RegisterRequest;
 import gr.athtech.daem.dto.ResetPasswordRequest;
 import gr.athtech.daem.dto.UserDTO;
@@ -51,6 +54,8 @@ public class UserController {
 	private final UserWithCoursesConverter userWithCoursesConverter;
 
 	private final UserWithCertificationsConverter userWithCertificationsConverter;
+
+	private final PositionConverter positionConverter;
 
 	private final CourseController courseController;
 
@@ -201,6 +206,21 @@ public class UserController {
 				userOptional.get());
 		return ResponseEntity.ok(
 				ApiResponse.<UserWithCertificationsDTO>builder().data(userWithCertificationsDTO).build());
+	}
+
+	@Transactional
+	@PutMapping("/{id}/setPosition")
+	public ResponseEntity<ApiResponse<UserDTO>> setPosition(@PathVariable(name = "id") Long id,
+															@RequestBody PositionDTO positionDTO) {
+		Optional<User> userOptional = userService.findById(id);
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		final User user = userOptional.get();
+		final Position position = positionConverter.convertToEntity(positionDTO);
+		userService.updateUserPosition(user, position);
+		final UserDTO userDTO = userConverter.convertToDTO(user);
+		return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(userDTO).build(), HttpStatus.CREATED);
 	}
 
 }
