@@ -22,25 +22,27 @@ import { AddPositionComponent } from './components/add-position/add-position.com
 import { AddManagerComponent } from './components/add-manager/add-manager.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { AddDepartmentComponent } from './add-department/add-department.component';
+import {FooterComponent} from "./components/common/footer/footer.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    LoginComponent,
-    SignupComponent,
-    AdminHomeComponent,
-    HeaderComponent,
-    CoursesListComponent,
-    AddCourseComponent,
-    AddCertificationsComponent,
-    NotFoundComponent,
-    ProfileComponent,
-    AddPositionComponent,
-    AddManagerComponent,
-    ResetPasswordComponent,
-    AddDepartmentComponent
-  ],
+    declarations: [
+        AppComponent,
+        HomeComponent,
+        LoginComponent,
+        SignupComponent,
+        AdminHomeComponent,
+        HeaderComponent,
+        CoursesListComponent,
+        AddCourseComponent,
+        AddCertificationsComponent,
+        NotFoundComponent,
+        ProfileComponent,
+        AddPositionComponent,
+        AddManagerComponent,
+        ResetPasswordComponent,
+        AddDepartmentComponent,
+        FooterComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
