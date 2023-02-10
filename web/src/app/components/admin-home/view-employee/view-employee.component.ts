@@ -57,12 +57,6 @@ export class ViewEmployeeComponent implements OnInit {
       })
   }
 
-
-    goBack(){
-      this.router.navigate(['/admin-home'], { relativeTo: this.route });
-
-  }
-
   goBack() {
     this.router.navigate(['/admin-home'], {relativeTo: this.route});
   }

@@ -59,9 +59,6 @@ export class UserService {
 
   }
 
-  addManagerToUser() {
-  }
-
   completePendingCourse(userId: number, pendingCourseId: number,) {
     return this.http.post(`${environment.apiUrl}/users/${userId}/completePendingCourse/${pendingCourseId}`, {});
   }
