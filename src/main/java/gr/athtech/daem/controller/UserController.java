@@ -9,15 +9,7 @@ import gr.athtech.daem.domain.Course;
 import gr.athtech.daem.domain.Department;
 import gr.athtech.daem.domain.Position;
 import gr.athtech.daem.domain.User;
-import gr.athtech.daem.dto.CertificationDTO;
-import gr.athtech.daem.dto.CourseDTO;
-import gr.athtech.daem.dto.LoginRequest;
-import gr.athtech.daem.dto.PositionDTO;
-import gr.athtech.daem.dto.RegisterRequest;
-import gr.athtech.daem.dto.ResetPasswordRequest;
-import gr.athtech.daem.dto.UserDTO;
-import gr.athtech.daem.dto.UserWithCertificationsDTO;
-import gr.athtech.daem.dto.UserWithCoursesDTO;
+import gr.athtech.daem.dto.*;
 import gr.athtech.daem.service.BaseService;
 import gr.athtech.daem.service.CourseService;
 import gr.athtech.daem.service.DepartmentService;
@@ -111,24 +103,21 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<ApiResponse<UserDTO>> login(@RequestBody LoginRequest loginRequest) {
-		UserDTO body = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
-		if (body == null) {
-			return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(body).build(), HttpStatus.NOT_FOUND);
-		}
-		return ResponseEntity.ok(ApiResponse.<UserDTO>builder().data(body).build());
+	public ResponseEntity<ApiResponse<AuthenticationResponse>> login(@RequestBody LoginRequest loginRequest) {
+		AuthenticationResponse authenticationResponse = userService.login(loginRequest.getEmail(),
+																		  loginRequest.getPassword());
+		return ResponseEntity.ok(ApiResponse.<AuthenticationResponse>builder().data(authenticationResponse).build());
 	}
 
 	@Transactional
 	@PostMapping("/register")
-	public ResponseEntity<ApiResponse<User>> register(@RequestBody @NotNull RegisterRequest registerRequest) {
-		User body = userService.register(registerRequest.getFirstName(), registerRequest.getLastName(),
-										 registerRequest.getEmail(), registerRequest.getPassword());
-		if (body == null) {
-			return new ResponseEntity<>(ApiResponse.<User>builder().data(body).build(),
-										HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-		return ResponseEntity.ok(ApiResponse.<User>builder().data(body).build());
+	public ResponseEntity<ApiResponse<AuthenticationResponse>> register(
+			@RequestBody @NotNull RegisterRequest registerRequest) {
+		AuthenticationResponse authenticationResponse = userService.register(registerRequest.getFirstName(),
+																			 registerRequest.getLastName(),
+																			 registerRequest.getEmail(),
+																			 registerRequest.getPassword());
+		return ResponseEntity.ok(ApiResponse.<AuthenticationResponse>builder().data(authenticationResponse).build());
 	}
 
 	@Transactional

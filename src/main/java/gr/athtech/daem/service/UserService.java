@@ -5,6 +5,7 @@ import gr.athtech.daem.domain.Course;
 import gr.athtech.daem.domain.Department;
 import gr.athtech.daem.domain.Position;
 import gr.athtech.daem.domain.User;
+import gr.athtech.daem.dto.AuthenticationResponse;
 import gr.athtech.daem.dto.UserDTO;
 
 import java.util.List;
@@ -56,9 +57,9 @@ public interface UserService extends BaseService<User> {
 
 	User deleteCompletedCourseFromUser(User userToBeUpdated, Course completedCourseToBeDeleted);
 
-	User register(String firstName, String lastName, String email, String password);
+	AuthenticationResponse register(String firstName, String lastName, String email, String password);
 
-	UserDTO login(String email, String password);
+	AuthenticationResponse login(String email, String password);
 
 	UserDTO changePassword(Long userId, String currentPassword, String newPassword, String newPasswordConfirmed);
 
