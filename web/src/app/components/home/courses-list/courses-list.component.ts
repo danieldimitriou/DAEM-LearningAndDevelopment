@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Course} from "../../../models/course.model";
 import {UserService} from "../../../services/user.service";
 import {AuthenticationService} from "../../../services/authentication.service";
@@ -16,11 +16,14 @@ export class CoursesListComponent implements OnInit{
   completedCoursesList: Course[] = [];
   user: User;
 
+  @Input() userId: number;
+
   constructor(private userService: UserService, private authService: AuthenticationService,private cdr: ChangeDetectorRef) {
+
   }
 
-  markPendingCourseAsComplete(courseId){
-    this.userService. completePendingCourse(this.authService.currentUserValue.id, courseId).subscribe(
+  markPendingCourseAsComplete(courseId: number, userId: number){
+    this.userService. completePendingCourse(userId, courseId).subscribe(
         next => {
           // console.log(next);
           const completedCourse = this.pendingCoursesList.find(course => course.id === courseId);
@@ -32,8 +35,8 @@ export class CoursesListComponent implements OnInit{
       )
   }
 
-  ngOnInit(){
-    this.userService.getUserWithCourses(this.authService.currentUserValue["id"]).subscribe(
+  getUserWithCourses(userId: number){
+    this.userService.getUserWithCourses(userId).subscribe(
       next => {
         // console.log(next);
         this.user = {
@@ -51,6 +54,17 @@ export class CoursesListComponent implements OnInit{
         // console.log(this.pendingCoursesList);
         // console.log(this.completedCoursesList);
       })
+  }
+
+  ngOnInit(){
+    if(this.userId === undefined){
+      this.userId = this.authService.currentUserValue.id;
+      this.getUserWithCourses(this.userId);
+    }else{
+      console.log(this.userId);
+      this.getUserWithCourses(this.userId);
+    }
+
     // this.userService.completePendingCourse(this.authService.currentUserValue.id, this.)
   }
 }

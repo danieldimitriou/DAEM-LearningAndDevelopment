@@ -9,7 +9,7 @@
         <p class="course-type"><b>Course Type:</b> {{course.type.name}}</p>
         <p class="course-type"><b>Certified By:</b> {{course.certification.certificationAuthority.name}}</p>
         <div class="text-center">
-          <button class="btn btn-primary" (click)="markPendingCourseAsComplete(course.id)" >Mark as complete</button>
+          <button class="btn btn-primary" (click)="markPendingCourseAsComplete(course.id,userId)" >Mark as complete</button>
         </div>
       </div>
     </div>

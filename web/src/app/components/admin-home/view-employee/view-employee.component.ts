@@ -13,8 +13,9 @@ import {Certification} from "../../../models/certification.model";
 })
 export class ViewEmployeeComponent implements OnInit {
 
-  userId: number;
+  employeeId: number;
   user:User;
+  // currentUserId = this.authService.currentUserValue.id;
   certifications: Certification[] = [];
 
   pendingCoursesList: Course[]= [];
@@ -28,14 +29,14 @@ export class ViewEmployeeComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-      this.userId = params['id'];
+      this.employeeId = params['id'];
     });
-    console.log(this.userId);
+    console.log(this.employeeId);
 
-    this.userService.getUserById(this.userId).subscribe(
+    this.userService.getUserById(this.employeeId).subscribe(
       next => {
         this.user = next["data"];
-        this.userService.getUserWithCourses(this.userId).subscribe(
+        this.userService.getUserWithCourses(this.employeeId).subscribe(
           next => {
             console.log(next);
             this.pendingCoursesList = next["data"]["pendingCourses"];
