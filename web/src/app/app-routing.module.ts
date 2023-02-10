@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./components/home/home.component";
 import {SignupComponent} from "./components/signup/signup.component";
 import {LoginComponent} from "./components/login/login.component";
@@ -12,20 +12,22 @@ import {ProfileComponent} from "./components/profile/profile.component";
 import {AddManagerComponent} from "./components/add-manager/add-manager.component";
 import {AddPositionComponent} from "./components/add-position/add-position.component";
 import {ChangePasswordComponent} from "./components/change-password/change-password.component";
+import {ViewEmployeeComponent} from "./components/admin-home/view-employee/view-employee.component";
 
 const routes: Routes = [
-  {path:'',canActivate:[AuthGuard],component:HomeComponent},
-  {path:'home',canActivate:[AuthGuard],component:HomeComponent},
-  {path:'profile',canActivate:[AuthGuard],component:ProfileComponent},
-  {path: 'users/addManager',canActivate:[AuthGuard],component:AddManagerComponent},
-  {path: 'users/addPosition',canActivate:[AuthGuard],component:AddPositionComponent},
-  {path: 'users/changePassword',canActivate:[AuthGuard],component:ChangePasswordComponent},
-  {path:'signup',component:SignupComponent},
-  {path:'login',component:LoginComponent},
-  {path:'home/addCourse',canActivate:[AuthGuard], component:AddCourseComponent},
-  {path:'users/addCertification',canActivate:[AuthGuard], component:AddCertificationsComponent},
-  {path:'admin-home',canActivate:[AuthGuard],component:AdminHomeComponent},
-  {path: '**', component:NotFoundComponent}
+  {path: '', canActivate: [AuthGuard], component: HomeComponent},
+  {path: 'home', canActivate: [AuthGuard], component: HomeComponent},
+  {path: 'profile', canActivate: [AuthGuard], component: ProfileComponent},
+  {path: 'users/addManager', canActivate: [AuthGuard], component: AddManagerComponent},
+  {path: 'users/addPosition', canActivate: [AuthGuard], component: AddPositionComponent},
+  {path: 'users/changePassword', canActivate: [AuthGuard], component: ChangePasswordComponent},
+  {path: 'signup', component: SignupComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'home/addCourse', canActivate: [AuthGuard], component: AddCourseComponent},
+  {path: 'users/addCertification', canActivate: [AuthGuard], component: AddCertificationsComponent},
+  {path: 'admin-home', canActivate: [AuthGuard], component: AdminHomeComponent, children: []},
+  {path: 'admin-home/viewEmployee/:id', canActivate: [AuthGuard], component: ViewEmployeeComponent},
+  {path: '**', component: NotFoundComponent}
 
 ];
 

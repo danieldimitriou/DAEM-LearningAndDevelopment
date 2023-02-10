@@ -5,11 +5,15 @@
   <div class="col-sm-4 mb-3" *ngFor="let user of users;" >
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title text-center pb-2 text-decoration-none"><a class="text-decoration-none" href="" >{{ user.firstName}} {{user.lastName}}</a></h5>
-<!--        <p class="user-department-name"><b>Department:</b> {{user.department.name}}</p>-->
+        <h5 class="card-title text-center pb-2 text-decoration-none"><a
+          class="text-decoration-none">{{user.firstName}} {{user.lastName}}</a></h5>
+        <!--        <p class="user-department-name"><b>Department:</b> {{user.department.name}}</p>-->
         <p class="user-email"><b>Email:</b> {{user.email}}</p>
+        <p class="user-email"><b>Position:</b> {{user.position.name}}</p>
+        <p class="user-email"><b>Level:</b> {{user.position.level}}</p>
+        <p class="user-email"><b>Department:</b> {{user.department.name}}</p>
         <div class="text-center">
-          <button class="btn btn-primary" routerLink="">View Employee</button>
+          <button class="btn btn-primary" [routerLink]="['viewEmployee',user.id]"> View Employee</button>
         </div>
       </div>
     </div>

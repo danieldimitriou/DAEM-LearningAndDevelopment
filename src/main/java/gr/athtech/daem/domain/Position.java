@@ -26,7 +26,7 @@ import java.util.List;
 @SequenceGenerator(name = "idGenerator", allocationSize = 1)
 public class Position extends BaseModel {
 
-	@Column(length = 50, nullable = false, unique = true)
+	@Column(length = 50, nullable = false)
 	@NotEmpty
 	@NotNull
 	private String name;

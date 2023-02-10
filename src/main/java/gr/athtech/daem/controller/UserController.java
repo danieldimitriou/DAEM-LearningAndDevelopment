@@ -1,14 +1,18 @@
 package gr.athtech.daem.controller;
 
+import gr.athtech.daem.converter.PositionConverter;
 import gr.athtech.daem.converter.UserConverter;
 import gr.athtech.daem.converter.UserWithCertificationsConverter;
 import gr.athtech.daem.converter.UserWithCoursesConverter;
 import gr.athtech.daem.domain.Certification;
 import gr.athtech.daem.domain.Course;
+import gr.athtech.daem.domain.Department;
+import gr.athtech.daem.domain.Position;
 import gr.athtech.daem.domain.User;
 import gr.athtech.daem.dto.CertificationDTO;
 import gr.athtech.daem.dto.CourseDTO;
 import gr.athtech.daem.dto.LoginRequest;
+import gr.athtech.daem.dto.PositionDTO;
 import gr.athtech.daem.dto.RegisterRequest;
 import gr.athtech.daem.dto.ResetPasswordRequest;
 import gr.athtech.daem.dto.UserDTO;
@@ -16,6 +20,7 @@ import gr.athtech.daem.dto.UserWithCertificationsDTO;
 import gr.athtech.daem.dto.UserWithCoursesDTO;
 import gr.athtech.daem.service.BaseService;
 import gr.athtech.daem.service.CourseService;
+import gr.athtech.daem.service.DepartmentService;
 import gr.athtech.daem.service.UserService;
 import gr.athtech.daem.transfer.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
@@ -52,11 +58,15 @@ public class UserController {
 
 	private final UserWithCertificationsConverter userWithCertificationsConverter;
 
+	private final PositionConverter positionConverter;
+
 	private final CourseController courseController;
 
 	private final CertificationController certificationController;
 
 	private final CourseService courseService;
+
+	private final DepartmentService departmentService;
 
 	protected BaseService<User> getBaseService() {
 		return userService;
@@ -201,6 +211,76 @@ public class UserController {
 				userOptional.get());
 		return ResponseEntity.ok(
 				ApiResponse.<UserWithCertificationsDTO>builder().data(userWithCertificationsDTO).build());
+	}
+
+	@Transactional
+	@PutMapping("/{id}/setPosition")
+	public ResponseEntity<ApiResponse<UserDTO>> setPosition(@PathVariable(name = "id") Long id,
+															@RequestBody PositionDTO positionDTO) {
+		Optional<User> userOptional = userService.findById(id);
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		final User user = userOptional.get();
+		final Position position = positionConverter.convertToEntity(positionDTO);
+		userService.updateUserPosition(user, position);
+		final UserDTO userDTO = userConverter.convertToDTO(user);
+		return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(userDTO).build(), HttpStatus.CREATED);
+	}
+
+	@Transactional
+	@PutMapping("/{userId}/setDepartment/{departmentId}")
+	public ResponseEntity<ApiResponse<UserDTO>> setDepartment(@PathVariable(name = "userId") Long userId,
+															  @PathVariable(name = "departmentId") Long departmentId) {
+		Optional<User> userOptional = userService.findById(userId);
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		User user = userOptional.get();
+		Optional<Department> departmentOptional = departmentService.findById(departmentId);
+		if (departmentOptional.isEmpty()) {
+			throw new NoSuchElementException("Department not found");
+		}
+		Department department = departmentOptional.get();
+		departmentService.addMember(department, user);
+		final UserDTO userDTO = userConverter.convertToDTO(user);
+		return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(userDTO).build(), HttpStatus.CREATED);
+
+	}
+
+	@PutMapping("/{id}/setManager")
+	public ResponseEntity<ApiResponse<UserDTO>> setManager(@PathVariable(name = "id") Long id,
+														   @RequestBody @Email Map<String, String> managerEmail) {
+		Optional<User> userOptional = userService.findById(id);
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		User user = userOptional.get();
+		User manager = userService.findByEmail(managerEmail.get("managerEmail"));
+		if (manager == null) {
+			throw new NoSuchElementException("Wrong email");
+		}
+		if (!manager.getPosition().getName().equalsIgnoreCase("Manager")) {
+			throw new IllegalArgumentException("Email does not belong to a manager");
+		}
+		userService.updateUserManager(user, manager);
+		final UserDTO userDTO = userConverter.convertToDTO(user);
+		return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(userDTO).build(), HttpStatus.CREATED);
+	}
+
+	@Transactional
+	@PutMapping(value = "/{id}/updateEmail", consumes = "application/json")
+	public ResponseEntity<ApiResponse<UserDTO>> updateEmail(@PathVariable(name = "id") Long id,
+															@RequestBody @Email Map<String, String> newEmail) {
+		Optional<User> userOptional = userService.findById(id);
+
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("User not found");
+		}
+		User user = userOptional.get();
+		userService.updateUserEmail(user, newEmail.get("email"));
+		final UserDTO userDTO = userConverter.convertToDTO(user);
+		return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(userDTO).build(), HttpStatus.CREATED);
 	}
 
 }

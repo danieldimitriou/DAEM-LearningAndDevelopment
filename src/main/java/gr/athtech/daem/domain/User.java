@@ -7,15 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -53,6 +45,9 @@ public class User extends BaseModel {
 	@NotEmpty
 	private String password;
 
+	@Enumerated(EnumType.STRING)
+	private Role role;
+
 	@JsonManagedReference
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Position position;
@@ -79,6 +74,9 @@ public class User extends BaseModel {
 	private List<Course> completedCourses;
 
 	public void setPosition(final Position position) {
+		if (position.getUsers() == null) {
+			position.setUsers(new ArrayList<>());
+		}
 		position.getUsers().add(this);
 		this.position = position;
 	}
