@@ -18,6 +18,7 @@ export class ViewEmployeeComponent implements OnInit {
   certifications: Certification[] = [];
 
   pendingCoursesList: Course[]= [];
+  completedCoursesList:Course[] = [];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -38,6 +39,7 @@ export class ViewEmployeeComponent implements OnInit {
           next => {
             console.log(next);
             this.pendingCoursesList = next["data"]["pendingCourses"];
+            this.completedCoursesList = next["data"]["completedCourses"];
             console.log(this.pendingCoursesList);
 
           }

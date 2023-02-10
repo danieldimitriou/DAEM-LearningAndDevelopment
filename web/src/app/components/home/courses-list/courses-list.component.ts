@@ -20,7 +20,7 @@ export class CoursesListComponent implements OnInit{
   }
 
   markPendingCourseAsComplete(courseId){
-    this.userService.completePendingCourse(this.authService.currentUserValue.id, courseId).subscribe(
+    this.userService. completePendingCourse(this.authService.currentUserValue.id, courseId).subscribe(
         next => {
           // console.log(next);
           const completedCourse = this.pendingCoursesList.find(course => course.id === courseId);
