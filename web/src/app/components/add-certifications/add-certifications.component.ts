@@ -29,13 +29,15 @@ export class AddCertificationsComponent implements OnInit{
 
   ngOnInit(): void {
     this.addCertificationForm = this.formBuilder.group({
-      certificationName:['', Validators.required],
-      certificationAuthorityName:['',Validators.required],
-      awardingBodyDescription:['',Validators.required]
+      certificationName: ['', Validators.required],
+      certificationAuthorityName: ['', Validators.required],
+      awardingBodyDescription: ['', Validators.required]
     })
   }
 
-  get f() { return this.addCertificationForm.controls; }
+  get f() {
+    return this.addCertificationForm.controls;
+  }
 
   onSubmit() {
     this.submitted = false;

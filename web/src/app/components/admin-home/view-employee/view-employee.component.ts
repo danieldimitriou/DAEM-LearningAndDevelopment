@@ -11,13 +11,14 @@ import {Certification} from "../../../models/certification.model";
   templateUrl: './view-employee.component.html',
   styleUrls: ['./view-employee.component.css']
 })
-export class ViewEmployeeComponent implements OnInit{
+export class ViewEmployeeComponent implements OnInit {
 
   userId: number;
   user:User;
   certifications: Certification[] = [];
 
   pendingCoursesList: Course[]= [];
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private userService: UserService,
@@ -26,12 +27,12 @@ export class ViewEmployeeComponent implements OnInit{
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-        this.userId = params['id'];
-      });
+      this.userId = params['id'];
+    });
     console.log(this.userId);
 
     this.userService.getUserById(this.userId).subscribe(
-      next =>{
+      next => {
         this.user = next["data"];
         this.userService.getUserWithCourses(this.userId).subscribe(
           next => {
@@ -44,6 +45,7 @@ export class ViewEmployeeComponent implements OnInit{
         // console.log(this.user);
       }
     )
+
     this.userService.getUserWithCertifications(this.authService.currentUserValue.id).subscribe(
       next => {
         // console.log(next);
@@ -58,8 +60,12 @@ export class ViewEmployeeComponent implements OnInit{
 
     goBack(){
       this.router.navigate(['/admin-home'], { relativeTo: this.route });
+
   }
 
+  goBack() {
+    this.router.navigate(['/admin-home'], {relativeTo: this.route});
+  }
 
 
 }

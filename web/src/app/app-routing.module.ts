@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./components/home/home.component";
 import {SignupComponent} from "./components/signup/signup.component";
 import {LoginComponent} from "./components/login/login.component";
@@ -33,7 +33,6 @@ const routes: Routes = [
   {path:'admin-home',canActivate:[AdminAuthGuard],component:AdminHomeComponent,children:[]},
   {path:'admin-home/viewEmployee/:id',canActivate:[AdminAuthGuard],component:ViewEmployeeComponent},
   {path: '**', component:NotFoundComponent}
-
 ];
 
 @NgModule({

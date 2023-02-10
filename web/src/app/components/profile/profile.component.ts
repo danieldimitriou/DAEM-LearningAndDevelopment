@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit{
         // console.log(next["data"]);
           this.user=next["data"];
         // console.log(this.user);
+
       }
     )
   }
