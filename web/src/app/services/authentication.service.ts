@@ -5,11 +5,12 @@ import {catchError, map} from 'rxjs/operators';
 
 import {User} from "../models/user.model";
 import {environment} from "../../environments/environment";
+import {Role} from "../models/role.model";
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   readonly currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  private currentUser: Observable<User>;
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -19,6 +20,10 @@ export class AuthenticationService {
 
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
+  }
+
+  public get isUserAdmin(){
+    return this.currentUserValue.role;
   }
 
 
@@ -32,7 +37,8 @@ export class AuthenticationService {
           if (res.status == 200) {
             let user: User = {
               id: res.body["data"]["id"],
-              authData: window.btoa(email + ':' + password)
+              authData: window.btoa(email + ':' + password),
+              role: res.body["data"]["role"]
             }
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);
@@ -55,9 +61,16 @@ export class AuthenticationService {
         map(res => {
           console.log(res.status)
           if (res.status == 200) {
+            let role:Role;
+            if(res.body["data"]["role"] === Role.Admin){
+              role = Role.Admin
+            }else{
+              role = Role.User
+            }
             let user: User = {
               id: res.body["data"]["id"],
-              authData: window.btoa(data.email + ':' + data.password)
+              authData: window.btoa(data.email + ':' + data.password),
+              role: role
             }
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);

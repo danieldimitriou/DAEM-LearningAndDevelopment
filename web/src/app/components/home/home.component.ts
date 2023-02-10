@@ -40,8 +40,8 @@ export class HomeComponent implements OnInit{
           this.completedCoursesList.push(completedCourse);
         }
 
-        console.log(this.pendingCoursesList);
-        console.log(this.completedCoursesList);
+        // console.log(this.pendingCoursesList);
+        // console.log(this.completedCoursesList);
 
       }
     )

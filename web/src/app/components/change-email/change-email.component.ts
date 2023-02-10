@@ -5,12 +5,12 @@ import {UserService} from "../../services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
-  selector: 'app-add-manager',
-  templateUrl: './add-manager.component.html',
-  styleUrls: ['./add-manager.component.css']
+  selector: 'app-change-email',
+  templateUrl: './change-email.component.html',
+  styleUrls: ['./change-email.component.css']
 })
-export class AddManagerComponent implements OnInit{
-  updateManagerForm:FormGroup;
+export class ChangeEmailComponent implements OnInit{
+  updateEmailForm:FormGroup;
   submitted: boolean;
   error:string;
 
@@ -20,35 +20,32 @@ export class AddManagerComponent implements OnInit{
               private route: ActivatedRoute,
               private router: Router ) {
   }
-
-  ngOnInit(){
-    this.updateManagerForm = this.formBuilder.group({
-      managersEmail:['',Validators.email]
-    })
+  ngOnInit() {
+    this.updateEmailForm =   this.formBuilder.group({
+      newEmail:['',Validators.email],
+      newEmailConfirmed:['',Validators.email],
+    },)
   }
 
-  get f() {
-    return this.updateManagerForm.controls;
-  }
+  get f() { return this.updateEmailForm.controls; }
+
   onSubmit(){
-    this.error = '';
+    this.error='';
     this.submitted = false;
-
-    this.userService.addManagerToUser(this.f['managersEmail'].value,this.authService.currentUserValue.id).subscribe(
+    let email = this.f['newEmail'].value;
+    this.userService.updateEmail(email,this.authService.currentUserValue.id).subscribe(
       next =>{
         if(next.status === 201){
-            this.submitted = true;
+          this.submitted = true;
           setTimeout(() => {
             this.router.navigate(['/profile'])
           }, 500);
-        }else{
-          this.submitted=false;
-          this.error = 'error';
+          console.log("success");
+
         }
       },error =>{
         this.error = error;
       }
-    )
-
+    );
   }
 }
