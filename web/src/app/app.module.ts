@@ -17,11 +17,12 @@ import {NotFoundComponent} from './components/not-found/not-found.component';
 import {BasicAuthInterceptor, ErrorInterceptor} from "./helpers";
 import {ProfileComponent} from './components/profile/profile.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {AddPositionComponent} from './components/add-position/add-position.component';
-import {AddManagerComponent} from './components/add-manager/add-manager.component';
-import {ChangePasswordComponent} from './components/change-password/change-password.component';
-import {AddDepartmentComponent} from './components/add-department/add-department.component';
-import {ViewEmployeeComponent} from './components/admin-home/view-employee/view-employee.component';
+import { AddPositionComponent } from './components/add-position/add-position.component';
+import { AddManagerComponent } from './components/add-manager/add-manager.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ViewEmployeeComponent } from './components/admin-home/view-employee/view-employee.component';
+import { ChangeEmailComponent } from './components/change-email/change-email.component';
+import { CertificationsListComponent } from './components/home/certifications-list/certifications-list.component';
 
 @NgModule({
   declarations: [
@@ -39,8 +40,9 @@ import {ViewEmployeeComponent} from './components/admin-home/view-employee/view-
     AddPositionComponent,
     AddManagerComponent,
     ChangePasswordComponent,
-    AddDepartmentComponent,
-    ViewEmployeeComponent
+    ViewEmployeeComponent,
+    ChangeEmailComponent,
+    CertificationsListComponent
   ],
   imports: [
     BrowserModule,

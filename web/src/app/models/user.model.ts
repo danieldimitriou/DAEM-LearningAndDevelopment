@@ -2,6 +2,7 @@ import {Position} from "./position.model";
 import {Department} from "./department.model";
 import {Certification} from "./certification.model";
 import {Course} from "./course.model";
+import {Role} from "./role.model";
 
 export class User {
   id?:number;
@@ -9,6 +10,7 @@ export class User {
   lastName?: string;
   email?: string;
   password?: string;
+  role?:Role;
   position?: Position;
   manager?:User;
   department?:Department;
