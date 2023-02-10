@@ -23,6 +23,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { ViewEmployeeComponent } from './components/admin-home/view-employee/view-employee.component';
 import { ChangeEmailComponent } from './components/change-email/change-email.component';
 import { CertificationsListComponent } from './components/home/certifications-list/certifications-list.component';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { CertificationsListComponent } from './components/home/certifications-li
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatButtonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

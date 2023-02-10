@@ -22,7 +22,7 @@
       <div *ngIf="!error && departmentSubmitted && positionSubmitted" class="alert alert-info mt-3 mb-0">Position
         Added
       </div>
-      <button *ngIf="!submitted" class="btn btn-primary">Add Position</button>
+      <button mat-raised-button class="bg-dark text-white" *ngIf="!submitted" >Add Position</button>
     </form>
   </div>
 </div>

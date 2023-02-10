@@ -13,7 +13,7 @@
       <div>
         <a class="button" routerLink="/signup">Don't have an account? Sign Up!</a>
       </div>
-      <button [disabled]="loading" class="btn btn-primary">
+      <button mat-raised-button class="bg-dark text-white" [disabled]="loading" >
         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
         Login
       </button>

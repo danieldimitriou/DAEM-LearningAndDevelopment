@@ -29,13 +29,16 @@
           </div>
       </div>
     </div>
-  </div>
+      <div class="text-center">
+        <button mat-raised-button class="bg-dark text-white" routerLink="certifications">Certifications</button>
+      </div>
+    </div>
 </div>
 
   <app-courses-list [userId]="employeeId"></app-courses-list>
 
   <div class="text-center mb-3">
-    <button class="btn btn-primary btn-lg" (click)="goBack()">Go Back</button>
+    <button mat-raised-button class="bg-dark text-white" (click)="goBack()">Go Back</button>
   </div>
 </div>
 <!--</div>-->
