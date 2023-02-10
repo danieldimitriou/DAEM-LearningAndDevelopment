@@ -30,8 +30,10 @@ const routes: Routes = [
   {path:'home/addCourse',canActivate:[AuthGuard], component:AddCourseComponent},
   {path:'users/addCertification',canActivate:[AuthGuard], component:AddCertificationsComponent},
   {path:'users/changeEmail',canActivate:[AuthGuard],component:ChangeEmailComponent},
-  {path:'admin-home',canActivate:[AdminAuthGuard],component:AdminHomeComponent,children:[]},
+  {path:'admin-home',canActivate:[AdminAuthGuard],component:AdminHomeComponent},
   {path:'admin-home/viewEmployee/:id',canActivate:[AdminAuthGuard],component:ViewEmployeeComponent},
+  {path:'admin-home/viewEmployee/:id/addCourse',canActivate:[AdminAuthGuard],component:AddCourseComponent},
+  {path:'admin-home/viewEmployee/:id/certifications',canActivate:[AdminAuthGuard],component:CertificationsListComponent},
   {path: '**', component:NotFoundComponent}
 ];
 

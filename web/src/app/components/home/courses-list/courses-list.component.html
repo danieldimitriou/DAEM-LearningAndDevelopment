@@ -5,19 +5,24 @@
        [ngClass]="{ 'ml-auto': (i + 1) % 3 === 0 }">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title text-center pb-2"><a class="text-decoration-none" href="">{{ course.name }}</a></h5>
+        <h4 class="card-title text-center pb-2"><b>{{ course.name}}</b></h4>
         <p class="course-type"><b>Course Type:</b> {{course.type.name}}</p>
         <p class="course-type"><b>Certified By:</b> {{course.certification.certificationAuthority.name}}</p>
         <div class="text-center">
-          <button class="btn btn-primary" (click)="markPendingCourseAsComplete(course.id)" >Mark as complete</button>
+          <button mat-raised-button class="bg-dark text-white" (click)="markPendingCourseAsComplete(course.id,userId)" >Mark as complete</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-<div class="buttons d-flex justify-content-center">
-    <button type="button" class="btn btn-primary m-1" routerLink="/home/addCourse" >Add Course</button>
+<div *ngIf="isAdminView" class="buttons d-flex justify-content-center">
+  <button mat-raised-button routerLink="/admin-home/viewEmployee/{{userId}}/addCourse/" class="bg-dark text-white">Add Course</button>
 </div>
+
+<div *ngIf="!isAdminView" class="buttons d-flex justify-content-center">
+  <button mat-raised-button class="bg-dark text-white" routerLink="/home/addCourse" >Add Course</button>
+</div>
+
 </div>
 <hr>
 
@@ -28,7 +33,7 @@
          [ngClass]="{ 'ml-auto': (i + 1) % 3 === 0 }">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title text-center pb-2"><a class="text-decoration-none" href="">{{ course.name }}</a></h5>
+          <h4 class="card-title text-center pb-2"><b>{{ course.name}}</b></h4>
           <p class="course-type"><b>Course Type:</b> {{course.type.name}}</p>
           <p class="course-type"><b>Certified By:</b> {{course.certification.certificationAuthority.name}}</p>
         </div>

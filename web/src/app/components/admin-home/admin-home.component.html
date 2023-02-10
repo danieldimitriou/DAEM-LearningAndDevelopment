@@ -4,7 +4,7 @@
       <div class="col-sm-4 mb-3" *ngFor="let user of users;" >
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title text-center pb-2 text-decoration-none"><a class="text-decoration-none">{{user.firstName}} {{user.lastName}}</a></h5>
+            <h3 class="card-title text-center pb-2" >{{user.firstName}} {{user.lastName}}</h3>
     <!--        <p class="user-department-name"><b>Department:</b> {{user.department.name}}</p>-->
             <p><b>Email:</b> {{user.email}}</p>
             <p *ngIf="user.position?.name"><b>Position:</b> {{user.position?.name}}</p>
@@ -12,11 +12,9 @@
             <p *ngIf="user.department?.name"><b>Department:</b> {{user.department?.name}}</p>
           </div>
           <div class="text-center mb-4">
-            <button class="btn btn-primary" [routerLink]="['viewEmployee',user.id]">View Employee</button>
+            <button mat-raised-button class="bg-dark text-white" [routerLink]="['viewEmployee',user.id]">View Employee</button>
           </div>
-
         </div>
       </div>
     </div>
-
 </div>
