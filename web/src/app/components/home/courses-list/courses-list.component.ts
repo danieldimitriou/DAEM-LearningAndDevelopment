@@ -15,6 +15,7 @@ export class CoursesListComponent implements OnInit{
   pendingCoursesList: Course[] = [];
   completedCoursesList: Course[] = [];
   user: User;
+  isAdminView:boolean;
 
   @Input() userId: number;
 
@@ -58,10 +59,12 @@ export class CoursesListComponent implements OnInit{
 
   ngOnInit(){
     if(this.userId === undefined){
+      this.isAdminView = false;
       this.userId = this.authService.currentUserValue.id;
       this.getUserWithCourses(this.userId);
     }else{
       console.log(this.userId);
+      this.isAdminView = true;
       this.getUserWithCourses(this.userId);
     }
 
