@@ -38,9 +38,9 @@ export class AddCourseComponent implements OnInit{
       typeOfCourseName: ['', Validators.required],
       typeOfCourseDescription: ['', Validators.required],
       areasOfStudy: this.formBuilder.array([this.newAreaOfStudy()]),
-      certificationName:['', Validators.required],
-      certificationAuthorityName:['',Validators.required],
-      awardingBodyDescription:['',Validators.required]
+      certificationName: ['', Validators.required],
+      certificationAuthorityName: ['', Validators.required],
+      awardingBodyDescription: ['', Validators.required]
     });
     // get return url from route parameters or default to '/'
     // if a user enters /admin-home but needs login, they get redirected
@@ -49,27 +49,29 @@ export class AddCourseComponent implements OnInit{
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  areasOfStudyGet(): FormArray{
+  areasOfStudyGet(): FormArray {
     return this.addCourseForm.get("areasOfStudy") as FormArray;
   }
 
-  newAreaOfStudy():FormGroup{
+  newAreaOfStudy(): FormGroup {
     return this.formBuilder.group({
-      name:['',Validators.required],
-      description:['',Validators.required]
+      name: ['', Validators.required],
+      description: ['', Validators.required]
     })
   }
 
-  addAreaOfStudy(){
+  addAreaOfStudy() {
     this.counter++;
     this.areasOfStudyGet().push(this.newAreaOfStudy());
   }
 
-  removeAreaOfStudy(){
-    this.areasOfStudyGet().removeAt(this.areasOfStudyGet().length-1)
+  removeAreaOfStudy() {
+    this.areasOfStudyGet().removeAt(this.areasOfStudyGet().length - 1)
   }
 
-  get f() { return this.addCourseForm.controls; }
+  get f() {
+    return this.addCourseForm.controls;
+  }
 
   // addAreaOfStudy() {
   //   const control = <FormArray>this.addCourseForm.controls['areasOfStudy'];
@@ -89,14 +91,14 @@ export class AddCourseComponent implements OnInit{
   // }
 
 
-  onSubmit(){
-    let awardingBody:TypeOfInstitution = {
-      description:this.f['awardingBodyDescription'].value
+  onSubmit() {
+    let awardingBody: TypeOfInstitution = {
+      description: this.f['awardingBodyDescription'].value
     }
 
-    let certificationAuthority:Authority = {
-      name:this.f['certificationAuthorityName'].value,
-      awardingBody:awardingBody
+    let certificationAuthority: Authority = {
+      name: this.f['certificationAuthorityName'].value,
+      awardingBody: awardingBody
     }
 
     let certification: Certification = {
@@ -130,7 +132,7 @@ export class AddCourseComponent implements OnInit{
           this.submitted = true;
           setTimeout(() => {
             this.router.navigate(['/'])
-          },500)
+          }, 500)
         }
       },error=>{
         this.error = error;

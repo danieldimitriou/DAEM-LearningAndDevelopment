@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit{
     this.userService.getUserById(this.authService.currentUserValue.id).subscribe(
       next =>{
         console.log(next["data"]);
-          this.user=next["data"];
+        this.user = next["data"];
         console.log(this.user);
       }
     )

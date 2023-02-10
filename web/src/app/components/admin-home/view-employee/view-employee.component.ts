@@ -8,10 +8,11 @@ import {User} from "../../../models/user.model";
   templateUrl: './view-employee.component.html',
   styleUrls: ['./view-employee.component.css']
 })
-export class ViewEmployeeComponent implements OnInit{
+export class ViewEmployeeComponent implements OnInit {
 
   userId: number;
-  user:User;
+  user: User;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private userService: UserService,) {
@@ -19,22 +20,21 @@ export class ViewEmployeeComponent implements OnInit{
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
-        this.userId = params['id'];
-      });
+      this.userId = params['id'];
+    });
     console.log(this.userId);
 
     this.userService.getUserById(this.userId).subscribe(
-      next =>{
+      next => {
         this.user = next["data"];
         console.log(this.user);
       }
     )
-    }
-
-    goBack(){
-      this.router.navigate(['/admin-home'], { relativeTo: this.route });
   }
 
+  goBack() {
+    this.router.navigate(['/admin-home'], {relativeTo: this.route});
+  }
 
 
 }
