@@ -240,6 +240,7 @@ public class UserController {
 
 	}
 
+	@Transactional
 	@PutMapping("/{id}/setManager")
 	public ResponseEntity<ApiResponse<UserDTO>> setManager(@PathVariable(name = "id") Long id,
 														   @RequestBody @Email Map<String, String> managerEmail) {

@@ -22,8 +22,7 @@ public class WebSecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		//TODO: implement filtering
 		http.csrf().disable().cors().and().authorizeHttpRequests().requestMatchers("/", "/users/login",
-																				   "/users/register",
-																				   "http://localhost:4200").permitAll()
+																				   "/users/register").permitAll()
 			.requestMatchers("/users").hasRole("ADMIN").anyRequest().authenticated().and().sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authenticationProvider(authenticationProvider)
 			.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
