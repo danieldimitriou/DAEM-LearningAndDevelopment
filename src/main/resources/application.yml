@@ -38,7 +38,7 @@ logging:
     pattern:
         console: "%d %-5level %logger : %msg%n"
     level:
-        org.springframework: info
-        org.hibernate: debug
+        org.springframework: error
+        org.hibernate: error
 server:
     port: 8080
