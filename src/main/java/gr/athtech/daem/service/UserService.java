@@ -6,7 +6,6 @@ import gr.athtech.daem.domain.Department;
 import gr.athtech.daem.domain.Position;
 import gr.athtech.daem.domain.User;
 import gr.athtech.daem.dto.AuthenticationResponse;
-import gr.athtech.daem.dto.UserDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -61,6 +60,7 @@ public interface UserService extends BaseService<User> {
 
 	AuthenticationResponse login(String email, String password);
 
-	UserDTO changePassword(Long userId, String currentPassword, String newPassword, String newPasswordConfirmed);
+	AuthenticationResponse changePassword(Long userId, String currentPassword, String newPassword,
+										  String newPasswordConfirmed);
 
 }

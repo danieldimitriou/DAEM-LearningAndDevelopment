@@ -122,15 +122,18 @@ public class UserController {
 
 	@Transactional
 	@PutMapping("/{id}/change-password")
-	public ResponseEntity<ApiResponse<UserDTO>> changePassword(@PathVariable(name = "id") Long id,
-															   @RequestBody @NotNull ResetPasswordRequest resetPasswordRequest) {
-		UserDTO body = userService.changePassword(id, resetPasswordRequest.getCurrentPassword(),
-												  resetPasswordRequest.getNewPassword(),
-												  resetPasswordRequest.getNewPasswordConfirmed());
-		if (body == null) {
-			return new ResponseEntity<>(ApiResponse.<UserDTO>builder().data(body).build(), HttpStatus.UNAUTHORIZED);
+	public ResponseEntity<ApiResponse<AuthenticationResponse>> changePassword(@PathVariable(name = "id") Long id,
+																			  @RequestBody @NotNull ResetPasswordRequest resetPasswordRequest) {
+		AuthenticationResponse authenticationResponse = userService.changePassword(id,
+																				   resetPasswordRequest.getCurrentPassword(),
+																				   resetPasswordRequest.getNewPassword(),
+																				   resetPasswordRequest.getNewPasswordConfirmed());
+		if (authenticationResponse == null) {
+			return new ResponseEntity<>(
+					ApiResponse.<AuthenticationResponse>builder().data(authenticationResponse).build(),
+					HttpStatus.UNAUTHORIZED);
 		}
-		return ResponseEntity.ok(ApiResponse.<UserDTO>builder().data(body).build());
+		return ResponseEntity.ok(ApiResponse.<AuthenticationResponse>builder().data(authenticationResponse).build());
 	}
 
 	@Transactional

@@ -8,7 +8,6 @@ import gr.athtech.daem.domain.Position;
 import gr.athtech.daem.domain.Role;
 import gr.athtech.daem.domain.User;
 import gr.athtech.daem.dto.AuthenticationResponse;
-import gr.athtech.daem.dto.UserDTO;
 import gr.athtech.daem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -177,7 +176,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 			user.setPendingCourses(null);
 			userRepository.save(user);
 			var jwtToken = jwtService.generateToken(user);
-			return AuthenticationResponse.builder().token(jwtToken).id(user.getId()).build();
+			return AuthenticationResponse.builder().token(jwtToken).id(user.getId()).role(user.getRole()).build();
 		}
 		return null;
 	}
@@ -190,20 +189,24 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 			throw new NoSuchElementException("This username does not exist");
 		}
 		var jwtToken = jwtService.generateToken(user);
-		return AuthenticationResponse.builder().token(jwtToken).id(user.getId()).build();
+		return AuthenticationResponse.builder().token(jwtToken).id(user.getId()).role(user.getRole()).build();
 	}
 
 	@Override
-	public UserDTO changePassword(Long userId, String currentPassword, String newPassword,
-								  String newPasswordConfirmed) {
-		Optional<User> user = userRepository.findById(userId);
-		UserDTO userDTO = userConverter.convertToDTO(user.get());
-		if (user.isPresent() && passwordEncoder.matches(currentPassword.trim(), user.get().getPassword())) {
+	public AuthenticationResponse changePassword(Long userId, String currentPassword, String newPassword,
+												 String newPasswordConfirmed) {
+		Optional<User> userOptional = userRepository.findById(userId);
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("Invalid user id");
+		}
+		User user = userOptional.get();
+		if (passwordEncoder.matches(currentPassword.trim(), user.getPassword())) {
 			if (Objects.equals(newPassword.trim(), newPasswordConfirmed.trim())) {
-				user.get().setPassword(passwordEncoder.encode(newPassword.trim()));
-				userRepository.save(user.get());
+				user.setPassword(passwordEncoder.encode(newPassword.trim()));
+				userRepository.save(user);
 				logger.info("Changed password for user with ID {}", userId);
-				return userDTO;
+				var jwtToken = jwtService.generateToken(user);
+				return AuthenticationResponse.builder().token(jwtToken).id(user.getId()).role(user.getRole()).build();
 			}
 		}
 		return null;

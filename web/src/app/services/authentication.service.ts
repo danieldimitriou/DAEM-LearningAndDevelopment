@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
@@ -35,10 +35,16 @@ export class AuthenticationService {
       .pipe(
         map(res => {
           if (res.status == 200) {
+            let role: Role;
+            if (res.body["data"]["role"] === Role.Admin) {
+              role = Role.Admin
+            } else {
+              role = Role.User
+            }
             let user: User = {
               id: res.body["data"]["id"],
-              authData: window.btoa(email + ':' + password),
-              role: res.body["data"]["role"]
+              authData: res.body["data"]["token"],
+              role: role
             }
             localStorage.setItem('currentUser', JSON.stringify(user));
             this.currentUserSubject.next(user);
@@ -69,7 +75,7 @@ export class AuthenticationService {
             }
             let user: User = {
               id: res.body["data"]["id"],
-              authData: window.btoa(data.email + ':' + data.password),
+              authData: res.body["data"]["token"],
               role: role
             }
             localStorage.setItem('currentUser', JSON.stringify(user));
