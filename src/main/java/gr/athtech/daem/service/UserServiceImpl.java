@@ -177,7 +177,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 			user.setPendingCourses(null);
 			userRepository.save(user);
 			var jwtToken = jwtService.generateToken(user);
-			return AuthenticationResponse.builder().token(jwtToken).build();
+			return AuthenticationResponse.builder().token(jwtToken).id(user.getId()).build();
 		}
 		return null;
 	}
@@ -190,7 +190,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 			throw new NoSuchElementException("This username does not exist");
 		}
 		var jwtToken = jwtService.generateToken(user);
-		return AuthenticationResponse.builder().token(jwtToken).build();
+		return AuthenticationResponse.builder().token(jwtToken).id(user.getId()).build();
 	}
 
 	@Override
