@@ -19,13 +19,14 @@
       </div>
     </div>
     <div *ngIf="isAdminView" class="buttons d-flex justify-content-center addCourse">
-      <button mat-raised-button routerLink="/admin-home/viewEmployee/{{userId}}/addCourse/" class="bg-dark text-white">
+      <button mat-raised-button routerLink="/admin-home/viewEmployee/{{userId}}/addCourse/"
+              class="bg-dark text-white addCourseBtn">
         Add Course
       </button>
     </div>
 
     <div *ngIf="!isAdminView" class="buttons d-flex justify-content-center">
-      <button mat-raised-button class="bg-dark text-white" routerLink="/home/addCourse">Add Course</button>
+      <button mat-raised-button class="bg-dark text-white addCourseBtn" routerLink="/home/addCourse">Add Course</button>
     </div>
 
 

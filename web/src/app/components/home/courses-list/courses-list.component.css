@@ -44,3 +44,7 @@ button {
 .body {
   border: 1px solid black;
 }
+
+.addCourseBtn {
+  margin: 1rem;
+}
