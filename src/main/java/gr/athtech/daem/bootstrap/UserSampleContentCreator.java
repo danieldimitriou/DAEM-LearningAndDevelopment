@@ -35,10 +35,10 @@ public class UserSampleContentCreator extends BaseComponent implements CommandLi
 	@Transactional
 	public void run(final String... args) throws Exception {
 		List<User> users = List.of(User.builder().firstName("Stefan").lastName("Bordea").email(
-										   "stefan@stefanbordea.com").password(passwordEncoder.encode("pass12345!")).role(Role.ADMIN).build(),
+										   "stefan@stefanbordea.com").password(passwordEncoder.encode("pass12345!")).role(Role.ROLE_ADMIN).build(),
 
 								   User.builder().firstName("Dionysis").lastName("Petrotos").email("dpetr@email.gr")
-									   .password(passwordEncoder.encode("o)(JD!2djjd109jd")).role(Role.USER)
+									   .password(passwordEncoder.encode("o)(JD!2djjd109jd")).role(Role.ROLE_USER)
 									   //						.department(Department.builder().name("C-level").build())
 									   .build());
 

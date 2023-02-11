@@ -7,14 +7,17 @@ import gr.athtech.daem.domain.Department;
 import gr.athtech.daem.domain.Position;
 import gr.athtech.daem.domain.Role;
 import gr.athtech.daem.domain.User;
-import gr.athtech.daem.dto.UserDTO;
+import gr.athtech.daem.dto.AuthenticationResponse;
 import gr.athtech.daem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -25,6 +28,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final UserConverter userConverter;
+
+	private final JwtService jwtService;
+
+	private final AuthenticationManager authenticationManager;
 
 	@Override
 	public JpaRepository<User, Long> getRepository() {
@@ -156,43 +163,50 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	}
 
 	@Override
-	public User register(String firstName, String lastName, String email, String password) {
+	public AuthenticationResponse register(String firstName, String lastName, String email, String password) {
 		if (userRepository.findByEmail(email.trim()) == null) {
 			User user = new User();
 			user.setFirstName(firstName.trim());
 			user.setLastName(lastName.trim());
 			user.setEmail(email.trim());
 			user.setPassword(passwordEncoder.encode(password.trim()));
-			user.setRole(Role.USER);
+			user.setRole(Role.ROLE_USER);
 			user.setCertifications(null);
 			user.setCompletedCourses(null);
 			user.setPendingCourses(null);
-			return userRepository.save(user);
+			userRepository.save(user);
+			var jwtToken = jwtService.generateToken(user);
+			return AuthenticationResponse.builder().token(jwtToken).id(user.getId()).role(user.getRole()).build();
 		}
 		return null;
 	}
 
 	@Override
-	public UserDTO login(String email, String password) {
-		User user = userRepository.findByEmail(email.trim());
-		UserDTO userDTO = userConverter.convertToDTO(user);
-		if (user != null && passwordEncoder.matches(password.trim(), user.getPassword())) {
-			return userDTO;
+	public AuthenticationResponse login(String email, String password) {
+		authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
+		var user = userRepository.findByEmail(email.trim());
+		if (user == null) {
+			throw new NoSuchElementException("This username does not exist");
 		}
-		return null;
+		var jwtToken = jwtService.generateToken(user);
+		return AuthenticationResponse.builder().token(jwtToken).id(user.getId()).role(user.getRole()).build();
 	}
 
 	@Override
-	public UserDTO changePassword(Long userId, String currentPassword, String newPassword,
-								  String newPasswordConfirmed) {
-		Optional<User> user = userRepository.findById(userId);
-		UserDTO userDTO = userConverter.convertToDTO(user.get());
-		if (user.isPresent() && passwordEncoder.matches(currentPassword.trim(), user.get().getPassword())) {
+	public AuthenticationResponse changePassword(Long userId, String currentPassword, String newPassword,
+												 String newPasswordConfirmed) {
+		Optional<User> userOptional = userRepository.findById(userId);
+		if (userOptional.isEmpty()) {
+			throw new NoSuchElementException("Invalid user id");
+		}
+		User user = userOptional.get();
+		if (passwordEncoder.matches(currentPassword.trim(), user.getPassword())) {
 			if (Objects.equals(newPassword.trim(), newPasswordConfirmed.trim())) {
-				user.get().setPassword(passwordEncoder.encode(newPassword.trim()));
-				userRepository.save(user.get());
+				user.setPassword(passwordEncoder.encode(newPassword.trim()));
+				userRepository.save(user);
 				logger.info("Changed password for user with ID {}", userId);
-				return userDTO;
+				var jwtToken = jwtService.generateToken(user);
+				return AuthenticationResponse.builder().token(jwtToken).id(user.getId()).role(user.getRole()).build();
 			}
 		}
 		return null;
