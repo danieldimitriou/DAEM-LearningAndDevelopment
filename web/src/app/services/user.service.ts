@@ -51,18 +51,19 @@ export class UserService {
     return this.http.put(`${environment.apiUrl}/users/${userId}/setDepartment/${departmentId}`, null, {observe: 'response'});
   }
 
-  addPositionToUser(position: Position, userId: number){
-    return this.http.put(`${environment.apiUrl}/users/${userId}/setPosition`,position, {observe:'response'});
+  addPositionToUser(position: Position, userId: number) {
+    return this.http.put(`${environment.apiUrl}/users/${userId}/setPosition`, position, {observe: 'response'});
   }
-  addManagerToUser(managersEmail: string, userId: number){
-    return this.http.put(`${environment.apiUrl}/users/${userId}/setManager`,managersEmail,{observe:'response'});
+
+  addManagerToUser(managerEmail: string, userId: number) {
+    return this.http.put(`${environment.apiUrl}/users/${userId}/setManager`, {"managerEmail": managerEmail}, {observe: 'response'});
   }
 
   completePendingCourse(userId: number, pendingCourseId: number,) {
     return this.http.post(`${environment.apiUrl}/users/${userId}/completePendingCourse/${pendingCourseId}`, {});
   }
 
-  getUserWithCertifications(userId:number){
+  getUserWithCertifications(userId: number) {
     return this.http.get(`${environment.apiUrl}/users/${userId}/certifications`);
   }
 
