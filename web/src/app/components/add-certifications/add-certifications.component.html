@@ -1,23 +1,28 @@
 <app-header></app-header>
-<div class="d-flex align-items-center justify-content-center">
-  <div class="col-sm-3 text-center">
-    <h2 class="mb-4">Add Certification</h2>
-    <form [formGroup]="addCertificationForm" (ngSubmit)="onSubmit()">
-      <div class="form-group mb-3">
-        <label>Certification Name:</label>
-        <input type="text" formControlName="certificationName" class="form-control"  />
+<div class="certiFormContainer">
+  <h2 class="mb-4 text-center">Add Certification</h2>
+  <div class="d-flex align-items-center justify-content-center">
+    <!--  <div class="col-sm-3 text-center">-->
+    <form [formGroup]="addCertificationForm" (ngSubmit)="onSubmit()" class="certiForm">
+      <div class="row">
+        <div class="colform-group mb-3">
+          <label>Certification Name:</label>
+          <input type="text" formControlName="certificationName" class="form-control"/>
+        </div>
+        <div class="col form-group mb-3">
+          <label>Certification Authority Name:</label>
+          <input type="text" formControlName="certificationAuthorityName" class="form-control"
+                 placeholder="Name of the authority that issued the certification."/>
+        </div>
+        <div class="col form-group mb-3">
+          <label>Type of Institution:</label>
+          <input type="text" formControlName="awardingBodyDescription" class="form-control"
+                 placeholder="University, College etc."/>
+        </div>
+        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">Something went wrong. Please try again.</div>
+        <div *ngIf="!error && submitted" class="alert alert-info mt-3 mb-0">Certification added.</div>
+        <button mat-raised-button class="bg-dark text-white" *ngIf="!submitted">Add Certification</button>
       </div>
-      <div class="form-group mb-3">
-        <label>Certification Authority Name:</label>
-        <input type="text" formControlName="certificationAuthorityName" class="form-control" placeholder="Name of the authority that issued the certification."  />
-      </div>
-      <div class="form-group mb-3">
-        <label>Type of Institution:</label>
-        <input type="text" formControlName="awardingBodyDescription" class="form-control" placeholder="University, College etc."  />
-      </div>
-      <div *ngIf="error" class="alert alert-danger mt-3 mb-0">Something went wrong. Please try again. </div>
-      <div *ngIf="!error && submitted" class="alert alert-info mt-3 mb-0">Certification added.</div>
-      <button mat-raised-button class="bg-dark text-white" *ngIf="!submitted">Add Certification</button>
     </form>
   </div>
 </div>

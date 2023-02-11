@@ -1,3 +1,50 @@
-.body{
-  border:1px solid black;
+.courseListContainer {
+  background-color: rgb(33, 36, 40);
+
+
+}
+
+.container h3 {
+  color: rgb(238, 246, 255);
+}
+
+.pending {
+  padding-bottom: 0.5rem;
+  /*background-color:  rgb(49, 56, 64);*/
+
+}
+
+.pending h3 {
+  color: white;
+}
+
+.completed {
+  background-color: rgb(145, 142, 162);
+  padding-top: 1rem;
+  padding-bottom: 0.1rem;
+}
+
+.card {
+
+  color: rgb(33, 36, 40);
+
+}
+
+.row {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+button {
+  border-style: solid;
+  border-width: 1px;
+  border-color: white;
+}
+
+.body {
+  border: 1px solid black;
+}
+
+.addCourseBtn {
+  margin: 1rem;
 }

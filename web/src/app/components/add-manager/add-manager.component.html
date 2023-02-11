@@ -1,17 +1,22 @@
 <app-header></app-header>
-<div class="d-flex align-items-center justify-content-center">
-  <div class="col-sm-3 text-center">
-    <form [formGroup]="updateManagerForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label>Manager's Email:</label>
-        <input type="text" formControlName="managerEmail" class="form-control"/>
-      </div>
-      <div *ngIf="error" class="alert alert-danger mt-3 mb-0">Wrong input. Please try again.</div>
-      <div *ngIf="!error && submitted" class="alert alert-info mt-3 mb-0">Manager updated successfully.</div>
+<div class="managerFormContainer">
+  <h2 class="mb-3 text-center">Add Manager</h2>
+  <div class="d-flex align-items-center justify-content-center">
+    <!--  <div class="col-sm-3 text-center">-->
+    <form [formGroup]="updateManagerForm" (ngSubmit)="onSubmit()" class="managerForm">
+      <div class="row">
+        <div class="col form-group inputContainer">
+          <label>Manager's Email:</label>
+          <input type="text" formControlName="managerEmail" class="form-control"/>
+        </div>
+        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">Wrong input. Please try again.</div>
+        <div *ngIf="!error && submitted" class="alert alert-info mt-3 mb-0">Manager updated successfully.</div>
 
-      <button mat-raised-button class="bg-dark text-white"  *ngIf="!submitted">
-        Update Manager
-      </button>
+        <button mat-raised-button class="bg-dark text-white" *ngIf="!submitted">
+          Update Manager
+        </button>
+      </div>
     </form>
   </div>
 </div>
+<app-footer></app-footer>
