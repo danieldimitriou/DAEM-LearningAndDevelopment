@@ -8,6 +8,7 @@ import {LoginComponent} from './components/login/login.component';
 import {SignupComponent} from './components/signup/signup.component';
 import {AdminHomeComponent} from './components/admin-home/admin-home.component';
 import {HeaderComponent} from './components/common/header/header.component';
+import {FooterComponent} from './components/common/footer/footer.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {CoursesListComponent} from './components/home/courses-list/courses-list.component';
@@ -33,6 +34,7 @@ import {MatButtonModule} from '@angular/material/button';
     SignupComponent,
     AdminHomeComponent,
     HeaderComponent,
+    FooterComponent,
     CoursesListComponent,
     AddCourseComponent,
     AddCertificationsComponent,

@@ -1,0 +1,49 @@
+.managerFormContainer {
+  background: rgb(33, 36, 40);
+  padding-top: 1.5rem;
+  padding-bottom: 16.4rem;
+
+}
+
+h2 {
+  padding-top: 5rem;
+  color: white;
+}
+
+.managerForm {
+  background: white;
+  border-radius: 0.8em;
+  width: 20rem;
+  padding: 1rem;
+  border-color: rgb(0.1, 33, 36, 40);
+  border-style: solid;
+  border-width: 5px;
+  height: 13rem;
+
+}
+
+label {
+  padding-bottom: 1rem;
+}
+
+input {
+  background-color: rgb(130, 132, 137);
+  width: 17rem;
+
+}
+
+input::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+label::placeholder {
+  color: white;
+  opacity: 1
+}
+
+.inputContainer {
+  padding-bottom: 1rem;
+
+}
+
