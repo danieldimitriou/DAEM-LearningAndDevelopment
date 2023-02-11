@@ -4,12 +4,12 @@
     <form [formGroup]="updateManagerForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label>Manager's Email:</label>
-        <input type="text" formControlName="managersEmail" class="form-control"/>
+        <input type="text" formControlName="managerEmail" class="form-control"/>
       </div>
       <div *ngIf="error" class="alert alert-danger mt-3 mb-0">Wrong input. Please try again.</div>
       <div *ngIf="!error && submitted" class="alert alert-info mt-3 mb-0">Manager updated successfully.</div>
 
-      <button  *ngIf="!submitted" class="btn btn-primary">
+      <button mat-raised-button class="bg-dark text-white"  *ngIf="!submitted">
         Update Manager
       </button>
     </form>

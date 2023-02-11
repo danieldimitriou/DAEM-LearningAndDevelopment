@@ -23,7 +23,7 @@ export class AddManagerComponent implements OnInit{
 
   ngOnInit(){
     this.updateManagerForm = this.formBuilder.group({
-      managersEmail:['',Validators.email]
+      managerEmail:['',Validators.email]
     })
   }
 
@@ -34,7 +34,7 @@ export class AddManagerComponent implements OnInit{
     this.error = '';
     this.submitted = false;
 
-    this.userService.addManagerToUser(this.f['managersEmail'].value,this.authService.currentUserValue.id).subscribe(
+    this.userService.addManagerToUser(this.f['managerEmail'].value,this.authService.currentUserValue.id).subscribe(
       next =>{
         if(next.status === 201){
             this.submitted = true;

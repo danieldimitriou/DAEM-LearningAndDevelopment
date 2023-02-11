@@ -22,6 +22,8 @@ export class AddCourseComponent implements OnInit{
   returnUrl: string;
   error : string;
   counter = 1;
+  isAdminView: boolean;
+  userId: number;
 
   // areasOfStudy: FormGroup[];
 
@@ -42,6 +44,21 @@ export class AddCourseComponent implements OnInit{
       certificationAuthorityName: ['', Validators.required],
       awardingBodyDescription: ['', Validators.required]
     });
+    this.route.params.subscribe(
+      next =>{
+        if(+next['id']){
+          this.userId = +next['id'];
+        }
+      }
+    );
+    if(this.userId === undefined){
+      this.userId = this.authenticationService.currentUserValue.id;
+      console.log(this.userId)
+      this.isAdminView = false;
+    }else{
+      console.log(this.userId);
+        this.isAdminView = true;
+    }
     // get return url from route parameters or default to '/'
     // if a user enters /admin-home but needs login, they get redirected
     // to /admin-home after authentication, or if they didn't give any link,
@@ -59,7 +76,6 @@ export class AddCourseComponent implements OnInit{
       description: ['', Validators.required]
     })
   }
-
   addAreaOfStudy() {
     this.counter++;
     this.areasOfStudyGet().push(this.newAreaOfStudy());
@@ -72,25 +88,6 @@ export class AddCourseComponent implements OnInit{
   get f() {
     return this.addCourseForm.controls;
   }
-
-  // addAreaOfStudy() {
-  //   const control = <FormArray>this.addCourseForm.controls['areasOfStudy'];
-  //   control.push(
-  //     this.formBuilder.group({
-  //       'name': [''],
-  //       'description': ['']
-  //     })
-  //   );
-  //   this.counter++;
-  // }
-  //
-  // removeAreaOfStudy(){
-  //   const control = <FormArray>this.addCourseForm.controls['areasOfStudy'];
-  //   this.counter--;
-  //   control.removeAt(this.counter);
-  // }
-
-
   onSubmit() {
     let awardingBody: TypeOfInstitution = {
       description: this.f['awardingBodyDescription'].value
@@ -126,7 +123,7 @@ export class AddCourseComponent implements OnInit{
     }
 
     console.log(JSON.stringify({ data: course}, null, 4));
-    this.userService.createCourse(course,this.authenticationService.currentUserValue.id).subscribe(
+    this.userService.createCourse(course,this.userId).subscribe(
       next =>{
         if(next.status === 201){
           this.submitted = true;

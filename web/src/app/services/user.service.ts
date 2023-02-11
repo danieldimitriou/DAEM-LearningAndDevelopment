@@ -56,7 +56,6 @@ export class UserService {
   }
   addManagerToUser(managersEmail: string, userId: number){
     return this.http.put(`${environment.apiUrl}/users/${userId}/setManager`,managersEmail,{observe:'response'});
-
   }
 
   completePendingCourse(userId: number, pendingCourseId: number,) {
